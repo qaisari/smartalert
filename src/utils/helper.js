@@ -1,5 +1,5 @@
 export const handleLoadImageError = (event) => {
-  event.currentTarget.src = `${import.meta.env.BASE_URL}/img/cars/no-car.png`;
+  event.currentTarget.src = "/img/cars/no-car.png";
 };
 
 export function getTime(date) {

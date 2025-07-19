@@ -32,13 +32,13 @@ const Header1 = () => {
                 <Link to="/" className="header-logo mr-20">
                   <img
                     style={{height: 39}}
-                   src={`${import.meta.env.BASE_URL}/img/general/logo-light.png`} alt="logo icon" />
+                   src="/img/general/logo-light.png" alt="logo icon" />
                 </Link>
                 {/* End logo */}
 
                 <div className="header-menu">
                   <div className="header-menu__content">
-                    <MainMenu style="text-white" />
+                    <MainMenu style="text-white"/>
                   </div>
                 </div>
                 {/* End header-menu */}

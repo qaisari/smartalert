@@ -236,6 +236,7 @@ const fr = {
     home: "Accueil",
     usedCars: "Occasion",
     newCars: "Neuve",
+    location: "Location",
     about: "À propos",
     terms: "Termes & Conditions",
     selectLanguage: "Choisir la langue"

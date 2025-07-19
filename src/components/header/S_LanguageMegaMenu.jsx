@@ -15,7 +15,7 @@ const LanguageMegaMenu = ({ textClass }) => {
         fr: "France",
         ar: "فرنسا",
       },
-      img: `${import.meta.env.BASE_URL}/img/general/fr.png`
+      img: `/img/general/fr.png`
     },
     {
       id: 2,

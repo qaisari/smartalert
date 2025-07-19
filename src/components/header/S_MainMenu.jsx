@@ -36,6 +36,16 @@ const MainMenu = ({ style = "" }) => {
             }
           }} to="/neuve">{t[lang].header.newCars}</Link>
         </li>
+        <li className={pathname === "/location" ? "current" : ""}>
+          <Link onClick={() => {
+            if (pathname === "/location") {
+              searchParams.delete("alert")
+              searchParams.delete("page")
+              setSearchParams(searchParams)
+              window.location.reload()
+            }
+          }} to="/location">{t[lang].header.location}</Link>
+        </li>
         <li className={pathname === "/about" ? "current" : ""}>
           <Link to="/about">{t[lang].header.about}</Link>
         </li>

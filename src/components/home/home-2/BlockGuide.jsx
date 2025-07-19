@@ -8,21 +8,21 @@ const BlockGuide = () => {
   const blockContent = [
     {
       id: 1,
-      icon: `${import.meta.env.BASE_URL}/img/featureIcons/3/3.svg`,
+      icon: "/img/featureIcons/3/3.svg",
       title: t[lang].home.guide._1.title,
       text: t[lang].home.guide._1.text,
       delayAnim: "0",
     },
     {
       id: 2,
-      icon: `${import.meta.env.BASE_URL}/img/featureIcons/3/2.svg`,
+      icon: "/img/featureIcons/3/2.svg",
       title: t[lang].home.guide._2.title,
       text: t[lang].home.guide._2.text,
       delayAnim: "50",
     },
     {
       id: 3,
-      icon: `${import.meta.env.BASE_URL}/img/featureIcons/2/2.svg`,
+      icon: "/img/featureIcons/2/2.svg",
       title: t[lang].home.guide._3.title,
       text: t[lang].home.guide._3.text,
       delayAnim: "100",
