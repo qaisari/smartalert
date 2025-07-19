@@ -38,7 +38,7 @@ const Header1 = () => {
 
                 <div className="header-menu">
                   <div className="header-menu__content">
-                    <MainMenu style="text-white" />
+                    <MainMenu style="text-white"/>
                   </div>
                 </div>
                 {/* End header-menu */}

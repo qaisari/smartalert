@@ -63,6 +63,16 @@ const MobileMenu = () => {
           {/* End  Accueil Menu */}
 
           <MenuItem
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            onClick={() => navigate("/location")}
+            className={pathname === "/location" ? "menu-active-link" : ""}
+          >
+            {t[lang].header.location}
+          </MenuItem>
+          {/* End  Location Menu */}
+
+          <MenuItem
             onClick={() => navigate("/about")}
             className={pathname === "/about" ? "menu-active-link" : ""}
           >

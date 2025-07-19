@@ -283,6 +283,7 @@ const ar = {
     home: "الرئيسية",
     usedCars: "المستعمل",
     newCars: "الجديد",
+    location: "كراء",
     about: "معلومات عنا",
     terms: "الأحكام والشروط",
     selectLanguage: "اختر لغتك",
