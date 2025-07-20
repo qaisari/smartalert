@@ -24,7 +24,7 @@ const LanguageMegaMenu = ({ textClass }) => {
         fr: "Maroc",
         ar: "المغرب"
       },
-      img: `${import.meta.env.BASE_URL}/img/general/ar.png`
+      img: `/img/general/ar.png`
     },
   ];
   const [selectedCurrency, setSelectedCurrency] = useState(languageContent[lang == "ar" ? 1 : 0]);

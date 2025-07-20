@@ -207,15 +207,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     const [filtersApplied, setFiltersApplied] = useState(false);
 
     const handleChange = (e) => {
-        const value = e.target.value;
-        setSearch(value);
-        setShowDropDown(value.trim().length > 0);
-        
-        // Clear selected brand if input is empty
-        if (value.trim() === "") {
-            setSelectedBrand("");
-            setModelSearch("");
-        }
+        setSearch(e.target.value);
+        setShowDropDown(true);
     }
 
     const handleModelChange = (e) => {
@@ -467,7 +460,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     return (
         <>
             <aside style={{
-                width: isMobile ? '100%' : '390px',
+                width: isMobile ? '100%' : '35px',
                 minWidth: isMobile ? 'auto' : '280px',
                 maxWidth: isMobile ? '100%' : '320px',
                 height: isMobile ? 'fit-content' : 'fit-content',
@@ -475,8 +468,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                 display: 'flex',
                 flexDirection: 'column',
                 background: '#fff',
-                borderRadius: '12px',
-                boxShadow: isMobile ? 'none' : '0 2px 8px rgba(0,0,0,0.08)',
+                marginTop: isMobile ? '0' : '47px',
+                marginLeft: isMobile ? '0' : '20px',
+                // boxShadow: isMobile ? 'none' : '0 2px 8px rgba(0,0,0,0.08)',
                 padding: '0',
             }}>
             {isMobile && (
@@ -503,24 +497,25 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             )}
 
             {/* Marque Filter */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff', borderRadius: '12px 12px 0 0' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'sans-serif', fontSize: '1.1rem', marginBottom: '0.75rem', color: '#16213e' }}>Marque</div>
+            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: isMobile ? 'none' : '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '0' : '-20px' }}>Marque</div>
                 <div style={{ position: 'relative' }}>
                     <input 
                         className="filter-input"
                         type="text"
                         placeholder="Ex: Dacia"
-                        style={{ width: '100%', height: '48px', background: '#f9fafb', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222' }}
+                        style={{ width: '100%', height: '48px', background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: '1rem', outline: 'none', marginBottom: -10, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
                         value={search}
                         onChange={handleChange}
+                        onFocus={() => setShowDropDown(true)}
                     />
                     {showDropDown && filteredOptions.length > 0 && (
-                        <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10 }}>
+                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', overflowY: 'auto', zIndex: 10, width: '279px', maxHeight: '385px', padding: '0.7rem 0'}}>
                             {filteredOptions.map((car, index) => (
                                 <div
                                     key={index}
-                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '1rem', borderBottom: index === filteredOptions.length - 1 ? 'none' : '1px solid #e5e7eb', background: 'transparent', transition: 'background 0.15s', color: '#222' }}
-                                    onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
+                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                    onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                     onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                     onClick={() => handleOptionSelect(car)}
                                 >
@@ -541,24 +536,24 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             {/* Modèle Filter - Only show when brand is selected */}
             {selectedBrand && availableModels.length > 0 && (
                 <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'sans-serif', fontSize: '1.1rem', marginBottom: '0.75rem', color: '#16213e' }}>Modèle</div>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Modèle</div>
                     <div style={{ position: 'relative' }}>
                         <input 
                             // className="filter-input"
                             type="text"
                             placeholder="Ex: A3"
-                            style={{ width: '100%', height: '48px', background: '#f9fafb', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222' }}
+                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '0' : '-35px', fontFamily: 'Roboto, sans-serif' }}
                             value={modelSearch}
                             onChange={handleModelChange}
                             onFocus={() => setShowModelDropDown(true)}
                         />
                         {showModelDropDown && filteredModels.length > 0 && (
-                            <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10 }}>
+                            <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: '279px' }}>
                                 {filteredModels.map((model, index) => (
                                     <div
                                         key={index}
-                                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '1rem', borderBottom: index === filteredModels.length - 1 ? 'none' : '1px solid #e5e7eb', background: 'transparent', transition: 'background 0.15s', color: '#222' }}
-                                        onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
+                                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                        onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                         onClick={() => handleModelSelect(model)}
                                     >
@@ -579,13 +574,13 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Période Filter (Calendar Trigger) */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', position: 'relative', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'sans-serif', fontSize: '1.1rem', marginBottom: '0.75rem', color: '#16213e' }}>Période</div>
+            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Période</div>
                 <div 
                     className="filter-date"
-                    style={{ background: '#f9fafb', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}
+                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '15px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}
                     onClick={() => setShowCalendar(!showCalendar)}
                 >
-                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginTop: '-3px', color: '#16213e' }}>
                         <div style={{ flex: 1, minWidth: 60 }}>
                             <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : 'Début'}</div>
                             <div style={{ fontSize: '1rem', fontWeight: 600 }}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
@@ -604,9 +599,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Pickup / Drop-off Section */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'sans-serif', fontSize: '1.1rem', marginBottom: '0.75rem', color: '#16213e' }}>Lieu de dépôt</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Lieu de dépôt</div>
                 <div className="filter-date" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <div style={{ width: '100%', maxWidth: 240, marginBottom: 8 }}>
+                    <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>
                         <CustomDropdown
                             value={localisation}
                             onChange={setLocalisation}
@@ -620,28 +615,28 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         <input
                             className="filter-input"
                             type="text"
-                            placeholder="Ville de prise en charge (ex: Rabat)"
-                            style={{ marginBottom: 0, background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 6, fontSize: 15, padding: '12px 16px', fontWeight: 500, color: '#222' }}
+                            placeholder="Ex: Rabat"
+                            style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '0' : '-30px' }}
                         />
                     )}
                     {localisation === 'different' && (
                         <div style={{ display: 'flex', gap: 12 }}>
                             <div style={{ flex: 1 }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, marginBottom: 6, color: '#16213e' }}>Départ</div>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Départ</div>
                                 <input
                                     className="filter-input"
                                     type="text"
                                     placeholder="Ex: Rabat"
-                                    style={{ marginBottom: 0, background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 6, fontSize: 15, padding: '12px 16px', fontWeight: 500, color: '#222' }}
+                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
                                 />
                             </div>
                             <div style={{ flex: 1 }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, marginBottom: 6, color: '#16213e' }}>Dépôt</div>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Dépôt</div>
                                 <input
                                     className="filter-input"
                                     type="text"
-                                    placeholder="Ex: Casablanca"
-                                    style={{ marginBottom: 0, background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 6, fontSize: 15, padding: '12px 16px', fontWeight: 500, color: '#222' }}
+                                    placeholder="Ex: Tanger"
+                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
                                 />
                             </div>
                         </div>
@@ -651,7 +646,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Promotion Filter */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'sans-serif', fontSize: '1.1rem', marginBottom: '0.75rem', color: '#16213e' }}>Promotion</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Promotion</div>
                 <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222' }}>
                     <input 
                         type="checkbox" 

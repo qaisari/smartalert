@@ -414,7 +414,7 @@ export default function CarGrid({ filters = {} }) {
                 alignItems: 'center',
                 marginBottom: '2rem'
             }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', margin: 0, marginTop: '10px'}}>
                     {filteredCars.length} voiture(s) disponible(s)
                 </h2>
                 {filters.startDate && filters.endDate && (
@@ -429,7 +429,8 @@ export default function CarGrid({ filters = {} }) {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 maxWidth: '980px',
                 gap: '1.5rem',
-                marginBottom: '3rem'
+                marginTop: '-17px',
+                marginBottom: '3rem',
             }}>
                 {getCurrentPageCars().map((car, index) => {
                     const totalPrice = calculateDailyPrice(car, filters.startDate, filters.endDate);
