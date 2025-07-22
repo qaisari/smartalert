@@ -95,7 +95,7 @@ export default function Location() {
                     )}
 
                     {/* Mobile Filter Sidebar */}
-                    {showMobileFilters && (
+                    {
                         <>
                             {/* Overlay */}
                             <div 
@@ -106,7 +106,10 @@ export default function Location() {
                                     bottom: 0,
                                     right: 0,
                                     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                                    zIndex: 50
+                                    zIndex: 50,
+                                    opacity: showMobileFilters ? 1 : 0,
+                                    pointerEvents: showMobileFilters ? 'auto' : 'none',
+                                    transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
                                 }}
                                 onClick={() => setShowMobileFilters(false)}
                             ></div>
@@ -124,8 +127,10 @@ export default function Location() {
                                 overflowY: 'auto',
                                 height: '100vh',
                                 maxHeight: isMobile ? '100vh' : '85vh',
-                                transform: 'translateX(0)',
-                                transition: 'transform 0.3s ease-in-out'
+                                transform: showMobileFilters ? 'translateX(0)' : 'translateX(-100%)',
+                                opacity: showMobileFilters ? 1 : 0,
+                                pointerEvents: showMobileFilters ? 'auto' : 'none',
+                                transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.4s cubic-bezier(0.4,0,0.2,1)'
                             }}>
                                 {/* Close Button */}
                                 <div style={{
@@ -179,7 +184,7 @@ export default function Location() {
                                 </div>
                             </div>
                         </>
-                    )}
+                    }
 
                     <CarGrid filters={currentFilters} />
                 </div>

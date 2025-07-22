@@ -470,7 +470,6 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                 background: '#fff',
                 marginTop: isMobile ? '0' : '47px',
                 marginLeft: isMobile ? '0' : '20px',
-                // boxShadow: isMobile ? 'none' : '0 2px 8px rgba(0,0,0,0.08)',
                 padding: '0',
             }}>
             {isMobile && (
@@ -486,10 +485,10 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     <button 
                         onClick={onClose}
                         style={{ color: '#9ca3af', background: 'none', border: 'none', borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', transition: 'color 0.2s' }}
-                        onMouseEnter={e => e.currentTarget.style.color = '#4b5563'}
+                        onMouseEnter={e => e.currentTarget.style.color = '#fb923c'}
                         onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
                     >
-                        <svg style={{ width: 24, height: 24 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: 24, height: 24, }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -510,7 +509,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         onFocus={() => setShowDropDown(true)}
                     />
                     {showDropDown && filteredOptions.length > 0 && (
-                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', overflowY: 'auto', zIndex: 10, width: '279px', maxHeight: '385px', padding: '0.7rem 0'}}>
+                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
                             {filteredOptions.map((car, index) => (
                                 <div
                                     key={index}
@@ -577,10 +576,10 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Période</div>
                 <div 
                     className="filter-date"
-                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '15px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}
+                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '0' : '-20px' }}
                     onClick={() => setShowCalendar(!showCalendar)}
                 >
-                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginTop: '-3px', color: '#16213e' }}>
+                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#16213e' }}>
                         <div style={{ flex: 1, minWidth: 60 }}>
                             <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : 'Début'}</div>
                             <div style={{ fontSize: '1rem', fontWeight: 600 }}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
@@ -698,9 +697,20 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         </aside>
 
         {/* Calendar Modal - Rendered outside the aside using portal */}
-        {showCalendar && createPortal(
+        {createPortal(
             <div 
-                style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(2px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}
+                style={{ 
+                    position: 'fixed', 
+                    inset: 0, 
+                    background: 'rgba(0, 0, 25, 0.40)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    zIndex: 9999,
+                    opacity: showCalendar ? 1 : 0,
+                    pointerEvents: showCalendar ? 'auto' : 'none',
+                    transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                }}
                 onClick={() => setShowCalendar(false)}
             >
                 <div style={{ 
@@ -713,7 +723,11 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     maxHeight: '90vh', 
                     overflow: 'hidden', 
                     display: 'flex', 
-                    flexDirection: 'column' 
+                    flexDirection: 'column',
+                    transform: showCalendar ? 'scale(1)' : 'scale(0.95)',
+                    opacity: showCalendar ? 1 : 0,
+                    pointerEvents: showCalendar ? 'auto' : 'none',
+                    transition: 'transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.28s cubic-bezier(0.4,0,0.2,1)'
                 }}
                 onClick={(e) => e.stopPropagation()}
                 >
@@ -727,7 +741,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         <button 
                             onClick={() => setShowCalendar(false)}
                             style={{ color: '#9ca3af', background: 'none', border: 'none', borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', transition: 'color 0.2s' }}
-                            onMouseEnter={e => e.currentTarget.style.color = '#4b5563'}
+                            onMouseEnter={e => e.currentTarget.style.color = '#fb923c'}
                             onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
                         >
                             <svg style={{ width: 24, height: 24 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -743,7 +757,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
                             onMouseLeave={e => e.currentTarget.style.background = 'none'}
                         >
-                            <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 2 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
@@ -758,7 +772,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
                             onMouseLeave={e => e.currentTarget.style.background = 'none'}
                         >
-                            <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 2 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
@@ -775,7 +789,6 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                 <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
                                     {startDate ? `${formatDayName(startDate)} ${formatDateForDisplay(startDate)}` : '--/--'}
                                 </div>
-                                <div style={{ fontSize: '0.95rem', color: '#2563eb', cursor: 'pointer' }}>Noon ⌄</div>
                             </div>
                             <div style={{ width: 1, height: '3rem', background: '#e5e7eb', margin: '0 1rem' }}></div>
                             <div style={{ fontSize: '0.95rem', flex: 1 }}>
@@ -783,7 +796,6 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                 <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
                                     {endDate ? `${formatDayName(endDate)} ${formatDateForDisplay(endDate)}` : '--/--'}
                                 </div>
-                                <div style={{ fontSize: '0.95rem', color: '#2563eb', cursor: 'pointer' }}>Noon ⌄</div>
                             </div>
                         </div>
                         <button 
