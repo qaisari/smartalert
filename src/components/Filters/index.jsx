@@ -1,174 +1,3 @@
-// import { useState, useEffect } from "react";
-// import CustomDropdown from "../customDropDown";
-
-// export default function Filters({ onFiltersChange, isMobile = false, onClose }) {
-//     const [brand, setBrand] = useState("");
-//     const [model, setModel] = useState("");
-//     const [startDate, setStartDate] = useState("");
-//     const [endDate, setEndDate] = useState("");
-//     const [promotion, setPromotion] = useState(false);
-//     const [localisation, setLocalisation] = useState("same");
-//     const [selectFocused, setSelectFocused] = useState(false);
-
-//     // Update parent whenever filters change
-//     useEffect(() => {
-//         const filters = {
-//             brand,
-//             model,
-//             startDate: startDate ? new Date(startDate) : null,
-//             endDate: endDate ? new Date(endDate) : null,
-//             promotion
-//         };
-//         onFiltersChange && onFiltersChange(filters);
-//     }, [brand, model, startDate, endDate, promotion, onFiltersChange]);
-
-//     const handleSearch = () => {
-//         // Trigger search - filters are already being sent via useEffect
-//         if (isMobile && onClose) {
-//             onClose();
-//         }
-//     };
-
-//     return (
-//         <aside 
-//             className="mainFilters" 
-//             style={{
-//                 width: isMobile ? '100%' : 'fit-content',
-//                 height: isMobile ? 'fit-content' : 'fit-content',
-//                 minWidth: isMobile ? 'auto' : '350px',
-//                 maxHeight: isMobile ? '100vh' : '85vh',
-//                 boxShadow: isMobile ? 'none' : '0px 0px 10px rgba(5, 5, 0, 0.124)',
-//                 marginBottom: isMobile ? '50px' : '20px',
-//                 backgroundColor: isMobile ? '#fff' : '#f9f9f9',
-
-//             }}
-//         >
-//             {isMobile && (
-//                 <div style={{
-//                     display: 'flex',
-//                     justifyContent: 'space-between',
-//                     alignItems: 'center',
-//                     marginBottom: '1.5rem',    // mb-6 = 24px = 1.5rem
-//                     paddingBottom: '1rem',     // pb-4 = 16px = 1rem
-//                     borderBottom: '1px solid #e5e7eb', // border-b (Tailwind gray-200)
-//                 }}>
-//                     <h2 style={{
-//                         fontSize: '1.85rem',   // text-xl
-//                         fontWeight: 600        // font-semibold
-//                     }}>Filtres</h2>
-//                     <button
-//                         onClick={onClose}
-//                         className="filter-close-btn"
-//                         style={{ color: 'black' }}
-//                     >
-//                         <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-//                         </svg>
-//                     </button>
-//                 </div>
-//             )}
-
-//             {/* Brand Filter */}
-//             <div className="filter-section">
-//                 <h5 className="filter-label">Marque</h5>
-//                 <input 
-//                     className="filter-input" 
-//                     type="text" 
-//                     placeholder="Ex: Dacia" 
-//                     value={brand}
-//                     onChange={(e) => setBrand(e.target.value)}
-//                 />
-//             </div>
-
-//             {/* Model Filter */}
-//             {brand !== "" && (
-//                 <div className="filter-section">
-//                     <h5 className="filter-label">Modèle</h5>
-//                     <input 
-//                         className="filter-input" 
-//                         type="text" 
-//                         placeholder="Ex: Golf" 
-//                         value={model}
-//                         onChange={(e) => setModel(e.target.value)}
-//                     />
-//                 </div>
-//             )}
-            
-
-//             {/* Date Filter */}
-//             <div className="filter-section">
-//                 <div className="filter-label">Période</div>
-//                 <div className="filter-date">
-//                     <div className="date-label">Début</div>
-//                     <input 
-//                         className="date-picker" 
-//                         type="date" 
-//                         value={startDate}
-//                         onChange={(e) => setStartDate(e.target.value)}
-//                         min={new Date().toISOString().split('T')[0]}
-//                     />
-//                     <div className="date-label">Fin</div>
-//                     <input 
-//                         className="date-picker" 
-//                         type="date" 
-//                         value={endDate}
-//                         onChange={(e) => setEndDate(e.target.value)}
-//                         min={startDate || new Date().toISOString().split('T')[0]}
-//                     />
-//                 </div>
-//             </div>
-
-//             {/* Location Dropoff */}
-//             <div className="filter-section">
-//                 <div className="filter-label">Pickup / Drop-off</div>
-//                 <div className="filter-date">
-//                     <CustomDropdown value={localisation} onChange={setLocalisation} options={[
-//                         { value: "same", label: "Same drop-off" },
-//                         { value: "different", label: "Different drop-off" }
-//                     ]} />
-//                     {localisation === "same" && (
-//                         <>
-//                             <input className="filter-input" type="text" placeholder="Ex: Rabat"/>
-//                         </>
-//                     )}
-//                     {localisation === "different" && (
-//                         <>
-//                             <div className="date-label">Départ</div>
-//                             <input className="filter-input" type="text" placeholder="Ex: Rabat"/>
-//                             <div className="date-label">Lieu de dépôt</div>
-//                             <input className="filter-input" type="text" placeholder="Ex: Casablanca"/>
-//                         </>
-//                     )}
-//                 </div>
-//             </div>
-
-//             {/* Promotion Checkbox */}
-//             <div className="filter-section">
-//                 <div className="filter-label">Promotion</div>
-//                 <label className="promotion-label">
-//                     <input 
-//                         type="checkbox"
-//                         checked={promotion}
-//                         onChange={(e) => setPromotion(e.target.checked)}
-//                         style={{ marginRight: "0.5rem"}}
-//                     />
-//                     <span>Oui</span>
-//                 </label>
-//             </div>
-
-//             {/* Search Button */}
-//             <button 
-//                 className="filter-button" 
-//                 onClick={() => {
-//                     handleSearch();
-//                     if (isMobile && onClose) onClose();
-//             }}>
-//                 <i className="icon-search" style={{ marginRight: 10 }} />
-//                 Rechercher
-//             </button>
-//         </aside>
-//     );
-// }
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import CustomDropdown from "../customDropDown";
@@ -194,9 +23,18 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
     const [showDropDown, setShowDropDown] = useState(false);
     const [showModelDropDown, setShowModelDropDown] = useState(false);
+    const [showCityDropDown, setShowCityDropDown] = useState(false);
     const [search, setSearch] = useState("");
     const [selectedBrand, setSelectedBrand] = useState("");
     const [modelSearch, setModelSearch] = useState("");
+    const [citySearch, setCitySearch] = useState("");
+    const [selectedCity, setSelectedCity] = useState("");
+    const [departSearch, setDepartSearch] = useState("");
+    const [selectedDepart, setSelectedDepart] = useState("");
+    const [showDepartDropDown, setShowDepartDropDown] = useState(false);
+    const [depotSearch, setDepotSearch] = useState("");
+    const [selectedDepot, setSelectedDepot] = useState("");
+    const [showDepotDropDown, setShowDepotDropDown] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
@@ -235,8 +73,24 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         setShowModelDropDown(false);
     }
 
+
+    // List of cities from car data (hardcoded for now, should match car data)
+    const CityList = [
+        "Casablanca", "Rabat", "Marrakech", "Agadir", "Fès", "Tanger"
+    ];
+
     const filteredOptions = OptionList.filter(car => 
         car.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const filteredCities = CityList.filter(city =>
+        city.toLowerCase().includes(citySearch.toLowerCase())
+    );
+    const filteredDeparts = CityList.filter(city =>
+        city.toLowerCase().includes(departSearch.toLowerCase())
+    );
+    const filteredDepots = CityList.filter(city =>
+        city.toLowerCase().includes(depotSearch.toLowerCase())
     );
 
     // Get models for selected brand
@@ -411,12 +265,10 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         if (showCalendar) {
             document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = 'auto';
         }
-
-        // Cleanup function to restore scroll when component unmounts
         return () => {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = 'auto';
         };
     }, [showCalendar]);
 
@@ -424,15 +276,16 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         const filters = {
             brand: selectedBrand || "",
             model: modelSearch || "",
+            city: localisation === 'same' ? selectedCity || "" : "",
+            depart: localisation === 'different' ? selectedDepart || "" : "",
+            depot: localisation === 'different' ? selectedDepot || "" : "",
             startDate: startDate,
             endDate: endDate,
             promotion: promotion
         };
-        
         // Check if any filters are active
-        const hasActiveFilters = selectedBrand || modelSearch || startDate || endDate || promotion;
+        const hasActiveFilters = selectedBrand || modelSearch || selectedCity || selectedDepart || selectedDepot || startDate || endDate || promotion;
         setFiltersApplied(hasActiveFilters);
-        
         onFiltersChange(filters);
     };
 
@@ -440,17 +293,28 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         setSearch("");
         setSelectedBrand("");
         setModelSearch("");
+        setCitySearch("");
+        setSelectedCity("");
+        setDepartSearch("");
+        setSelectedDepart("");
+        setDepotSearch("");
+        setSelectedDepot("");
         setStartDate(null);
         setEndDate(null);
         setPromotion(false);
         setShowDropDown(false);
         setShowModelDropDown(false);
+        setShowCityDropDown(false);
+        setShowDepartDropDown(false);
+        setShowDepotDropDown(false);
         setFiltersApplied(false);
-        
         // Apply empty filters immediately
         onFiltersChange({
             brand: "",
             model: "",
+            city: "",
+            depart: "",
+            depot: "",
             startDate: null,
             endDate: null,
             promotion: false
@@ -460,19 +324,18 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     return (
         <>
             <aside style={{
-                width: isMobile ? '100%' : '35px',
-                minWidth: isMobile ? 'auto' : '280px',
-                maxWidth: isMobile ? '100%' : '320px',
+                width: isMobile ? '100%' : '300px',
                 height: isMobile ? 'fit-content' : 'fit-content',
                 overflowY: isMobile ? 'auto' : 'visible',
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
                 background: '#fff',
                 marginTop: isMobile ? '0' : '47px',
                 marginLeft: isMobile ? '0' : '20px',
-                padding: '0',
+                padding: '5px',
             }}>
-            {isMobile && (
+            {/* {isMobile && (
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -481,7 +344,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     background: '#fff',
                     borderBottom: '1px solid #e5e7eb',
                 }}>
-                    <h2 style={{ fontSize: '1.125rem', fontWeight: 600 }}>Filtrer les voitures</h2>
+                    <h2 style={{ fontSize: '1.325rem', fontWeight: 600 }}>Filtrer les voitures</h2>
                     <button 
                         onClick={onClose}
                         style={{ color: '#9ca3af', background: 'none', border: 'none', borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', transition: 'color 0.2s' }}
@@ -493,27 +356,27 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         </svg>
                     </button>
                 </div>
-            )}
+            )} */}
 
             {/* Marque Filter */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: isMobile ? 'none' : '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '0' : '-20px' }}>Marque</div>
+            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>Marque</div>
                 <div style={{ position: 'relative' }}>
                     <input 
                         className="filter-input"
                         type="text"
                         placeholder="Ex: Dacia"
-                        style={{ width: '100%', height: '48px', background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: '1rem', outline: 'none', marginBottom: -10, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
+                        style={{ width: '100%', height: '48px', background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: '1rem', outline: 'none', marginBottom: -10, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
                         value={search}
                         onChange={handleChange}
                         onFocus={() => setShowDropDown(true)}
                     />
                     {showDropDown && filteredOptions.length > 0 && (
-                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
+                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: isMobile ? '114%' : '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
                             {filteredOptions.map((car, index) => (
                                 <div
                                     key={index}
-                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 500, width: isMobile ? '85%' : '80%', height: '34px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                     onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                     onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                                     onClick={() => handleOptionSelect(car)}
@@ -535,19 +398,18 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             {/* Modèle Filter - Only show when brand is selected */}
             {selectedBrand && availableModels.length > 0 && (
                 <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Modèle</div>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Modèle</div>
                     <div style={{ position: 'relative' }}>
                         <input 
-                            // className="filter-input"
                             type="text"
                             placeholder="Ex: A3"
-                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '0' : '-35px', fontFamily: 'Roboto, sans-serif' }}
+                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '-35px' : '-35px', fontFamily: 'Roboto, sans-serif' }}
                             value={modelSearch}
                             onChange={handleModelChange}
                             onFocus={() => setShowModelDropDown(true)}
                         />
                         {showModelDropDown && filteredModels.length > 0 && (
-                            <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: '279px' }}>
+                            <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
                                 {filteredModels.map((model, index) => (
                                     <div
                                         key={index}
@@ -573,10 +435,10 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Période Filter (Calendar Trigger) */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', position: 'relative', background: '#fff' }}>
-            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Période</div>
+            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Période</div>
                 <div 
                     className="filter-date"
-                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '0' : '-20px' }}
+                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '-20px' : '-20px', position: 'relative' }}
                     onClick={() => setShowCalendar(!showCalendar)}
                 >
                     <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#16213e' }}>
@@ -598,9 +460,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Pickup / Drop-off Section */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Lieu de dépôt</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Lieu de dépôt</div>
                 <div className="filter-date" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>
+                    <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>
                         <CustomDropdown
                             value={localisation}
                             onChange={setLocalisation}
@@ -610,33 +472,109 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                             ]}
                         />
                     </div>
+                    {/* City dropdown for 'same' location */}
                     {localisation === 'same' && (
-                        <input
-                            className="filter-input"
-                            type="text"
-                            placeholder="Ex: Rabat"
-                            style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '0' : '-30px' }}
-                        />
+                        <div style={{ position: 'relative' }}>
+                            <input
+                                className="filter-input"
+                                type="text"
+                                placeholder="Ex: Rabat"
+                                style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '-30px' : '-30px' }}
+                                value={citySearch}
+                                onChange={e => { setCitySearch(e.target.value); setShowCityDropDown(true); }}
+                                onFocus={() => setShowCityDropDown(true)}
+                            />
+                            {showCityDropDown && filteredCities.length > 0 && (
+                                <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
+                                    {filteredCities.map((city, index) => (
+                                        <div
+                                            key={index}
+                                            style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                            onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                            onClick={() => { setSelectedCity(city); setCitySearch(city); setShowCityDropDown(false); }}
+                                        >
+                                            {city}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                            {showCityDropDown && (
+                                <div 
+                                    style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                    onClick={() => setShowCityDropDown(false)}
+                                ></div>
+                            )}
+                        </div>
                     )}
+                    {/* For 'different' location, keep as is or implement similar dropdowns for both fields if needed */}
                     {localisation === 'different' && (
                         <div style={{ display: 'flex', gap: 12 }}>
-                            <div style={{ flex: 1 }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Départ</div>
+                            <div style={{ flex: 1, position: 'relative' }}>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Départ</div>
                                 <input
                                     className="filter-input"
                                     type="text"
                                     placeholder="Ex: Rabat"
-                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
+                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
+                                    value={departSearch}
+                                    onChange={e => { setDepartSearch(e.target.value); setShowDepartDropDown(true); }}
+                                    onFocus={() => setShowDepartDropDown(true)}
                                 />
+                                {showDepartDropDown && filteredDeparts.length > 0 && (
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '100%' }}>
+                                        {filteredDeparts.map((city, index) => (
+                                            <div
+                                                key={index}
+                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                                onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                onClick={() => { setSelectedDepart(city); setDepartSearch(city); setShowDepartDropDown(false); }}
+                                            >
+                                                {city}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {showDepartDropDown && (
+                                    <div 
+                                        style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                        onClick={() => setShowDepartDropDown(false)}
+                                    ></div>
+                                )}
                             </div>
-                            <div style={{ flex: 1 }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Dépôt</div>
+                            <div style={{ flex: 1, position: 'relative' }}>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Dépôt</div>
                                 <input
                                     className="filter-input"
                                     type="text"
                                     placeholder="Ex: Tanger"
-                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '0' : '-30px' }}
+                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
+                                    value={depotSearch}
+                                    onChange={e => { setDepotSearch(e.target.value); setShowDepotDropDown(true); }}
+                                    onFocus={() => setShowDepotDropDown(true)}
                                 />
+                                {showDepotDropDown && filteredDepots.length > 0 && (
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '100%' }}>
+                                        {filteredDepots.map((city, index) => (
+                                            <div
+                                                key={index}
+                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                                onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                onClick={() => { setSelectedDepot(city); setDepotSearch(city); setShowDepotDropDown(false); }}
+                                            >
+                                                {city}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {showDepotDropDown && (
+                                    <div 
+                                        style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                        onClick={() => setShowDepotDropDown(false)}
+                                    ></div>
+                                )}
                             </div>
                         </div>
                     )}
@@ -644,9 +582,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             </div>
 
             {/* Promotion Filter */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '0' : '-20px' }}>Promotion</div>
-                <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222' }}>
+            <div className="filter-section" style={{ padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Promotion</div>
+                <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222',marginLeft: isMobile ? '-20px' : '-20px' }}>
                     <input 
                         type="checkbox" 
                         checked={promotion}
@@ -706,7 +644,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center', 
-                    zIndex: 9999,
+                    zIndex: 99999,
                     opacity: showCalendar ? 1 : 0,
                     pointerEvents: showCalendar ? 'auto' : 'none',
                     transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
@@ -718,7 +656,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     borderRadius: '16px', 
                     boxShadow: '0 8px 32px rgba(0,0,0,0.18)', 
                     maxWidth: isMobile ? '90vw' : '28rem', 
-                    width: isMobile ? '42vw' : '100%', 
+                    width: isMobile ? '45vw' : '100%', 
                     margin: '0 1rem', 
                     maxHeight: '90vh', 
                     overflow: 'hidden', 

@@ -106,7 +106,7 @@ export default function Location() {
                                     bottom: 0,
                                     right: 0,
                                     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                                    zIndex: 50,
+                                    zIndex: 9999,
                                     opacity: showMobileFilters ? 1 : 0,
                                     pointerEvents: showMobileFilters ? 'auto' : 'none',
                                     transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
@@ -120,10 +120,10 @@ export default function Location() {
                                 top: 0,
                                 left: 0,
                                 bottom: 0,
-                                width: '420px',
+                                width: '395px',
                                 backgroundColor: 'white',
                                 boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-                                zIndex: 60,
+                                zIndex: 99999,
                                 overflowY: 'auto',
                                 height: '100vh',
                                 maxHeight: isMobile ? '100vh' : '85vh',
@@ -132,21 +132,20 @@ export default function Location() {
                                 pointerEvents: showMobileFilters ? 'auto' : 'none',
                                 transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.4s cubic-bezier(0.4,0,0.2,1)'
                             }}>
-                                {/* Close Button */}
                                 <div style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
                                     padding: '1rem',
-                                    borderBottom: '1px solid #e5e7eb'
+                                    // borderBottom: '1px solid #e5e7eb'
                                 }}>
                                     <h3 
                                         style={{
-                                            fontSize: '1.125rem',
+                                            fontSize: '1.325rem',
                                             fontWeight: '600',
                                             margin: 0
                                     }}>
-                                        Filtres
+                                        Filtrer les voitures
                                     </h3>
                                     <button
                                         onClick={() => setShowMobileFilters(false)}
@@ -160,13 +159,10 @@ export default function Location() {
                                             alignItems: 'center',
                                             justifyContent: 'center'
                                         }}
+                                        onMouseEnter={e => e.currentTarget.style.color = '#3e3e3eff'}
+                                        onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
                                     >
-                                        <svg 
-                                            style={{ width: '1.25rem', height: '1.25rem' }}
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            viewBox="0 0 24 24"
-                                        >
+                                        <svg style={{ width: 24, height: 24, }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                         </svg>
                                     </button>
@@ -174,7 +170,7 @@ export default function Location() {
                                 
                                 {/* Filter Content */}
                                 <div style={{
-                                    padding: '1rem'
+                                    padding: '0 1rem'
                                 }}>
                                     <Filters 
                                         onFiltersChange={handleFiltersChange} 

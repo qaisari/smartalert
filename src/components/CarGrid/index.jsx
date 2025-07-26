@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
-import Aos from "aos";
-import "aos/dist/aos.css"; // Import AOS CSS
+import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
+import alternativeImage from "/img/alternativePicture/default_image.png";
 
 export default function CarGrid({ filters = {} }) {
-
-    useEffect(() => {
-        Aos.init({ 
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true,
-            offset: 100
-        });
-    }, []);
 
     // Mock car data with daily pricing and proper image links
     const [allCars] = useState([
@@ -20,313 +12,346 @@ export default function CarGrid({ filters = {} }) {
             brand: "Audi",
             model: "A3",
             image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
-            basePrice: 45,
+            basePrice: 450,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Casablanca"
         },
         {
             id: 2,
             brand: "BMW",
             model: "X3",
             image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=300&h=200&fit=crop",
-            basePrice: 65,
+            basePrice: 650,
             promotion: true,
             year: 2022,
             fuel: "Diesel",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Rabat"
         },
         {
             id: 3,
             brand: "Mercedes",
             model: "C-Class",
             image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=300&h=200&fit=crop",
-            basePrice: 55,
+            basePrice: 550,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Marrakech"
         },
         {
             id: 4,
             brand: "Volkswagen",
             model: "Golf",
             image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&h=200&fit=crop",
-            basePrice: 35,
+            basePrice: 350,
             promotion: true,
             year: 2021,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Agadir"
         },
         {
             id: 5,
             brand: "Peugeot",
             model: "308",
             image: "https://images.unsplash.com/photo-1549924231-f129b911e442?w=300&h=200&fit=crop",
-            basePrice: 40,
+            basePrice: 400,
             promotion: false,
             year: 2023,
             fuel: "Diesel",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Fès"
         },
         {
             id: 6,
             brand: "Fiat",
             model: "500",
             image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&h=200&fit=crop",
-            basePrice: 25,
+            basePrice: 250,
             promotion: false,
             year: 2022,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Tanger"
         },
         {
             id: 7,
             brand: "BMW",
             model: "Series 3",
             image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=200&fit=crop",
-            basePrice: 75,
+            basePrice: 750,
             promotion: true,
             year: 2023,
             fuel: "Diesel",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Casablanca"
         },
         {
             id: 8,
             brand: "Audi",
             model: "A4",
             image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
-            basePrice: 60,
+            basePrice: 600,
             promotion: false,
             year: 2022,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Rabat"
         },
         {
             id: 9,
             brand: "Renault",
             model: "Clio",
             image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=300&h=200&fit=crop",
-            basePrice: 30,
+            basePrice: 300,
             promotion: true,
             year: 2023,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Marrakech"
         },
         {
             id: 10,
             brand: "Toyota",
             model: "Corolla",
             image: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=300&h=200&fit=crop",
-            basePrice: 38,
+            basePrice: 380,
             promotion: false,
             year: 2022,
             fuel: "Hybride",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Agadir"
         },
         {
             id: 11,
             brand: "Opel",
             model: "Astra",
             image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&h=200&fit=crop",
-            basePrice: 42,
+            basePrice: 420,
             promotion: true,
             year: 2021,
             fuel: "Diesel",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Fès"
         },
         {
             id: 12,
             brand: "Ford",
             model: "Focus",
             image: "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=300&h=200&fit=crop",
-            basePrice: 48,
+            basePrice: 480,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Tanger"
         },
         {
             id: 13,
             brand: "Nissan",
             model: "Micra",
             image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=300&h=200&fit=crop",
-            basePrice: 28,
+            basePrice: 280,
             promotion: true,
             year: 2022,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Casablanca"
         },
         {
             id: 14,
             brand: "Hyundai",
             model: "i30",
             image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=300&h=200&fit=crop",
-            basePrice: 36,
+            basePrice: 360,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Rabat"
         },
         {
             id: 15,
             brand: "Kia",
             model: "Rio",
             image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=300&h=200&fit=crop",
-            basePrice: 32,
+            basePrice: 320,
             promotion: true,
             year: 2022,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Marrakech"
         },
         {
             id: 16,
             brand: "Seat",
             model: "Leon",
             image: "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
-            basePrice: 41,
+            basePrice: 410,
             promotion: false,
             year: 2023,
             fuel: "Diesel",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Agadir"
         },
         {
             id: 17,
             brand: "Skoda",
             model: "Octavia",
             image: "https://images.unsplash.com/photo-1549399772-f46aa5edf251?w=300&h=200&fit=crop",
-            basePrice: 44,
+            basePrice: 440,
             promotion: true,
             year: 2022,
             fuel: "Diesel",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Fès"
         },
         {
             id: 18,
             brand: "Citroen",
             model: "C3",
             image: "https://images.unsplash.com/photo-1517026575980-3e1e2dedeab4?w=300&h=200&fit=crop",
-            basePrice: 33,
+            basePrice: 330,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Tanger"
         },
         {
             id: 19,
             brand: "Mazda",
             model: "CX-5",
             image: "https://images.unsplash.com/photo-1606914469633-e70b07c89e8d?w=300&h=200&fit=crop",
-            basePrice: 58,
+            basePrice: 580,
             promotion: true,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Casablanca"
         },
         {
             id: 20,
             brand: "Honda",
             model: "Civic",
             image: "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=300&h=200&fit=crop",
-            basePrice: 46,
+            basePrice: 460,
             promotion: false,
             year: 2022,
             fuel: "Hybride",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Rabat"
         },
         {
             id: 21,
             brand: "Subaru",
             model: "Impreza",
             image: "https://images.unsplash.com/photo-1552519456-076085e36ae0?w=300&h=200&fit=crop",
-            basePrice: 52,
+            basePrice: 520,
             promotion: true,
             year: 2023,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Marrakech"
         },
         {
             id: 22,
             brand: "Mini",
             model: "Cooper",
             image: "https://images.unsplash.com/photo-1544829099-b9a0c5303bea?w=300&h=200&fit=crop",
-            basePrice: 49,
+            basePrice: 490,
             promotion: false,
             year: 2022,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Agadir"
         },
         {
             id: 23,
             brand: "Volvo",
             model: "V40",
             image: "https://images.unsplash.com/photo-1606859937578-7e7aa89fcb20?w=300&h=200&fit=crop",
-            basePrice: 56,
+            basePrice: 560,
             promotion: true,
             year: 2021,
             fuel: "Diesel",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Fès"
         },
         {
             id: 24,
             brand: "Alfa Romeo",
             model: "Giulietta",
             image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
-            basePrice: 51,
+            basePrice: 510,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Tanger"
         },
         {
             id: 25,
             brand: "Dacia",
             model: "Sandero",
             image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
-            basePrice: 22,
+            basePrice: 220,
             promotion: true,
             year: 2022,
             fuel: "Essence",
-            transmission: "Manuelle"
+            transmission: "Manuelle",
+            city: "Casablanca"
         },
         {
             id: 26,
             brand: "Tesla",
             model: "Model 3",
             image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop",
-            basePrice: 85,
+            basePrice: 850,
             promotion: false,
             year: 2023,
             fuel: "Électrique",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Rabat"
         },
         {
             id: 27,
             brand: "Lexus",
             model: "IS",
             image: "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
-            basePrice: 78,
+            basePrice: 780,
             promotion: true,
             year: 2022,
             fuel: "Hybride",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Marrakech"
         },
         {
             id: 28,
             brand: "Jaguar",
             model: "XE",
             image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
-            basePrice: 82,
+            alternativeImage: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+            basePrice: 820,
             promotion: false,
             year: 2023,
             fuel: "Essence",
-            transmission: "Automatique"
+            transmission: "Automatique",
+            city: "Agadir"
         }
     ]);
 
     const [filteredCars, setFilteredCars] = useState(allCars);
     const [currentPage, setCurrentPage] = useState(1);
+    const [showRentedCar, setShowRentedCar] = useState(false);
+    let [rentedCar, setRentedCar] = useState(null);
+    const [hoveredCardId, setHoveredCardId] = useState(null);
+    const [rentHovered, setRentHovered] = useState(false);
     const carsPerPage = 12;
 
     // Calculate daily price based on date and car
@@ -370,6 +395,25 @@ export default function CarGrid({ filters = {} }) {
             );
         }
 
+
+        if (filters.city) {
+            filtered = filtered.filter(car =>
+                car.city && car.city.toLowerCase().includes(filters.city.toLowerCase())
+            );
+        }
+
+        if (filters.depart) {
+            filtered = filtered.filter(car =>
+                car.city && car.city.toLowerCase().includes(filters.depart.toLowerCase())
+            );
+        }
+
+        // if (filters.depot) {
+        //     filtered = filtered.filter(car =>
+        //         car.city && car.city.toLowerCase().includes(filters.depot.toLowerCase())
+        //     );
+        // }
+
         if (filters.promotion) {
             filtered = filtered.filter(car => car.promotion === true);
         }
@@ -397,14 +441,22 @@ export default function CarGrid({ filters = {} }) {
         }
     };
 
+    //Lock/unlock body scroll when rented car opens/closes
+    useEffect(() => {
+        if(showRentedCar) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        // Cleanup function to restore scroll when component unmounts
+        return () => {
+            document.body.style.overflow = 'unset';
+        }
+    }, [showRentedCar]);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [filters]);
-
-    // Refresh AOS when page or filters change
-    useEffect(() => {
-        Aos.refresh();
-    }, [currentPage, filteredCars]);
 
     return (
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -414,11 +466,11 @@ export default function CarGrid({ filters = {} }) {
                 alignItems: 'center',
                 marginBottom: '2rem'
             }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', margin: 0, marginTop: '10px'}}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', marginTop: '10px'}}>
                     {filteredCars.length} voiture(s) disponible(s)
                 </h2>
                 {filters.startDate && filters.endDate && (
-                    <div style={{ color: '#6b7280', fontSize: '0.9rem' }}>
+                    <div style={{ color: '#6b7280', fontSize: '0.9rem', marginRight: '100px', marginTop: '10px' }}>
                         Pour {getDaysCount()} jour(s)
                     </div>
                 )}
@@ -432,29 +484,39 @@ export default function CarGrid({ filters = {} }) {
                 marginTop: '-17px',
                 marginBottom: '3rem',
             }}>
-                {getCurrentPageCars().map((car, index) => {
+                {getCurrentPageCars().map((car) => {
                     const totalPrice = calculateDailyPrice(car, filters.startDate, filters.endDate);
                     const dailyPrice = filters.startDate && filters.endDate ? 
                         Math.round(totalPrice / getDaysCount()) : car.basePrice;
-                    
+                    const isHovered = hoveredCardId === car.id;
+
                     return (
                         <div 
                             key={car.id} 
-                            data-aos="fade"
-                            data-aos-delay={index * 100}
-                            data-aos-duration="600"
                             style={{
                                 background: 'white',
                                 borderRadius: '12px',
                                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                                 overflow: 'hidden',
                                 transition: 'box-shadow 0.2s'
-                            }}>
+                            }}
+                            onMouseEnter={() => setHoveredCardId(car.id)}
+                            onMouseLeave={() => setHoveredCardId(null)}
+                        >
                             <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
                                 <img 
                                     src={car.image} 
                                     alt={`${car.brand} ${car.model}`}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    onError={(e) => {
+                                        e.currentTarget.src = alternativeImage; // Fallback to alternative image
+                                    }}
+                                    style={{ 
+                                        width: '100%', 
+                                        height: '100%', 
+                                        objectFit: 'cover',
+                                        transition: 'transform 0.5s',
+                                        transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+                                    }}
                                 />
                                 {car.promotion && (
                                     <div style={{
@@ -474,14 +536,36 @@ export default function CarGrid({ filters = {} }) {
                             </div>
                             
                             <div style={{ padding: '1.5rem' }}>
-                                <h3 style={{
-                                    fontSize: '1.2rem',
-                                    fontWeight: '600',
-                                    color: '#1f2937',
-                                    marginBottom: '0.5rem'
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
                                 }}>
-                                    {car.brand} {car.model}
-                                </h3>
+                                    <h3 style={{
+                                        fontSize: '1.2rem',
+                                        fontWeight: '600',
+                                        color: '#1f2937',
+                                        marginBottom: '0.5rem'
+                                    }}>
+                                        {car.brand} {car.model}
+                                    </h3>
+                                    <p>
+                                        <svg
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 20 20"
+                                            fill="#f97316"
+                                            style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                        >
+                                            <path
+                                                d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                fill="#f97316"
+                                            />
+                                            <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                        </svg>
+                                        {car.city}
+                                    </p>
+                                </div>
                                 
                                 <div style={{
                                     color: '#6b7280',
@@ -498,30 +582,46 @@ export default function CarGrid({ filters = {} }) {
                                 }}>
                                     <div>
                                         <div style={{
+                                            display: 'flex',
+                                            alignItems: 'baseline',
                                             fontSize: '1.5rem',
                                             fontWeight: 'bold',
                                             color: '#f97316'
                                         }}>
-                                            €{totalPrice}
+                                            {totalPrice}<p style={{ color: '#f97316',  }}>dh</p>
                                         </div>
                                         <div style={{
                                             color: '#6b7280',
                                             fontSize: '0.9rem'
                                         }}>
-                                            €{dailyPrice}/jour
+                                            {dailyPrice}dh/jour
                                         </div>
                                     </div>
                                     
-                                    <button style={{
-                                        background: '#f97316',
-                                        color: 'white',
-                                        border: 'none',
-                                        padding: '10px 20px',
-                                        borderRadius: '6px',
-                                        fontWeight: '500',
-                                        cursor: 'pointer',
-                                        transition: 'background 0.3s'
-                                    }}>
+                                    <button 
+                                        style={{
+                                            background: '#f97316',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '10px 20px',
+                                            borderRadius: '6px',
+                                            fontWeight: '500',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.3s'
+                                        }}
+                                        onMouseOver={(e) => {
+                                            e.currentTarget.style.background = '#e85d04';
+                                            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                                        }}
+                                        onMouseOut={(e) => {
+                                            e.currentTarget.style.background = '#f97316';
+                                            e.currentTarget.style.boxShadow = 'none';
+                                        }}
+                                        onClick={() => {
+                                            setRentedCar({ ...car, totalPrice, dailyPrice });
+                                            setShowRentedCar(true);
+                                        }}
+                                    >
                                         Réserver
                                     </button>
                                 </div>
@@ -633,6 +733,181 @@ export default function CarGrid({ filters = {} }) {
                         Essayez de modifier vos filtres
                     </div>
                 </div>
+            )}
+            {rentedCar && createPortal(
+                <div
+                    style={{
+                        position: 'fixed', 
+                        inset: 0, 
+                        background: 'rgba(0, 0, 25, 0.40)', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        zIndex: 9999,
+                        opacity: showRentedCar ? 1 : 0,
+                        pointerEvents: showRentedCar ? 'auto' : 'none',
+                        transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                    }}
+                    onClick={() => setShowRentedCar(false)}
+                >
+                    <div
+                        key={rentedCar.id}
+                        className="pt-40 pb-30 px-20 sm:px-50 md:px-70 lg:px-100 xl:px-150"
+                        style={{
+                            background: 'white',
+                            width: 'auto',
+                            height: 'auto',
+                            borderRadius: '12px',
+                            boxShadow: '0 0 50px rgba(0,0,0,0.4)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            minWidth: 600,
+                            minHeight: 300,
+                            maxWidth: 600,
+                            position: 'relative',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <section style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: '20px', background: 'white' }}>
+                            <div
+                                style={{ 
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    width: '200px',
+                                    background: 'white',
+                                    flex: 1,
+                                    marginRight: 0,
+                                }}
+                                onMouseEnter={() => setRentHovered(true)}
+                                onMouseLeave={() => setRentHovered(false)}
+                            > 
+                                <div className="col-auto">
+                                    <h1 className="text-30 sm:text-25 fw-600">{rentedCar.brand} {rentedCar.model}</h1>
+                                </div>
+
+                                <div className="col-auto" style={{ marginTop: '10px' }}>
+                                    <div className="text-14">Prix: <label className="text-15 fw-500">{rentedCar.totalPrice}MAD</label></div>
+                                    <div className="text-14">{rentedCar.year} • {rentedCar.fuel} • {rentedCar.transmission}</div>
+                                    <div className="text-14" style={{ marginLeft: '-5px' }}>
+                                        { (filters.depot && filters.depart) ? (
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <svg
+                                                        width="18"
+                                                        height="18"
+                                                        viewBox="0 0 20 20"
+                                                        fill="#f97316"
+                                                        style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                    >
+                                                        <path
+                                                            d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                            fill="#f97316"
+                                                        />
+                                                        <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                    </svg>
+                                                    {filters.depart || rentedCar.city}
+                                                </div>
+                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18px' }}>
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="4" cy="9" r="1.5" fill="#f97316"/>
+                                                        <circle cx="9" cy="9" r="1.5" fill="#f97316"/>
+                                                        <circle cx="14" cy="9" r="1.5" fill="#f97316"/>
+                                                    </svg>
+                                                </span>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <svg
+                                                        width="18"
+                                                        height="18"
+                                                        viewBox="0 0 20 20"
+                                                        fill="#f97316"
+                                                        style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                    >
+                                                        <path
+                                                            d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                            fill="#f97316"
+                                                        />
+                                                        <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                    </svg>
+                                                    {filters.depot || rentedCar.city}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <svg
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 20 20"
+                                                    fill="#f97316"
+                                                    style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                >
+                                                    <path
+                                                        d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                        fill="#f97316"
+                                                    />
+                                                    <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                </svg>
+                                                {rentedCar.city}
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className="text-14">{rentedCar.dailyPrice}dh/jour</div>
+                                </div>
+
+                                <div className="col-auto" style={{ marginTop: 'auto' }}>
+                                    <div className="button h-50 px-24 -dark-2 bg-brown-2 text-white" style={{ marginTop: '27px', cursor: 'pointer'  }}>
+                                        Plus de details
+                                        <div className="icon-arrow-top-right ml-15"/>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div 
+                                style={{ 
+                                    borderRadius: '5px', 
+                                    flex: 1, 
+                                    display: 'flex', 
+                                    alignItems: 'stretch', 
+                                    position: 'relative', 
+                                    overflow: 'hidden' 
+                                }}
+                            >
+                                <img 
+                                    style={{  
+                                        width: '100%', 
+                                        height: '100%', 
+                                        objectFit: 'cover', 
+                                        display: 'block', 
+                                        transition: 'transform 0.5s',
+                                        transform: rentHovered ? 'scale(1)' : 'scale(1.05)'
+                                     }} 
+                                    src={rentedCar.image} 
+                                    alt={`${rentedCar.brand} ${rentedCar.model}`}
+                                    // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                    // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                    onError={(e) => { e.currentTarget.src = alternativeImage; }}
+                                />
+                            </div>
+                        </section>
+                        {rentedCar.promotion && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '13px',
+                                right: '-42px',
+                                rotate: '40deg',
+                                width: '150px',
+                                textAlign: 'center',
+                                background: '#F5C906',
+                                color: 'white',
+                                padding: '4px 15px 4px 15px',
+                                borderRadius: '4px',
+                                fontSize: '0.75rem',
+                                fontWeight: '600'
+                            }}>
+                                PROMO
+                            </div>
+                        )}
+                    </div>
+                </div>, document.body
             )}
         </div>
     );
