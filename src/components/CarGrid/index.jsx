@@ -11,7 +11,11 @@ export default function CarGrid({ filters = {} }) {
             id: 1,
             brand: "Audi",
             model: "A3",
-            image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1511918984145-48de785d4c4e?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 450,
             promotion: false,
             year: 2023,
@@ -23,7 +27,10 @@ export default function CarGrid({ filters = {} }) {
             id: 2,
             brand: "BMW",
             model: "X3",
-            image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1461632830798-3adb3034e4c8?w=300&h=200&fit=crop"
+            ],
             basePrice: 650,
             promotion: true,
             year: 2022,
@@ -35,7 +42,10 @@ export default function CarGrid({ filters = {} }) {
             id: 3,
             brand: "Mercedes",
             model: "C-Class",
-            image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 550,
             promotion: false,
             year: 2023,
@@ -47,7 +57,10 @@ export default function CarGrid({ filters = {} }) {
             id: 4,
             brand: "Volkswagen",
             model: "Golf",
-            image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1461632830798-3adb3034e4c8?w=300&h=200&fit=crop"
+            ],
             basePrice: 350,
             promotion: true,
             year: 2021,
@@ -59,7 +72,10 @@ export default function CarGrid({ filters = {} }) {
             id: 5,
             brand: "Peugeot",
             model: "308",
-            image: "https://images.unsplash.com/photo-1549924231-f129b911e442?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1549924231-f129b911e442?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 400,
             promotion: false,
             year: 2023,
@@ -71,7 +87,10 @@ export default function CarGrid({ filters = {} }) {
             id: 6,
             brand: "Fiat",
             model: "500",
-            image: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 250,
             promotion: false,
             year: 2022,
@@ -83,7 +102,10 @@ export default function CarGrid({ filters = {} }) {
             id: 7,
             brand: "BMW",
             model: "Series 3",
-            image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1461632830798-3adb3034e4c8?w=300&h=200&fit=crop"
+            ],
             basePrice: 750,
             promotion: true,
             year: 2023,
@@ -95,7 +117,10 @@ export default function CarGrid({ filters = {} }) {
             id: 8,
             brand: "Audi",
             model: "A4",
-            image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 600,
             promotion: false,
             year: 2022,
@@ -107,7 +132,10 @@ export default function CarGrid({ filters = {} }) {
             id: 9,
             brand: "Renault",
             model: "Clio",
-            image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 300,
             promotion: true,
             year: 2023,
@@ -119,7 +147,10 @@ export default function CarGrid({ filters = {} }) {
             id: 10,
             brand: "Toyota",
             model: "Corolla",
-            image: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 380,
             promotion: false,
             year: 2022,
@@ -131,7 +162,10 @@ export default function CarGrid({ filters = {} }) {
             id: 11,
             brand: "Opel",
             model: "Astra",
-            image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 420,
             promotion: true,
             year: 2021,
@@ -143,7 +177,10 @@ export default function CarGrid({ filters = {} }) {
             id: 12,
             brand: "Ford",
             model: "Focus",
-            image: "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 480,
             promotion: false,
             year: 2023,
@@ -155,7 +192,10 @@ export default function CarGrid({ filters = {} }) {
             id: 13,
             brand: "Nissan",
             model: "Micra",
-            image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 280,
             promotion: true,
             year: 2022,
@@ -167,7 +207,10 @@ export default function CarGrid({ filters = {} }) {
             id: 14,
             brand: "Hyundai",
             model: "i30",
-            image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 360,
             promotion: false,
             year: 2023,
@@ -179,7 +222,10 @@ export default function CarGrid({ filters = {} }) {
             id: 15,
             brand: "Kia",
             model: "Rio",
-            image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 320,
             promotion: true,
             year: 2022,
@@ -191,7 +237,10 @@ export default function CarGrid({ filters = {} }) {
             id: 16,
             brand: "Seat",
             model: "Leon",
-            image: "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 410,
             promotion: false,
             year: 2023,
@@ -203,7 +252,10 @@ export default function CarGrid({ filters = {} }) {
             id: 17,
             brand: "Skoda",
             model: "Octavia",
-            image: "https://images.unsplash.com/photo-1549399772-f46aa5edf251?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1549399772-f46aa5edf251?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 440,
             promotion: true,
             year: 2022,
@@ -215,7 +267,10 @@ export default function CarGrid({ filters = {} }) {
             id: 18,
             brand: "Citroen",
             model: "C3",
-            image: "https://images.unsplash.com/photo-1517026575980-3e1e2dedeab4?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1517026575980-3e1e2dedeab4?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 330,
             promotion: false,
             year: 2023,
@@ -227,7 +282,10 @@ export default function CarGrid({ filters = {} }) {
             id: 19,
             brand: "Mazda",
             model: "CX-5",
-            image: "https://images.unsplash.com/photo-1606914469633-e70b07c89e8d?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606914469633-e70b07c89e8d?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 580,
             promotion: true,
             year: 2023,
@@ -239,7 +297,10 @@ export default function CarGrid({ filters = {} }) {
             id: 20,
             brand: "Honda",
             model: "Civic",
-            image: "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 460,
             promotion: false,
             year: 2022,
@@ -251,7 +312,10 @@ export default function CarGrid({ filters = {} }) {
             id: 21,
             brand: "Subaru",
             model: "Impreza",
-            image: "https://images.unsplash.com/photo-1552519456-076085e36ae0?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1552519456-076085e36ae0?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 520,
             promotion: true,
             year: 2023,
@@ -263,7 +327,10 @@ export default function CarGrid({ filters = {} }) {
             id: 22,
             brand: "Mini",
             model: "Cooper",
-            image: "https://images.unsplash.com/photo-1544829099-b9a0c5303bea?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1544829099-b9a0c5303bea?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 490,
             promotion: false,
             year: 2022,
@@ -275,7 +342,10 @@ export default function CarGrid({ filters = {} }) {
             id: 23,
             brand: "Volvo",
             model: "V40",
-            image: "https://images.unsplash.com/photo-1606859937578-7e7aa89fcb20?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606859937578-7e7aa89fcb20?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 560,
             promotion: true,
             year: 2021,
@@ -287,7 +357,10 @@ export default function CarGrid({ filters = {} }) {
             id: 24,
             brand: "Alfa Romeo",
             model: "Giulietta",
-            image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 510,
             promotion: false,
             year: 2023,
@@ -299,7 +372,10 @@ export default function CarGrid({ filters = {} }) {
             id: 25,
             brand: "Dacia",
             model: "Sandero",
-            image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 220,
             promotion: true,
             year: 2022,
@@ -311,7 +387,10 @@ export default function CarGrid({ filters = {} }) {
             id: 26,
             brand: "Tesla",
             model: "Model 3",
-            image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 850,
             promotion: false,
             year: 2023,
@@ -323,7 +402,10 @@ export default function CarGrid({ filters = {} }) {
             id: 27,
             brand: "Lexus",
             model: "IS",
-            image: "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1606016159854-8070a8de3ff7?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 780,
             promotion: true,
             year: 2022,
@@ -335,8 +417,10 @@ export default function CarGrid({ filters = {} }) {
             id: 28,
             brand: "Jaguar",
             model: "XE",
-            image: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
-            alternativeImage: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+            images: [
+                "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=300&h=200&fit=crop",
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=300&h=200&fit=crop"
+            ],
             basePrice: 820,
             promotion: false,
             year: 2023,
@@ -351,7 +435,20 @@ export default function CarGrid({ filters = {} }) {
     const [showRentedCar, setShowRentedCar] = useState(false);
     let [rentedCar, setRentedCar] = useState(null);
     const [hoveredCardId, setHoveredCardId] = useState(null);
+    const [hoveredLeftBtnId, setHoveredLeftBtnId] = useState(null);
+    const [hoveredRightBtnId, setHoveredRightBtnId] = useState(null);
+    const [activeImageIndexes, setActiveImageIndexes] = useState({});
+    const [prevImageIndexes, setPrevImageIndexes] = useState({});
+    const [nextImageIndexes, setNextImageIndexes] = useState({});
+    const [slideDirections, setSlideDirections] = useState({});
+    const [animatingCars, setAnimatingCars] = useState({});
     const [rentHovered, setRentHovered] = useState(false);
+    const [modalImageIndex, setModalImageIndex] = useState(0);
+    const [modalLeftBtnHovered, setModalLeftBtnHovered] = useState(false);
+    const [modalRightBtnHovered, setModalRightBtnHovered] = useState(false);
+    const [modalAnimating, setModalAnimating] = useState(false);
+    const [modalSlideDirection, setModalSlideDirection] = useState('');
+    const [modalPrevImageIndex, setModalPrevImageIndex] = useState(null);
     const carsPerPage = 12;
 
     // Calculate daily price based on date and car
@@ -407,12 +504,6 @@ export default function CarGrid({ filters = {} }) {
                 car.city && car.city.toLowerCase().includes(filters.depart.toLowerCase())
             );
         }
-
-        // if (filters.depot) {
-        //     filtered = filtered.filter(car =>
-        //         car.city && car.city.toLowerCase().includes(filters.depot.toLowerCase())
-        //     );
-        // }
 
         if (filters.promotion) {
             filtered = filtered.filter(car => car.promotion === true);
@@ -489,6 +580,20 @@ export default function CarGrid({ filters = {} }) {
                     const dailyPrice = filters.startDate && filters.endDate ? 
                         Math.round(totalPrice / getDaysCount()) : car.basePrice;
                     const isHovered = hoveredCardId === car.id;
+                    const leftBtnIsHovered = hoveredLeftBtnId === car.id;
+                    const rightBtnIsHovered = hoveredRightBtnId === car.id;
+                    const activeImageIndex = activeImageIndexes[car.id] || 0;
+                    const prevImageIndex = typeof prevImageIndexes[car.id] !== 'undefined' ? prevImageIndexes[car.id] : null;
+                    const nextImageIndex = typeof nextImageIndexes[car.id] !== 'undefined' ? nextImageIndexes[car.id] : null;
+                    const slideDirection = slideDirections[car.id] || '';
+                    const isAnimating = animatingCars[car.id] || false;
+
+                    // Ensure each car has at least 3 images by duplicating if needed
+                    const carImages = [...car.images];
+                    while (carImages.length < 3) {
+                        carImages.push(...car.images);
+                    }
+                    carImages.splice(3); // Keep only first 3 images
 
                     return (
                         <div 
@@ -496,34 +601,92 @@ export default function CarGrid({ filters = {} }) {
                             style={{
                                 background: 'white',
                                 borderRadius: '12px',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                boxShadow: isHovered ? '0 2px 15px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.1)',
                                 overflow: 'hidden',
                                 transition: 'box-shadow 0.2s'
                             }}
                             onMouseEnter={() => setHoveredCardId(car.id)}
                             onMouseLeave={() => setHoveredCardId(null)}
                         >
-                            <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
-                                <img 
-                                    src={car.image} 
-                                    alt={`${car.brand} ${car.model}`}
-                                    onError={(e) => {
-                                        e.currentTarget.src = alternativeImage; // Fallback to alternative image
-                                    }}
-                                    style={{ 
-                                        width: '100%', 
-                                        height: '100%', 
-                                        objectFit: 'cover',
-                                        transition: 'transform 0.5s',
-                                        transform: isHovered ? 'scale(1.05)' : 'scale(1)'
-                                    }}
-                                />
+                            <div 
+                                style={{ position: 'relative', height: '200px', overflow: 'hidden' }}
+                            >
+                                <div style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                }}>
+                                    {carImages.map((img, idx) => {
+                                        // Animation logic for proper sliding effect
+                                        let transform = 'translateX(100%)';
+                                        let opacity = 0;
+                                        let zIndex = 0;
+                                        
+                                        if (idx === activeImageIndex) {
+                                            // The currently active/visible image
+                                            transform = 'translateX(0) scale(' + (isHovered ? '1.05' : '1') + ')';
+                                            opacity = 1;
+                                            zIndex = 2;
+                                        } else if (prevImageIndex !== null && idx === prevImageIndex) {
+                                            // The outgoing image during animation
+                                            if (slideDirection === 'left') {
+                                                // LEFT button: old image should slide out to the RIGHT
+                                                transform = 'translateX(100%) scale(1)';
+                                            } else if (slideDirection === 'right') {
+                                                // RIGHT button: old image should slide out to the LEFT
+                                                transform = 'translateX(-100%) scale(1)';
+                                            }
+                                            opacity = 1;
+                                            zIndex = 1;
+                                        
+                                        } else {
+                                            // Hidden images positioning for incoming animation
+                                            if (slideDirection === 'left') {
+                                                // LEFT button: new image comes from the LEFT
+                                                transform = 'translateX(-100%) scale(1)';
+                                            } else if (slideDirection === 'right') {
+                                                // RIGHT button: new image comes from the RIGHT
+                                                transform = 'translateX(100%) scale(1)';
+                                            } else {
+                                                // Default: hide on the right
+                                                transform = leftBtnIsHovered ? 'translateX(-100%) scale(1)' : 'translateX(100%) scale(1)';
+                                            }
+                                            opacity = 0;
+                                            zIndex = 0;
+                                        }
+                                        
+                                        return (
+                                            <img
+                                                key={img}
+                                                src={img}
+                                                alt={`${car.brand} ${car.model}`}
+                                                onError={(e) => {
+                                                    e.currentTarget.src = alternativeImage;
+                                                }}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    transition: 'transform 0.5s ease-in-out',
+                                                    transform,
+                                                    opacity,
+                                                    zIndex,
+                                                }}
+                                            />
+                                        );
+                                    })}
+                                </div>
                                 {car.promotion && (
                                     <div style={{
                                         position: 'absolute',
                                         top: '12px',
                                         left: '-3px',
                                         background: '#F5C906',
+                                        zIndex: 3,
                                         color: 'white',
                                         padding: '4px 8px 4px 15px',
                                         borderRadius: '4px',
@@ -531,6 +694,128 @@ export default function CarGrid({ filters = {} }) {
                                         fontWeight: '600'
                                     }}>
                                         PROMO
+                                    </div>
+                                )}
+                                {/* Fade-in navigation buttons on card hover */}
+                                {isHovered && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        position: 'absolute',
+                                        width: '100%',
+                                        top: '50%',
+                                        left: '0',
+                                        transform: 'translateY(-50%)',
+                                        opacity: isHovered ? 1 : 0,
+                                        transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1)',
+                                        pointerEvents: 'auto',
+                                        zIndex: 3,
+                                    }}>
+                                        <button 
+                                            disabled={isAnimating}
+                                            style={{
+                                                background: leftBtnIsHovered ? '#ffe736ff' : 'white',
+                                                borderRadius: '50%',
+                                                width: '30px',
+                                                height: '30px',
+                                                border: 'none',
+                                                color: leftBtnIsHovered ? '#ffffffff' : '#374151',
+                                                marginLeft: 16,
+                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                transition: 'background 0.3s, color 0.3s'
+                                            }}
+                                            onMouseEnter={() => !isAnimating && setHoveredLeftBtnId(car.id)}
+                                            onMouseLeave={() => setHoveredLeftBtnId(null)}
+                                            onClick={(e) => {
+                                                if (isAnimating) return;
+                                                e.stopPropagation();
+                                                
+                                                // Set animating state
+                                                setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                
+                                                // Set direction and previous image index
+                                                setSlideDirections(prev => ({ ...prev, [car.id]: 'left' }));
+                                                setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                
+                                                // Change to previous image immediately
+                                                setActiveImageIndexes(prev => {
+                                                    const total = carImages.length;
+                                                    const current = activeImageIndex;
+                                                    return {
+                                                        ...prev,
+                                                        [car.id]: (current - 1 + total) % total
+                                                    };
+                                                });
+                                                
+                                                // Clear animation state after animation
+                                                setTimeout(() => {
+                                                    setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                    setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                    setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                }, 1000);
+                                            }}
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </button>
+                                        <button 
+                                            disabled={isAnimating}
+                                            style={{
+                                                background: rightBtnIsHovered ? '#ffe736ff' : 'white',
+                                                borderRadius: '50%',
+                                                width: '30px',
+                                                height: '30px',
+                                                border: 'none',
+                                                color: rightBtnIsHovered ? '#ffffffff' : '#374151',
+                                                marginRight: 16,
+                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                transition: 'background 0.5s, color 0.3s'
+                                            }}
+                                            onMouseEnter={() => !isAnimating && setHoveredRightBtnId(car.id)}
+                                            onMouseLeave={() => setHoveredRightBtnId(null)}
+                                            onClick={(e) => {
+                                                if (isAnimating) return;
+                                                e.stopPropagation();
+                                                
+                                                // Set animating state
+                                                setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                
+                                                // Set direction and previous image index
+                                                setSlideDirections(prev => ({ ...prev, [car.id]: 'right' }));
+                                                setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                
+                                                // Change to next image immediately
+                                                setActiveImageIndexes(prev => {
+                                                    const total = carImages.length;
+                                                    const current = activeImageIndex;
+                                                    return {
+                                                        ...prev,
+                                                        [car.id]: (current + 1) % total
+                                                    };
+                                                });
+                                                
+                                                // Clear animation state after animation
+                                                setTimeout(() => {
+                                                    setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                    setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                    setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                }, 1000);
+                                            }}
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 )}
                             </div>
@@ -620,6 +905,7 @@ export default function CarGrid({ filters = {} }) {
                                         onClick={() => {
                                             setRentedCar({ ...car, totalPrice, dailyPrice });
                                             setShowRentedCar(true);
+                                            setModalImageIndex(0); // Reset modal image index
                                         }}
                                     >
                                         Réserver
@@ -767,8 +1053,12 @@ export default function CarGrid({ filters = {} }) {
                             position: 'relative',
                             overflow: 'hidden',
                         }}
+                        onMouseEnter={() => setRentHovered(true)}
+                        onMouseLeave={() => setRentHovered(false)}
                     >
-                        <section style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: '20px', background: 'white' }}>
+                        <section 
+                            style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: '20px', background: 'white' }}
+                        >
                             <div
                                 style={{ 
                                     display: 'flex',
@@ -778,8 +1068,7 @@ export default function CarGrid({ filters = {} }) {
                                     flex: 1,
                                     marginRight: 0,
                                 }}
-                                onMouseEnter={() => setRentHovered(true)}
-                                onMouseLeave={() => setRentHovered(false)}
+                                
                             > 
                                 <div className="col-auto">
                                     <h1 className="text-30 sm:text-25 fw-600">{rentedCar.brand} {rentedCar.model}</h1>
@@ -842,7 +1131,7 @@ export default function CarGrid({ filters = {} }) {
                                                 >
                                                     <path
                                                         d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
-                                                        fill="#f97316"
+                                                    fill="#f97316"
                                                     />
                                                     <circle cx="10" cy="8" r="2" fill="#f97316" />
                                                 </svg>
@@ -871,21 +1160,166 @@ export default function CarGrid({ filters = {} }) {
                                     overflow: 'hidden' 
                                 }}
                             >
-                                <img 
-                                    style={{  
-                                        width: '100%', 
-                                        height: '100%', 
-                                        objectFit: 'cover', 
-                                        display: 'block', 
-                                        transition: 'transform 0.5s',
-                                        transform: rentHovered ? 'scale(1)' : 'scale(1.05)'
-                                     }} 
-                                    src={rentedCar.image} 
-                                    alt={`${rentedCar.brand} ${rentedCar.model}`}
-                                    // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                                    // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                                    onError={(e) => { e.currentTarget.src = alternativeImage; }}
-                                />
+                                <div style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                }}>
+                                    {rentedCar.images.map((img, idx) => {
+                                        let transform = 'translateX(100%)';
+                                        let opacity = 0;
+                                        let zIndex = 0;
+                                        
+                                        if (idx === modalImageIndex) {
+                                            transform = 'translateX(0) scale(' + (rentHovered ? '1' : '1.05') + ')';
+                                            opacity = 1;
+                                            zIndex = 2;
+                                        } else if (modalPrevImageIndex !== null && idx === modalPrevImageIndex) {
+                                            if (modalSlideDirection === 'left') {
+                                                transform = 'translateX(100%) scale(1)';
+                                            } else if (modalSlideDirection === 'right') {
+                                                transform = 'translateX(-100%) scale(1)';
+                                            }
+                                            opacity = 1;
+                                            zIndex = 1;
+                                        } else {
+                                            if (modalSlideDirection === 'left') {
+                                                transform = 'translateX(-100%) scale(1)';
+                                            } else if (modalSlideDirection === 'right') {
+                                                transform = 'translateX(100%) scale(1)';
+                                            } else {
+                                                transform = modalLeftBtnHovered ? 'translateX(-100%) scale(1)' : 'translateX(100%) scale(1)';
+                                            }
+                                            opacity = 0;
+                                            zIndex = 0;
+                                        }
+                                        
+                                        return (
+                                            <img
+                                                key={img}
+                                                src={img}
+                                                alt={`${rentedCar.brand} ${rentedCar.model}`}
+                                                onError={(e) => { e.currentTarget.src = alternativeImage; }}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                    display: 'block',
+                                                    transition: 'transform 0.5s ease-in-out',
+                                                    transform,
+                                                    opacity,
+                                                    zIndex,
+                                                }}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                                
+                                {/* Navigation buttons for modal */}
+                                {rentedCar.images.length > 1 && (
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        position: 'absolute',
+                                        width: '100%',
+                                        top: '50%',
+                                        left: '0',
+                                        transform: 'translateY(-50%)',
+                                        opacity: 1,
+                                        pointerEvents: 'auto',
+                                        zIndex: 3,
+                                    }}>
+                                        <button 
+                                            disabled={modalAnimating}
+                                            style={{
+                                                background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
+                                                borderRadius: '50%',
+                                                width: '35px',
+                                                height: '35px',
+                                                border: 'none',
+                                                color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
+                                                marginLeft: 16,
+                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                cursor: modalAnimating ? 'default' : 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                transition: 'background 0.3s, color 0.3s'
+                                            }}
+                                            onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
+                                            onMouseLeave={() => setModalLeftBtnHovered(false)}
+                                            onClick={(e) => {
+                                                if (modalAnimating) return;
+                                                e.stopPropagation();
+                                                
+                                                setModalAnimating(true);
+                                                setModalSlideDirection('left');
+                                                setModalPrevImageIndex(modalImageIndex);
+                                                
+                                                const total = rentedCar.images.length;
+                                                const newIndex = (modalImageIndex - 1 + total) % total;
+                                                setModalImageIndex(newIndex);
+                                                
+                                                setTimeout(() => {
+                                                    setModalSlideDirection('');
+                                                    setModalPrevImageIndex(null);
+                                                    setModalAnimating(false);
+                                                }, 500);
+                                            }}
+                                        >
+                                            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </button>
+                                        <button 
+                                            disabled={modalAnimating}
+                                            style={{
+                                                background: modalRightBtnHovered ? '#ffe736ff' : 'white',
+                                                borderRadius: '50%',
+                                                width: '35px',
+                                                height: '35px',
+                                                border: 'none',
+                                                color: modalRightBtnHovered ? '#ffffffff' : '#374151',
+                                                marginRight: 16,
+                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                cursor: modalAnimating ? 'default' : 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                transition: 'background 0.3s, color 0.3s'
+                                            }}
+                                            onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
+                                            onMouseLeave={() => setModalRightBtnHovered(false)}
+                                            onClick={(e) => {
+                                                if (modalAnimating) return;
+                                                e.stopPropagation();
+                                                
+                                                setModalAnimating(true);
+                                                setModalSlideDirection('right');
+                                                setModalPrevImageIndex(modalImageIndex);
+                                                
+                                                const total = rentedCar.images.length;
+                                                const newIndex = (modalImageIndex + 1) % total;
+                                                setModalImageIndex(newIndex);
+                                                
+                                                setTimeout(() => {
+                                                    setModalSlideDirection('');
+                                                    setModalPrevImageIndex(null);
+                                                    setModalAnimating(false);
+                                                }, 500);
+                                            }}
+                                        >
+                                            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </section>
                         {rentedCar.promotion && (
@@ -901,7 +1335,8 @@ export default function CarGrid({ filters = {} }) {
                                 padding: '4px 15px 4px 15px',
                                 borderRadius: '4px',
                                 fontSize: '0.75rem',
-                                fontWeight: '600'
+                                fontWeight: '600',
+                                zIndex: 9
                             }}>
                                 PROMO
                             </div>
