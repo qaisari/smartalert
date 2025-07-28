@@ -722,7 +722,7 @@ export default function CarGrid({ filters = {} }) {
                                         fontSize: '0.75rem',
                                         fontWeight: '600'
                                     }}>
-                                        {t[lang].sideBar.promo.cartitle}
+                                        {t[lang].sideBar.promo.title}
                                     </div>
                                 )}
                                 {/* Fade-in navigation buttons on card hover */}
@@ -1067,7 +1067,7 @@ export default function CarGrid({ filters = {} }) {
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage <= 1}
                             >
-                                <i className="icon-chevron-left text-12" />
+                                <i className="icon-chevron-right text-12" />
                             </button>
                         </div>
 
@@ -1143,7 +1143,7 @@ export default function CarGrid({ filters = {} }) {
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage >= totalPages}
                             >
-                                <i className="icon-chevron-right text-12" />
+                                <i className="icon-chevron-left text-12" />
                             </button>
                         </div>
                     </div>
@@ -1317,19 +1317,19 @@ export default function CarGrid({ filters = {} }) {
                                             zIndex = 2;
                                         } else if (modalPrevImageIndex !== null && idx === modalPrevImageIndex) {
                                             if (modalSlideDirection === 'left') {
-                                                transform = 'translateX(100%) scale(1)';
-                                            } else if (modalSlideDirection === 'right') {
                                                 transform = 'translateX(-100%) scale(1)';
+                                            } else if (modalSlideDirection === 'right') {
+                                                transform = 'translateX(100%) scale(1)';
                                             }
                                             opacity = 1;
                                             zIndex = 1;
                                         } else {
                                             if (modalSlideDirection === 'left') {
-                                                transform = 'translateX(-100%) scale(1)';
-                                            } else if (modalSlideDirection === 'right') {
                                                 transform = 'translateX(100%) scale(1)';
+                                            } else if (modalSlideDirection === 'right') {
+                                                transform = 'translateX(-100%) scale(1)';
                                             } else {
-                                                transform = modalLeftBtnHovered ? 'translateX(100%) scale(1)' : 'translateX(-100%) scale(1)';
+                                                transform = modalLeftBtnHovered ? 'translateX(-100%) scale(1)' : 'translateX(100%) scale(1)';
                                             }
                                             opacity = 0;
                                             zIndex = 0;
@@ -1577,7 +1577,7 @@ export default function CarGrid({ filters = {} }) {
                                 fontWeight: '600',
                                 zIndex: 9
                             }}>
-                                {t[lang].sideBar.promo.cartitle}
+                                {t[lang].sideBar.promo.title}
                             </div>
                         )}
                     </div>
