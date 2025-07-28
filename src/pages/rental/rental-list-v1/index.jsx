@@ -6,6 +6,9 @@ import TopHeaderFilter from "@/components/rental-list/rental-list-v1/TopHeaderFi
 import RentalProperties from "@/components/rental-list/rental-list-v1/RentalProperties";
 import Pagination from "@/components/rental-list/common/Pagination";
 import Sidebar from "@/components/rental-list/rental-list-v1/Sidebar";
+import { useContext } from "react";
+import { LanguageContext } from "@/i18n/LanguageProvider";
+import t from "@/i18n/t";
 
 import MetaComponent from "@/components/common/MetaComponent";
 
@@ -15,6 +18,8 @@ const metadata = {
 };
 
 const RentalListPage1 = () => {
+  const { lang } = useContext(LanguageContext);
+  
   return (
     <>
       <MetaComponent meta={metadata} />
@@ -31,7 +36,7 @@ const RentalListPage1 = () => {
           <div className="row">
             <div className="col-12">
               <div className="text-center">
-                <h1 className="text-30 fw-600">Rental in London</h1>
+                <h1 className="text-30 fw-600">{t[lang].rentals.title}</h1>
               </div>
               {/* End text-center */}
               <MainFilterSearchBox />
@@ -58,7 +63,7 @@ const RentalListPage1 = () => {
               >
                 <div className="offcanvas-header">
                   <h5 className="offcanvas-title" id="offcanvasLabel">
-                    Filter Rentals
+                    {t[lang].rentals.filterTitle}
                   </h5>
                   <button
                     type="button"

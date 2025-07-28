@@ -1,10 +1,16 @@
+import { useContext } from "react";
+import { LanguageContext } from "@/i18n/LanguageProvider";
+import t from "@/i18n/t";
+
 const TopHeaderFilter = () => {
+  const { lang } = useContext(LanguageContext);
+  
   return (
     <>
       <div className="row y-gap-10 items-center justify-between">
         <div className="col-auto">
           <div className="text-18">
-            <span className="fw-500">3,269 properties</span> in Europe
+            <span className="fw-500">3,269 {t[lang].rentals.properties}</span> {t[lang].rentals.inLocation} Europe
           </div>
         </div>
         {/* End .col */}
@@ -14,7 +20,7 @@ const TopHeaderFilter = () => {
             <div className="col-auto">
               <button className="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
                 <i className="icon-up-down text-14 mr-10" />
-                Sort
+                {t[lang].rentals.sort}
               </button>
             </div>
             {/* End .col */}
@@ -26,7 +32,7 @@ const TopHeaderFilter = () => {
                 className="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1"
               >
                 <i className="icon-up-down text-14 mr-10" />
-                Filter
+                {t[lang].rentals.filter}
               </button>
             </div>
             {/* End .col */}

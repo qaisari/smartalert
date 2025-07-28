@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function CustomDropdown({ value, onChange, options }) {
+export default function CustomDropdown({ value, onChange, options, placeholder = "Select..." }) {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
@@ -22,7 +22,7 @@ export default function CustomDropdown({ value, onChange, options }) {
         onClick={() => setOpen(o => !o)}
         type="button"
       >
-        {selected ? selected.label : "Select..."}
+        {selected ? selected.label : placeholder}
         <svg
           className={`arrow-icon${open ? " flipped" : ""}`}
           width="16"

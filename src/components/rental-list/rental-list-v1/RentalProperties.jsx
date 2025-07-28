@@ -1,10 +1,15 @@
 import rentalssData from "../../../data/rentals";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
+import { useContext } from "react";
+import { LanguageContext } from "@/i18n/LanguageProvider";
+import t from "@/i18n/t";
 
 import { Link } from "react-router-dom";
 
 const RentalProperties = () => {
+  const { lang } = useContext(LanguageContext);
+  
   return (
     <>
       {rentalssData.map((item) => (
@@ -58,7 +63,7 @@ const RentalProperties = () => {
                     <div className="row x-gap-5 items-center pt-5">
                       <div className="col-auto">
                         <div className="text-14 text-light-1">
-                          {item?.guest} guests
+                          {item?.guest} {t[lang].rentals.guests}
                         </div>
                       </div>
                       <div className="col-auto">
@@ -66,7 +71,7 @@ const RentalProperties = () => {
                       </div>
                       <div className="col-auto">
                         <div className="text-14 text-light-1">
-                          {item?.bedroom} bedroom
+                          {item?.bedroom} {t[lang].rentals.bedroom}
                         </div>
                       </div>
                       <div className="col-auto">
@@ -74,7 +79,7 @@ const RentalProperties = () => {
                       </div>
                       <div className="col-auto">
                         <div className="text-14 text-light-1">
-                          {item?.bed} bed
+                          {item?.bed} {t[lang].rentals.bed}
                         </div>
                       </div>
                     </div>
@@ -83,22 +88,22 @@ const RentalProperties = () => {
                   <div className="row x-gap-10 y-gap-10 pt-20">
                     <div className="col-auto">
                       <div className="border-light rounded-100 py-5 px-20 text-14 lh-14">
-                        Breakfast
+                        {t[lang].rentals.breakfast}
                       </div>
                     </div>
                     <div className="col-auto">
                       <div className="border-light rounded-100 py-5 px-20 text-14 lh-14">
-                        WiFi
+                        {t[lang].rentals.wifi}
                       </div>
                     </div>
                     <div className="col-auto">
                       <div className="border-light rounded-100 py-5 px-20 text-14 lh-14">
-                        Spa
+                        {t[lang].rentals.spa}
                       </div>
                     </div>
                     <div className="col-auto">
                       <div className="border-light rounded-100 py-5 px-20 text-14 lh-14">
-                        Bar
+                        {t[lang].rentals.bar}
                       </div>
                     </div>
                   </div>
@@ -109,9 +114,9 @@ const RentalProperties = () => {
               <div className="col-md-auto text-right md:text-left">
                 <div className="row x-gap-10 y-gap-10 justify-end items-center md:justify-start">
                   <div className="col-auto">
-                    <div className="text-14 lh-14 fw-500">Exceptional</div>
+                    <div className="text-14 lh-14 fw-500">{t[lang].rentals.exceptional}</div>
                     <div className="text-14 lh-14 text-light-1">
-                      {item.numberOfReviews} reviews
+                      {item.numberOfReviews} {t[lang].rentals.reviews}
                     </div>
                   </div>
                   <div className="col-auto">
@@ -120,14 +125,14 @@ const RentalProperties = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text-14 text-light-1 mt-40 md:mt-20">From</div>
+                <div className="text-14 text-light-1 mt-40 md:mt-20">{t[lang].rentals.from}</div>
                 <div className="text-22 lh-12 fw-600 mt-5">US${item.price}</div>
-                <div className="text-14 text-light-1 mt-5">per adult</div>
+                <div className="text-14 text-light-1 mt-5">{t[lang].rentals.perAdult}</div>
                 <Link
                   to={`/rental-single/${item.id}`}
                   className="button -md -dark-1 bg-blue-1 text-white mt-24"
                 >
-                  View Detail <div className="icon-arrow-top-right ml-15" />
+                  {t[lang].rentals.viewDetail} <div className="icon-arrow-top-right ml-15" />
                 </Link>
               </div>
               {/* End col-md-auto */}

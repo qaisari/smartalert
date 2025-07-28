@@ -19,6 +19,7 @@
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.0",
     "google-map-react": "^2.2.1",
+    "package": "^1.0.1",
     "photoswipe": "^5.4.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

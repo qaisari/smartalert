@@ -1,8 +1,44 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { createPortal } from "react-dom";
 import CustomDropdown from "../customDropDown";
+import { LanguageContext } from "@/i18n/LanguageProvider";
+import t from "@/i18n/t";
 
 export default function Filters({ onFiltersChange, isMobile = false, onClose }) {
+    const { lang } = useContext(LanguageContext);
+    
+    // Add functions to translate months and days
+    const translateMonth = (monthIndex) => {
+        const months = [
+            t[lang].months.january, t[lang].months.february, t[lang].months.march,
+            t[lang].months.april, t[lang].months.may, t[lang].months.june,
+            t[lang].months.july, t[lang].months.august, t[lang].months.september,
+            t[lang].months.october, t[lang].months.november, t[lang].months.december
+        ];
+        return months[monthIndex];
+    };
+
+    const translateDayOfWeek = (dayIndex) => {
+        const days = [
+            t[lang].days.sunday, t[lang].days.monday, t[lang].days.tuesday,
+            t[lang].days.wednesday, t[lang].days.thursday, t[lang].days.friday, t[lang].days.saturday
+        ];
+        return days[dayIndex];
+    };
+
+    // Add function to translate city names
+    const translateCity = (cityKey) => {
+        const cityMap = {
+            'Casablanca': t[lang].cities.casablanca,
+            'Rabat': t[lang].cities.rabat,
+            'Marrakech': t[lang].cities.marrakech,
+            'Agadir': t[lang].cities.agadir,
+            'Fès': t[lang].cities.fes,
+            'Tanger': t[lang].cities.tanger
+        };
+        return cityMap[cityKey] || cityKey;
+    };
+    
     const OptionList = ["Abarth", "Acrea", "AC", "Daewoo", "Acura", "Cadilac", "Skoda", "GAZ", "Lifan"
         , "Geely", "Alfa Romeo", "Aston Martin", "Rolls-Royce", "Audi", "Volkswagen", "Citroen",
         "Suzuki", "Fiat", "Opel", "Mercedes", "BMW", "Peugeot"];
@@ -83,15 +119,21 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         car.toLowerCase().includes(search.toLowerCase())
     );
 
-    const filteredCities = CityList.filter(city =>
-        city.toLowerCase().includes(citySearch.toLowerCase())
-    );
-    const filteredDeparts = CityList.filter(city =>
-        city.toLowerCase().includes(departSearch.toLowerCase())
-    );
-    const filteredDepots = CityList.filter(city =>
-        city.toLowerCase().includes(depotSearch.toLowerCase())
-    );
+    const filteredCities = CityList.filter(city => {
+        const translatedCity = translateCity(city);
+        return city.toLowerCase().includes(citySearch.toLowerCase()) ||
+               translatedCity.toLowerCase().includes(citySearch.toLowerCase());
+    });
+    const filteredDeparts = CityList.filter(city => {
+        const translatedCity = translateCity(city);
+        return city.toLowerCase().includes(departSearch.toLowerCase()) ||
+               translatedCity.toLowerCase().includes(departSearch.toLowerCase());
+    });
+    const filteredDepots = CityList.filter(city => {
+        const translatedCity = translateCity(city);
+        return city.toLowerCase().includes(depotSearch.toLowerCase()) ||
+               translatedCity.toLowerCase().includes(depotSearch.toLowerCase());
+    });
 
     // Get models for selected brand
     const availableModels = selectedBrand && BrandModels[selectedBrand] ? BrandModels[selectedBrand] : [];
@@ -102,7 +144,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
     const formatDate = (date) => {
         if (!date) return "";
-        return new Intl.DateTimeFormat('fr-FR', {
+        const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
+        return new Intl.DateTimeFormat(locale, {
             weekday: 'short',
             day: 'numeric',
             month: 'numeric'
@@ -111,7 +154,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
     const formatDateForDisplay = (date) => {
         if (!date) return "";
-        return new Intl.DateTimeFormat('fr-FR', {
+        const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
+        return new Intl.DateTimeFormat(locale, {
             day: '2-digit',
             month: '2-digit'
         }).format(date);
@@ -119,7 +163,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
     const formatDayName = (date) => {
         if (!date) return "";
-        return new Intl.DateTimeFormat('fr-FR', {
+        const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
+        return new Intl.DateTimeFormat(locale, {
             weekday: 'short'
         }).format(date);
     };
@@ -190,15 +235,18 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
     // --- Fix Calendar Grid Rendering ---
     const renderMonth = (monthDate) => {
-        const monthName = monthDate.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+        const monthName = `${translateMonth(monthDate.getMonth())} ${monthDate.getFullYear()}`;
         const days = getDaysInMonth(monthDate);
-        const weekDays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+        const weekDays = [
+            translateDayOfWeek(1), translateDayOfWeek(2), translateDayOfWeek(3), 
+            translateDayOfWeek(4), translateDayOfWeek(5), translateDayOfWeek(6), translateDayOfWeek(0)
+        ];
         return (
             <div key={monthDate.getTime()} style={{ marginBottom: 24 }}>
-                <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', margin: '1.5rem 0 1rem 0', color: '#16213e', letterSpacing: 0 }}>{monthName.charAt(0).toUpperCase() + monthName.slice(1)}</h4>
+                <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', margin: '1.5rem 0 1rem 0', color: '#16213e', letterSpacing: 0 }}>{monthName}</h4>
                 <div style={{ display: 'grid',  gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, textAlign: 'center', marginBottom: 8 }}>
-                    {weekDays.map(day => (
-                        <div key={day} style={{ fontWeight: 600, color: '#16213e', fontSize: 16, padding: '6px 0' }}>{day}</div>
+                    {weekDays.map((day, index) => (
+                        <div key={index} style={{ fontWeight: 600, color: '#16213e', fontSize: 16, padding: '6px 0' }}>{day}</div>
                     ))}
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8 }}>
@@ -272,19 +320,32 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         };
     }, [showCalendar]);
 
+    // Add function to get original city name from translated name
+    const getOriginalCityName = (translatedName) => {
+        const reverseCityMap = {
+            [t[lang].cities.casablanca]: 'Casablanca',
+            [t[lang].cities.rabat]: 'Rabat',
+            [t[lang].cities.marrakech]: 'Marrakech',
+            [t[lang].cities.agadir]: 'Agadir',
+            [t[lang].cities.fes]: 'Fès',
+            [t[lang].cities.tanger]: 'Tanger'
+        };
+        return reverseCityMap[translatedName] || translatedName;
+    };
+
     const handleSearch = () => {
         const filters = {
             brand: selectedBrand || "",
             model: modelSearch || "",
-            city: localisation === 'same' ? selectedCity || "" : "",
-            depart: localisation === 'different' ? selectedDepart || "" : "",
-            depot: localisation === 'different' ? selectedDepot || "" : "",
+            city: localisation === 'same' ? getOriginalCityName(citySearch) || "" : "",
+            depart: localisation === 'different' ? getOriginalCityName(departSearch) || "" : "",
+            depot: localisation === 'different' ? getOriginalCityName(depotSearch) || "" : "",
             startDate: startDate,
             endDate: endDate,
             promotion: promotion
         };
         // Check if any filters are active
-        const hasActiveFilters = selectedBrand || modelSearch || selectedCity || selectedDepart || selectedDepot || startDate || endDate || promotion;
+        const hasActiveFilters = selectedBrand || modelSearch || citySearch || departSearch || depotSearch || startDate || endDate || promotion;
         setFiltersApplied(hasActiveFilters);
         onFiltersChange(filters);
     };
@@ -360,19 +421,34 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Marque Filter */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>Marque</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.brand.title}</div>
                 <div style={{ position: 'relative' }}>
                     <input 
                         className="filter-input"
                         type="text"
-                        placeholder="Ex: Dacia"
-                        style={{ width: '100%', height: '48px', background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: '1rem', outline: 'none', marginBottom: -10, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
+                        placeholder={t[lang].sideBar.brand.placeholder}
+                        style={{ 
+                            width: '100%', 
+                            height: '48px', 
+                            background: '#ffffffff', 
+                            fontFamily: 'Roboto, sans-serif', 
+                            borderRadius: 6, 
+                            fontSize: '1rem', 
+                            outline: 'none', 
+                            marginBottom: -10, 
+                            fontWeight: 500, 
+                            color: '#222', 
+                            marginTop: -10, 
+                            marginLeft: (lang === "ar") ? -30 : -30, 
+                            padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 0.7rem',
+
+                        }}
                         value={search}
                         onChange={handleChange}
                         onFocus={() => setShowDropDown(true)}
                     />
                     {showDropDown && filteredOptions.length > 0 && (
-                        <div style={{ position: 'absolute', top: '160%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: isMobile ? '114%' : '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
+                        <div style={{ position: 'absolute', top: '160%', left: -25, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: isMobile ? '114%' : '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
                             {filteredOptions.map((car, index) => (
                                 <div
                                     key={index}
@@ -398,18 +474,18 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             {/* Modèle Filter - Only show when brand is selected */}
             {selectedBrand && availableModels.length > 0 && (
                 <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Modèle</div>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.model.title}</div>
                     <div style={{ position: 'relative' }}>
                         <input 
                             type="text"
-                            placeholder="Ex: A3"
-                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '-35px' : '-35px', fontFamily: 'Roboto, sans-serif' }}
+                            placeholder={t[lang].sideBar.model.placeholder}
+                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '-35px' : '-35px', fontFamily: 'Roboto, sans-serif' }}
                             value={modelSearch}
                             onChange={handleModelChange}
                             onFocus={() => setShowModelDropDown(true)}
                         />
                         {showModelDropDown && filteredModels.length > 0 && (
-                            <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
+                            <div style={{ position: 'absolute', top: '140%', left: -23, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
                                 {filteredModels.map((model, index) => (
                                     <div
                                         key={index}
@@ -435,7 +511,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Période Filter (Calendar Trigger) */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', position: 'relative', background: '#fff' }}>
-            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Période</div>
+            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.period}</div>
                 <div 
                     className="filter-date"
                     style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '-20px' : '-20px', position: 'relative' }}
@@ -443,12 +519,12 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                 >
                     <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#16213e' }}>
                         <div style={{ flex: 1, minWidth: 60 }}>
-                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : 'Début'}</div>
+                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : t[lang].rental.startDate}</div>
                             <div style={{ fontSize: '1rem', fontWeight: 600 }}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
                         </div>
                         <div style={{ margin: '0 0.5rem', color: '#9ca3af', fontWeight: 700, fontSize: 18 }}>-</div>
                         <div style={{ flex: 1, minWidth: 60 }}>
-                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : 'Fin'}</div>
+                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : t[lang].rental.endDate}</div>
                             <div style={{ fontSize: '1rem', fontWeight: 600 }}>{endDate ? formatDateForDisplay(endDate) : '--/--'}</div>
                         </div>
                         <svg style={{ width: 20, height: 20, color: '#9ca3af', marginLeft: 12 }} fill="currentColor" viewBox="0 0 20 20">
@@ -460,15 +536,16 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Pickup / Drop-off Section */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Lieu de dépôt</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.dropoffLocation}</div>
                 <div className="filter-date" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>
                         <CustomDropdown
                             value={localisation}
                             onChange={setLocalisation}
+                            placeholder={t[lang].rental.selectPlaceholder}
                             options={[
-                                { value: 'same', label: 'Même lieu' },
-                                { value: 'different', label: 'Lieu différent' }
+                                { value: 'same', label: t[lang].rental.sameLocation },
+                                { value: 'different', label: t[lang].rental.differentLocation }
                             ]}
                         />
                     </div>
@@ -478,23 +555,27 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                             <input
                                 className="filter-input"
                                 type="text"
-                                placeholder="Ex: Rabat"
+                                placeholder={t[lang].rental.cityPlaceholder}
                                 style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '-30px' : '-30px' }}
                                 value={citySearch}
                                 onChange={e => { setCitySearch(e.target.value); setShowCityDropDown(true); }}
                                 onFocus={() => setShowCityDropDown(true)}
                             />
                             {showCityDropDown && filteredCities.length > 0 && (
-                                <div style={{ position: 'absolute', top: '140%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
+                                <div style={{ position: 'absolute', top: '140%', left: -23, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
                                     {filteredCities.map((city, index) => (
                                         <div
                                             key={index}
                                             style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                             onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                            onClick={() => { setSelectedCity(city); setCitySearch(city); setShowCityDropDown(false); }}
+                                            onClick={() => { 
+                                                setSelectedCity(city); 
+                                                setCitySearch(translateCity(city)); 
+                                                setShowCityDropDown(false); 
+                                            }}
                                         >
-                                            {city}
+                                            {translateCity(city)}
                                         </div>
                                     ))}
                                 </div>
@@ -511,27 +592,31 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     {localisation === 'different' && (
                         <div style={{ display: 'flex', gap: 12 }}>
                             <div style={{ flex: 1, position: 'relative' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Départ</div>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.departureLabel}</div>
                                 <input
                                     className="filter-input"
                                     type="text"
-                                    placeholder="Ex: Rabat"
+                                    placeholder={t[lang].rental.cityPlaceholder}
                                     style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
                                     value={departSearch}
                                     onChange={e => { setDepartSearch(e.target.value); setShowDepartDropDown(true); }}
                                     onFocus={() => setShowDepartDropDown(true)}
                                 />
                                 {showDepartDropDown && filteredDeparts.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '100%' }}>
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '150px' : '105%' }}>
                                         {filteredDeparts.map((city, index) => (
                                             <div
                                                 key={index}
                                                 style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                                 onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { setSelectedDepart(city); setDepartSearch(city); setShowDepartDropDown(false); }}
+                                                onClick={() => { 
+                                                    setSelectedDepart(city); 
+                                                    setDepartSearch(translateCity(city)); 
+                                                    setShowDepartDropDown(false); 
+                                                }}
                                             >
-                                                {city}
+                                                {translateCity(city)}
                                             </div>
                                         ))}
                                     </div>
@@ -544,27 +629,31 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                 )}
                             </div>
                             <div style={{ flex: 1, position: 'relative' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Dépôt</div>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.returnLabel}</div>
                                 <input
                                     className="filter-input"
                                     type="text"
-                                    placeholder="Ex: Tanger"
+                                    placeholder={t[lang].rental.cityPlaceholder}
                                     style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
                                     value={depotSearch}
                                     onChange={e => { setDepotSearch(e.target.value); setShowDepotDropDown(true); }}
                                     onFocus={() => setShowDepotDropDown(true)}
                                 />
                                 {showDepotDropDown && filteredDepots.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '100%' }}>
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '150px' : '105%' }}>
                                         {filteredDepots.map((city, index) => (
                                             <div
                                                 key={index}
                                                 style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                                 onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { setSelectedDepot(city); setDepotSearch(city); setShowDepotDropDown(false); }}
+                                                onClick={() => { 
+                                                    setSelectedDepot(city); 
+                                                    setDepotSearch(translateCity(city)); 
+                                                    setShowDepotDropDown(false); 
+                                                }}
                                             >
-                                                {city}
+                                                {translateCity(city)}
                                             </div>
                                         ))}
                                     </div>
@@ -583,7 +672,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
 
             {/* Promotion Filter */}
             <div className="filter-section" style={{ padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>Promotion</div>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.promo.title}</div>
                 <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222',marginLeft: isMobile ? '-20px' : '-20px' }}>
                     <input 
                         type="checkbox" 
@@ -591,7 +680,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         onChange={(e) => setPromotion(e.target.checked)}
                         style={{ marginRight: '0.5rem', accentColor: '#fb923c', width: 18, height: 18 }}
                     />
-                    <span>Oui</span>
+                    <span>{t[lang].sideBar.promo.default}</span>
                 </label>
             </div>
 
@@ -611,7 +700,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     <svg style={{ width: 16, height: 16, marginRight: 8 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    Rechercher
+                    {t[lang].sideBar.search}
                 </button>
                 
                 {/* Show Clear All button only when filters are applied */}
@@ -628,7 +717,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         <svg style={{ width: 16, height: 16, marginRight: 8 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
-                        Effacer tout
+                        {t[lang].rental.reset}
                     </button>
                 )}
             </div>
@@ -690,28 +779,28 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     {/* Month Navigation */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', borderBottom: '1px solid #e5e7eb' }}>
                         <button 
-                            onClick={() => navigateMonth(-1)}
+                            onClick={() => navigateMonth(lang === "ar" ? 1 : -1)}
                             style={{ padding: '0.5rem', borderRadius: '9999px', background: 'none', border: 'none', transition: 'background 0.2s', cursor: 'pointer' }}
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
                             onMouseLeave={e => e.currentTarget.style.background = 'none'}
                         >
                             <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 2 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={lang === "ar" ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
                             </svg>
                         </button>
                         <div style={{ textAlign: 'center' }}>
                             <h4 style={{ fontSize: '1.125rem', fontWeight: 600, textTransform: 'capitalize' }}>
-                                {currentMonth.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}
+                                {translateMonth(currentMonth.getMonth())} {currentMonth.getFullYear()}
                             </h4>
                         </div>
                         <button 
-                            onClick={() => navigateMonth(1)}
+                            onClick={() => navigateMonth(lang === "ar" ? -1 : 1)}
                             style={{ padding: '0.5rem', borderRadius: '9999px', background: 'none', border: 'none', transition: 'background 0.2s', cursor: 'pointer' }}
                             onMouseEnter={e => e.currentTarget.style.background = '#f3f4f6'}
                             onMouseLeave={e => e.currentTarget.style.background = 'none'}
                         >
                             <svg style={{ width: 20, height: 20 }} fill="none" stroke="currentColor" viewBox="0 2 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={lang === "ar" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"} />
                             </svg>
                         </button>
                     </div>
@@ -723,14 +812,14 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     <div style={{ borderTop: '1px solid #e5e7eb', padding: '1rem', background: '#f9fafb' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '0.75rem', background: '#fff' }}>
                             <div style={{ fontSize: '0.95rem', flex: 1 }}>
-                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>Début</label>
+                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>{t[lang].rental.startDate}</label>
                                 <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
                                     {startDate ? `${formatDayName(startDate)} ${formatDateForDisplay(startDate)}` : '--/--'}
                                 </div>
                             </div>
                             <div style={{ width: 1, height: '3rem', background: '#e5e7eb', margin: '0 1rem' }}></div>
                             <div style={{ fontSize: '0.95rem', flex: 1 }}>
-                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>Fin</label>
+                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>{t[lang].rental.endDate}</label>
                                 <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
                                     {endDate ? `${formatDayName(endDate)} ${formatDateForDisplay(endDate)}` : '--/--'}
                                 </div>
@@ -742,7 +831,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                             onMouseLeave={e => e.currentTarget.style.background = '#fb923c'}
                             onClick={() => setShowCalendar(false)}
                         >
-                            Sélectionner ces dates
+                            {t[lang].rental.selectDates}
                         </button>
                     </div>
                 </div>

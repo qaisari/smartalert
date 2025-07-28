@@ -1,9 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { createPortal } from "react-dom";
 import alternativeImage from "/img/alternativePicture/default_image.png";
+import { LanguageContext } from "@/i18n/LanguageProvider";
+import t from "@/i18n/t";
 
 export default function CarGrid({ filters = {} }) {
+    const { lang } = useContext(LanguageContext);
+
+    // Add translation function for car specs
+    const translateCarSpec = (spec) => {
+        const specMap = {
+            'Essence': t[lang].carSpecs.essence,
+            'Diesel': t[lang].carSpecs.diesel,
+            'Électrique': t[lang].carSpecs.electric,
+            'Hybride': t[lang].carSpecs.hybrid,
+            'Manuelle': t[lang].carSpecs.manual,
+            'Automatique': t[lang].carSpecs.automatic
+        };
+        return specMap[spec] || spec;
+    };
+
+    // Add translation function for cities
+    const translateCity = (cityKey) => {
+        const cityMap = {
+            'Casablanca': t[lang].cities.casablanca,
+            'Rabat': t[lang].cities.rabat,
+            'Marrakech': t[lang].cities.marrakech,
+            'Agadir': t[lang].cities.agadir,
+            'Fès': t[lang].cities.fes,
+            'Tanger': t[lang].cities.tanger
+        };
+        return cityMap[cityKey] || cityKey;
+    };
 
     // Mock car data with daily pricing and proper image links
     const [allCars] = useState([
@@ -558,11 +587,11 @@ export default function CarGrid({ filters = {} }) {
                 marginBottom: '2rem'
             }}>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1f2937', marginTop: '10px'}}>
-                    {filteredCars.length} voiture(s) disponible(s)
+                    {filteredCars.length} {t[lang].rentals.carsAvailable}
                 </h2>
                 {filters.startDate && filters.endDate && (
                     <div style={{ color: '#6b7280', fontSize: '0.9rem', marginRight: '100px', marginTop: '10px' }}>
-                        Pour {getDaysCount()} jour(s)
+                        {t[lang].rentals.forDays.replace('{count}', getDaysCount())}
                     </div>
                 )}
             </div>
@@ -693,7 +722,7 @@ export default function CarGrid({ filters = {} }) {
                                         fontSize: '0.75rem',
                                         fontWeight: '600'
                                     }}>
-                                        PROMO
+                                        {t[lang].sideBar.promo.cartitle}
                                     </div>
                                 )}
                                 {/* Fade-in navigation buttons on card hover */}
@@ -712,110 +741,221 @@ export default function CarGrid({ filters = {} }) {
                                         pointerEvents: 'auto',
                                         zIndex: 3,
                                     }}>
-                                        <button 
-                                            disabled={isAnimating}
-                                            style={{
-                                                background: leftBtnIsHovered ? '#ffe736ff' : 'white',
-                                                borderRadius: '50%',
-                                                width: '30px',
-                                                height: '30px',
-                                                border: 'none',
-                                                color: leftBtnIsHovered ? '#ffffffff' : '#374151',
-                                                marginLeft: 16,
-                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                cursor: 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                transition: 'background 0.3s, color 0.3s'
-                                            }}
-                                            onMouseEnter={() => !isAnimating && setHoveredLeftBtnId(car.id)}
-                                            onMouseLeave={() => setHoveredLeftBtnId(null)}
-                                            onClick={(e) => {
-                                                if (isAnimating) return;
-                                                e.stopPropagation();
-                                                
-                                                // Set animating state
-                                                setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
-                                                
-                                                // Set direction and previous image index
-                                                setSlideDirections(prev => ({ ...prev, [car.id]: 'left' }));
-                                                setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
-                                                
-                                                // Change to previous image immediately
-                                                setActiveImageIndexes(prev => {
-                                                    const total = carImages.length;
-                                                    const current = activeImageIndex;
-                                                    return {
-                                                        ...prev,
-                                                        [car.id]: (current - 1 + total) % total
-                                                    };
-                                                });
-                                                
-                                                // Clear animation state after animation
-                                                setTimeout(() => {
-                                                    setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
-                                                    setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
-                                                    setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
-                                                }, 1000);
-                                            }}
-                                        >
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </button>
-                                        <button 
-                                            disabled={isAnimating}
-                                            style={{
-                                                background: rightBtnIsHovered ? '#ffe736ff' : 'white',
-                                                borderRadius: '50%',
-                                                width: '30px',
-                                                height: '30px',
-                                                border: 'none',
-                                                color: rightBtnIsHovered ? '#ffffffff' : '#374151',
-                                                marginRight: 16,
-                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                cursor: 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                transition: 'background 0.5s, color 0.3s'
-                                            }}
-                                            onMouseEnter={() => !isAnimating && setHoveredRightBtnId(car.id)}
-                                            onMouseLeave={() => setHoveredRightBtnId(null)}
-                                            onClick={(e) => {
-                                                if (isAnimating) return;
-                                                e.stopPropagation();
-                                                
-                                                // Set animating state
-                                                setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
-                                                
-                                                // Set direction and previous image index
-                                                setSlideDirections(prev => ({ ...prev, [car.id]: 'right' }));
-                                                setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
-                                                
-                                                // Change to next image immediately
-                                                setActiveImageIndexes(prev => {
-                                                    const total = carImages.length;
-                                                    const current = activeImageIndex;
-                                                    return {
-                                                        ...prev,
-                                                        [car.id]: (current + 1) % total
-                                                    };
-                                                });
-                                                
-                                                // Clear animation state after animation
-                                                setTimeout(() => {
-                                                    setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
-                                                    setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
-                                                    setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
-                                                }, 1000);
-                                            }}
-                                        >
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </button>
+                                        { (lang === 'ar') ? (
+                                            <>
+                                                <button 
+                                                    disabled={isAnimating}
+                                                    style={{
+                                                        background: rightBtnIsHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '30px',
+                                                        height: '30px',
+                                                        border: 'none',
+                                                        color: rightBtnIsHovered ? '#ffffffff' : '#374151',
+                                                        marginRight: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.5s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !isAnimating && setHoveredRightBtnId(car.id)}
+                                                    onMouseLeave={() => setHoveredRightBtnId(null)}
+                                                    onClick={(e) => {
+                                                        if (isAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        // Set animating state
+                                                        setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                        
+                                                        // Set direction and previous image index
+                                                        setSlideDirections(prev => ({ ...prev, [car.id]: 'right' }));
+                                                        setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                        
+                                                        // Change to next image immediately
+                                                        setActiveImageIndexes(prev => {
+                                                            const total = carImages.length;
+                                                            const current = activeImageIndex;
+                                                            return {
+                                                                ...prev,
+                                                                [car.id]: (current + 1) % total
+                                                            };
+                                                        });
+                                                        
+                                                        // Clear animation state after animation
+                                                        setTimeout(() => {
+                                                            setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                            setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                            setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                        }, 1000);
+                                                    }}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    disabled={isAnimating}
+                                                    style={{
+                                                        background: leftBtnIsHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '30px',
+                                                        height: '30px',
+                                                        border: 'none',
+                                                        color: leftBtnIsHovered ? '#ffffffff' : '#374151',
+                                                        marginLeft: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !isAnimating && setHoveredLeftBtnId(car.id)}
+                                                    onMouseLeave={() => setHoveredLeftBtnId(null)}
+                                                    onClick={(e) => {
+                                                        if (isAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        // Set animating state
+                                                        setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                        
+                                                        // Set direction and previous image index
+                                                        setSlideDirections(prev => ({ ...prev, [car.id]: 'left' }));
+                                                        setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                        
+                                                        // Change to previous image immediately
+                                                        setActiveImageIndexes(prev => {
+                                                            const total = carImages.length;
+                                                            const current = activeImageIndex;
+                                                            return {
+                                                                ...prev,
+                                                                [car.id]: (current - 1 + total) % total
+                                                            };
+                                                        });
+                                                        
+                                                        // Clear animation state after animation
+                                                        setTimeout(() => {
+                                                            setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                            setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                            setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                        }, 1000);
+                                                    }}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </>
+                                        ): (
+                                            <>
+                                                <button 
+                                                    disabled={isAnimating}
+                                                    style={{
+                                                        background: leftBtnIsHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '30px',
+                                                        height: '30px',
+                                                        border: 'none',
+                                                        color: leftBtnIsHovered ? '#ffffffff' : '#374151',
+                                                        marginLeft: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !isAnimating && setHoveredLeftBtnId(car.id)}
+                                                    onMouseLeave={() => setHoveredLeftBtnId(null)}
+                                                    onClick={(e) => {
+                                                        if (isAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        // Set animating state
+                                                        setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                        
+                                                        // Set direction and previous image index
+                                                        setSlideDirections(prev => ({ ...prev, [car.id]: 'left' }));
+                                                        setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                        
+                                                        // Change to previous image immediately
+                                                        setActiveImageIndexes(prev => {
+                                                            const total = carImages.length;
+                                                            const current = activeImageIndex;
+                                                            return {
+                                                                ...prev,
+                                                                [car.id]: (current - 1 + total) % total
+                                                            };
+                                                        });
+                                                        
+                                                        // Clear animation state after animation
+                                                        setTimeout(() => {
+                                                            setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                            setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                            setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                        }, 1000);
+                                                    }}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                                <button 
+                                                    disabled={isAnimating}
+                                                    style={{
+                                                        background: rightBtnIsHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '30px',
+                                                        height: '30px',
+                                                        border: 'none',
+                                                        color: rightBtnIsHovered ? '#ffffffff' : '#374151',
+                                                        marginRight: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.5s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !isAnimating && setHoveredRightBtnId(car.id)}
+                                                    onMouseLeave={() => setHoveredRightBtnId(null)}
+                                                    onClick={(e) => {
+                                                        if (isAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        // Set animating state
+                                                        setAnimatingCars(prev => ({ ...prev, [car.id]: true }));
+                                                        
+                                                        // Set direction and previous image index
+                                                        setSlideDirections(prev => ({ ...prev, [car.id]: 'right' }));
+                                                        setPrevImageIndexes(prev => ({ ...prev, [car.id]: activeImageIndex }));
+                                                        
+                                                        // Change to next image immediately
+                                                        setActiveImageIndexes(prev => {
+                                                            const total = carImages.length;
+                                                            const current = activeImageIndex;
+                                                            return {
+                                                                ...prev,
+                                                                [car.id]: (current + 1) % total
+                                                            };
+                                                        });
+                                                        
+                                                        // Clear animation state after animation
+                                                        setTimeout(() => {
+                                                            setSlideDirections(prev => ({ ...prev, [car.id]: '' }));
+                                                            setPrevImageIndexes(prev => ({ ...prev, [car.id]: null }));
+                                                            setAnimatingCars(prev => ({ ...prev, [car.id]: false }));
+                                                        }, 1000);
+                                                    }}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -848,7 +988,7 @@ export default function CarGrid({ filters = {} }) {
                                             />
                                             <circle cx="10" cy="8" r="2" fill="#f97316" />
                                         </svg>
-                                        {car.city}
+                                        {translateCity(car.city)}
                                     </p>
                                 </div>
                                 
@@ -857,7 +997,7 @@ export default function CarGrid({ filters = {} }) {
                                     fontSize: '0.9rem',
                                     marginBottom: '1rem'
                                 }}>
-                                    {car.year} • {car.fuel} • {car.transmission}
+                                    {car.year} • {translateCarSpec(car.fuel)} • {translateCarSpec(car.transmission)}
                                 </div>
                                 
                                 <div style={{
@@ -873,13 +1013,13 @@ export default function CarGrid({ filters = {} }) {
                                             fontWeight: 'bold',
                                             color: '#f97316'
                                         }}>
-                                            {totalPrice}<p style={{ color: '#f97316',  }}>dh</p>
+                                            {totalPrice}<p style={{ color: '#f97316',  }}>{t[lang].rentals.currency}</p>
                                         </div>
                                         <div style={{
                                             color: '#6b7280',
                                             fontSize: '0.9rem'
                                         }}>
-                                            {dailyPrice}dh/jour
+                                            {dailyPrice}{t[lang].rentals.currency}{t[lang].rentals.perDayShort}
                                         </div>
                                     </div>
                                     
@@ -908,7 +1048,7 @@ export default function CarGrid({ filters = {} }) {
                                             setModalImageIndex(0); // Reset modal image index
                                         }}
                                     >
-                                        Réserver
+                                        {t[lang].rentals.reserve}
                                     </button>
                                 </div>
                             </div>
@@ -992,7 +1132,7 @@ export default function CarGrid({ filters = {} }) {
 
                             <div className="text-center mt-30 md:mt-10">
                                 <div className="text-14 text-light-1">
-                                    {((currentPage - 1) * carsPerPage) + 1} – {Math.min(currentPage * carsPerPage, filteredCars.length)} of {filteredCars.length} voitures trouvées
+                                    {((currentPage - 1) * carsPerPage) + 1} – {Math.min(currentPage * carsPerPage, filteredCars.length)} of {filteredCars.length} {t[lang].rentals.carsFound}
                                 </div>
                             </div>
                         </div>
@@ -1013,10 +1153,10 @@ export default function CarGrid({ filters = {} }) {
             {filteredCars.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '3rem' }}>
                     <div style={{ fontSize: '1.2rem', color: '#6b7280', marginBottom: '0.5rem' }}>
-                        Aucune voiture trouvée avec ces critères
+                        {t[lang].rentals.noCarsFound}
                     </div>
                     <div style={{ color: '#9ca3af', fontSize: '0.9rem' }}>
-                        Essayez de modifier vos filtres
+                        {t[lang].rentals.tryModifyFilters}
                     </div>
                 </div>
             )}
@@ -1075,8 +1215,8 @@ export default function CarGrid({ filters = {} }) {
                                 </div>
 
                                 <div className="col-auto" style={{ marginTop: '10px' }}>
-                                    <div className="text-14">Prix: <label className="text-15 fw-500">{rentedCar.totalPrice}MAD</label></div>
-                                    <div className="text-14">{rentedCar.year} • {rentedCar.fuel} • {rentedCar.transmission}</div>
+                                    <div className="text-14">{t[lang].rentals.price}: <label className="text-15 fw-500">{rentedCar.totalPrice} {t[lang].rentals.currency}</label></div>
+                                    <div className="text-14">{rentedCar.year} • {translateCarSpec(rentedCar.fuel)} • {translateCarSpec(rentedCar.transmission)}</div>
                                     <div className="text-14" style={{ marginLeft: '-5px' }}>
                                         { (filters.depot && filters.depart) ? (
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1117,7 +1257,7 @@ export default function CarGrid({ filters = {} }) {
                                                         />
                                                         <circle cx="10" cy="8" r="2" fill="#f97316" />
                                                     </svg>
-                                                    {filters.depot || rentedCar.city}
+                                                    {translateCity(filters.depot || rentedCar.city)}
                                                 </div>
                                             </div>
                                         ) : (
@@ -1135,16 +1275,16 @@ export default function CarGrid({ filters = {} }) {
                                                     />
                                                     <circle cx="10" cy="8" r="2" fill="#f97316" />
                                                 </svg>
-                                                {rentedCar.city}
+                                                {translateCity(rentedCar.city)}
                                             </>
                                         )}
                                     </div>
-                                    <div className="text-14">{rentedCar.dailyPrice}dh/jour</div>
+                                    <div className="text-14">{rentedCar.dailyPrice}{t[lang].rentals.currency}{t[lang].rentals.perDayShort}</div>
                                 </div>
 
                                 <div className="col-auto" style={{ marginTop: 'auto' }}>
                                     <div className="button h-50 px-24 -dark-2 bg-brown-2 text-white" style={{ marginTop: '27px', cursor: 'pointer'  }}>
-                                        Plus de details
+                                        {t[lang].rentals.moreDetails}
                                         <div className="icon-arrow-top-right ml-15"/>
                                     </div>
                                 </div>
@@ -1189,7 +1329,7 @@ export default function CarGrid({ filters = {} }) {
                                             } else if (modalSlideDirection === 'right') {
                                                 transform = 'translateX(100%) scale(1)';
                                             } else {
-                                                transform = modalLeftBtnHovered ? 'translateX(-100%) scale(1)' : 'translateX(100%) scale(1)';
+                                                transform = modalLeftBtnHovered ? 'translateX(100%) scale(1)' : 'translateX(-100%) scale(1)';
                                             }
                                             opacity = 0;
                                             zIndex = 0;
@@ -1234,90 +1374,189 @@ export default function CarGrid({ filters = {} }) {
                                         pointerEvents: 'auto',
                                         zIndex: 3,
                                     }}>
-                                        <button 
-                                            disabled={modalAnimating}
-                                            style={{
-                                                background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
-                                                borderRadius: '50%',
-                                                width: '35px',
-                                                height: '35px',
-                                                border: 'none',
-                                                color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
-                                                marginLeft: 16,
-                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                cursor: modalAnimating ? 'default' : 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                transition: 'background 0.3s, color 0.3s'
-                                            }}
-                                            onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
-                                            onMouseLeave={() => setModalLeftBtnHovered(false)}
-                                            onClick={(e) => {
-                                                if (modalAnimating) return;
-                                                e.stopPropagation();
-                                                
-                                                setModalAnimating(true);
-                                                setModalSlideDirection('left');
-                                                setModalPrevImageIndex(modalImageIndex);
-                                                
-                                                const total = rentedCar.images.length;
-                                                const newIndex = (modalImageIndex - 1 + total) % total;
-                                                setModalImageIndex(newIndex);
-                                                
-                                                setTimeout(() => {
-                                                    setModalSlideDirection('');
-                                                    setModalPrevImageIndex(null);
-                                                    setModalAnimating(false);
-                                                }, 500);
-                                            }}
-                                        >
-                                            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </button>
-                                        <button 
-                                            disabled={modalAnimating}
-                                            style={{
-                                                background: modalRightBtnHovered ? '#ffe736ff' : 'white',
-                                                borderRadius: '50%',
-                                                width: '35px',
-                                                height: '35px',
-                                                border: 'none',
-                                                color: modalRightBtnHovered ? '#ffffffff' : '#374151',
-                                                marginRight: 16,
-                                                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                cursor: modalAnimating ? 'default' : 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                transition: 'background 0.3s, color 0.3s'
-                                            }}
-                                            onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
-                                            onMouseLeave={() => setModalRightBtnHovered(false)}
-                                            onClick={(e) => {
-                                                if (modalAnimating) return;
-                                                e.stopPropagation();
-                                                
-                                                setModalAnimating(true);
-                                                setModalSlideDirection('right');
-                                                setModalPrevImageIndex(modalImageIndex);
-                                                
-                                                const total = rentedCar.images.length;
-                                                const newIndex = (modalImageIndex + 1) % total;
-                                                setModalImageIndex(newIndex);
-                                                
-                                                setTimeout(() => {
-                                                    setModalSlideDirection('');
-                                                    setModalPrevImageIndex(null);
-                                                    setModalAnimating(false);
-                                                }, 500);
-                                            }}
-                                        >
-                                            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                            </svg>
-                                        </button>
+                                        {(lang === 'ar') ? (
+                                            <>
+                                                <button 
+                                                    disabled={modalAnimating}
+                                                    style={{
+                                                        background: modalRightBtnHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '35px',
+                                                        height: '35px',
+                                                        border: 'none',
+                                                        color: modalRightBtnHovered ? '#ffffffff' : '#374151',
+                                                        marginRight: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: modalAnimating ? 'default' : 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
+                                                    onMouseLeave={() => setModalRightBtnHovered(false)}
+                                                    onClick={(e) => {
+                                                        if (modalAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        setModalAnimating(true);
+                                                        setModalSlideDirection(lang === "ar" ? 'left' : 'right');
+                                                        setModalPrevImageIndex(modalImageIndex);
+                                                        
+                                                        const total = rentedCar.images.length;
+                                                        const newIndex = lang === "ar" ? 
+                                                            (modalImageIndex - 1 + total) % total : 
+                                                            (modalImageIndex + 1) % total;
+                                                        setModalImageIndex(newIndex);
+                                                        
+                                                        setTimeout(() => {
+                                                            setModalSlideDirection('');
+                                                            setModalPrevImageIndex(null);
+                                                            setModalAnimating(false);
+                                                        }, 500);
+                                                    }}
+                                                >
+                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                                <button 
+                                                    disabled={modalAnimating}
+                                                    style={{
+                                                        background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '35px',
+                                                        height: '35px',
+                                                        border: 'none',
+                                                        color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
+                                                        marginLeft: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: modalAnimating ? 'default' : 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
+                                                    onMouseLeave={() => setModalLeftBtnHovered(false)}
+                                                    onClick={(e) => {
+                                                        if (modalAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        setModalAnimating(true);
+                                                        setModalSlideDirection(lang === "ar" ? 'right' : 'left');
+                                                        setModalPrevImageIndex(modalImageIndex);
+                                                        
+                                                        const total = rentedCar.images.length;
+                                                        const newIndex = lang === "ar" ? 
+                                                            (modalImageIndex + 1) % total : 
+                                                            (modalImageIndex - 1 + total) % total;
+                                                        setModalImageIndex(newIndex);
+                                                        
+                                                        setTimeout(() => {
+                                                            setModalSlideDirection('');
+                                                            setModalPrevImageIndex(null);
+                                                            setModalAnimating(false);
+                                                        }, 500);
+                                                    }}
+                                                >
+                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d= "M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button 
+                                                    disabled={modalAnimating}
+                                                    style={{
+                                                        background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '35px',
+                                                        height: '35px',
+                                                        border: 'none',
+                                                        color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
+                                                        marginLeft: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: modalAnimating ? 'default' : 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
+                                                    onMouseLeave={() => setModalLeftBtnHovered(false)}
+                                                    onClick={(e) => {
+                                                        if (modalAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        setModalAnimating(true);
+                                                        setModalSlideDirection(lang === "ar" ? 'right' : 'left');
+                                                        setModalPrevImageIndex(modalImageIndex);
+                                                        
+                                                        const total = rentedCar.images.length;
+                                                        const newIndex = lang === "ar" ? 
+                                                            (modalImageIndex + 1) % total : 
+                                                            (modalImageIndex - 1 + total) % total;
+                                                        setModalImageIndex(newIndex);
+                                                        
+                                                        setTimeout(() => {
+                                                            setModalSlideDirection('');
+                                                            setModalPrevImageIndex(null);
+                                                            setModalAnimating(false);
+                                                        }, 500);
+                                                    }}
+                                                >
+                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d={lang === "ar" ? "M5.5 12.5L10 8L5.5 3.5" : "M10.5 3.5L6 8L10.5 12.5"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                                <button 
+                                                    disabled={modalAnimating}
+                                                    style={{
+                                                        background: modalRightBtnHovered ? '#ffe736ff' : 'white',
+                                                        borderRadius: '50%',
+                                                        width: '35px',
+                                                        height: '35px',
+                                                        border: 'none',
+                                                        color: modalRightBtnHovered ? '#ffffffff' : '#374151',
+                                                        marginRight: 16,
+                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                        cursor: modalAnimating ? 'default' : 'pointer',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        transition: 'background 0.3s, color 0.3s'
+                                                    }}
+                                                    onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
+                                                    onMouseLeave={() => setModalRightBtnHovered(false)}
+                                                    onClick={(e) => {
+                                                        if (modalAnimating) return;
+                                                        e.stopPropagation();
+                                                        
+                                                        setModalAnimating(true);
+                                                        setModalSlideDirection(lang === "ar" ? 'left' : 'right');
+                                                        setModalPrevImageIndex(modalImageIndex);
+                                                        
+                                                        const total = rentedCar.images.length;
+                                                        const newIndex = lang === "ar" ? 
+                                                            (modalImageIndex - 1 + total) % total : 
+                                                            (modalImageIndex + 1) % total;
+                                                        setModalImageIndex(newIndex);
+                                                        
+                                                        setTimeout(() => {
+                                                            setModalSlideDirection('');
+                                                            setModalPrevImageIndex(null);
+                                                            setModalAnimating(false);
+                                                        }, 500);
+                                                    }}
+                                                >
+                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d={lang === "ar" ? "M5.5 12.5L10 8L5.5 3.5" : "M10.5 3.5L6 8L10.5 12.5"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -1326,8 +1565,8 @@ export default function CarGrid({ filters = {} }) {
                             <div style={{
                                 position: 'absolute',
                                 top: '13px',
-                                right: '-42px',
-                                rotate: '40deg',
+                                [lang === "ar" ? 'left' : 'right']: '-42px',
+                                transform: `rotate(${lang === "ar" ? '-40deg' : '40deg'})`,
                                 width: '150px',
                                 textAlign: 'center',
                                 background: '#F5C906',
@@ -1338,7 +1577,7 @@ export default function CarGrid({ filters = {} }) {
                                 fontWeight: '600',
                                 zIndex: 9
                             }}>
-                                PROMO
+                                {t[lang].sideBar.promo.cartitle}
                             </div>
                         )}
                     </div>
