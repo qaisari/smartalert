@@ -722,7 +722,7 @@ export default function CarGrid({ filters = {} }) {
                                         fontSize: '0.75rem',
                                         fontWeight: '600'
                                     }}>
-                                        {t[lang].sideBar.promo.title}
+                                        {t[lang].sideBar.promo.cartitle}
                                     </div>
                                 )}
                                 {/* Fade-in navigation buttons on card hover */}
@@ -1577,7 +1577,7 @@ export default function CarGrid({ filters = {} }) {
                                 fontWeight: '600',
                                 zIndex: 9
                             }}>
-                                {t[lang].sideBar.promo.title}
+                                {t[lang].sideBar.promo.cartitle}
                             </div>
                         )}
                     </div>
