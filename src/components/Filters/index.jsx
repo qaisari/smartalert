@@ -119,21 +119,15 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         car.toLowerCase().includes(search.toLowerCase())
     );
 
-    const filteredCities = CityList.filter(city => {
-        const translatedCity = translateCity(city);
-        return city.toLowerCase().includes(citySearch.toLowerCase()) ||
-               translatedCity.toLowerCase().includes(citySearch.toLowerCase());
-    });
-    const filteredDeparts = CityList.filter(city => {
-        const translatedCity = translateCity(city);
-        return city.toLowerCase().includes(departSearch.toLowerCase()) ||
-               translatedCity.toLowerCase().includes(departSearch.toLowerCase());
-    });
-    const filteredDepots = CityList.filter(city => {
-        const translatedCity = translateCity(city);
-        return city.toLowerCase().includes(depotSearch.toLowerCase()) ||
-               translatedCity.toLowerCase().includes(depotSearch.toLowerCase());
-    });
+    const filteredCities = CityList.filter(city =>
+        city.toLowerCase().includes(citySearch.toLowerCase())
+    );
+    const filteredDeparts = CityList.filter(city =>
+        city.toLowerCase().includes(departSearch.toLowerCase())
+    );
+    const filteredDepots = CityList.filter(city =>
+        city.toLowerCase().includes(depotSearch.toLowerCase())
+    );
 
     // Get models for selected brand
     const availableModels = selectedBrand && BrandModels[selectedBrand] ? BrandModels[selectedBrand] : [];
@@ -320,32 +314,19 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         };
     }, [showCalendar]);
 
-    // Add function to get original city name from translated name
-    const getOriginalCityName = (translatedName) => {
-        const reverseCityMap = {
-            [t[lang].cities.casablanca]: 'Casablanca',
-            [t[lang].cities.rabat]: 'Rabat',
-            [t[lang].cities.marrakech]: 'Marrakech',
-            [t[lang].cities.agadir]: 'Agadir',
-            [t[lang].cities.fes]: 'Fès',
-            [t[lang].cities.tanger]: 'Tanger'
-        };
-        return reverseCityMap[translatedName] || translatedName;
-    };
-
     const handleSearch = () => {
         const filters = {
             brand: selectedBrand || "",
             model: modelSearch || "",
-            city: localisation === 'same' ? getOriginalCityName(citySearch) || "" : "",
-            depart: localisation === 'different' ? getOriginalCityName(departSearch) || "" : "",
-            depot: localisation === 'different' ? getOriginalCityName(depotSearch) || "" : "",
+            city: localisation === 'same' ? selectedCity || "" : "",
+            depart: localisation === 'different' ? selectedDepart || "" : "",
+            depot: localisation === 'different' ? selectedDepot || "" : "",
             startDate: startDate,
             endDate: endDate,
             promotion: promotion
         };
         // Check if any filters are active
-        const hasActiveFilters = selectedBrand || modelSearch || citySearch || departSearch || depotSearch || startDate || endDate || promotion;
+        const hasActiveFilters = selectedBrand || modelSearch || selectedCity || selectedDepart || selectedDepot || startDate || endDate || promotion;
         setFiltersApplied(hasActiveFilters);
         onFiltersChange(filters);
     };
@@ -569,11 +550,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                             style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                             onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                            onClick={() => { 
-                                                setSelectedCity(city); 
-                                                setCitySearch(translateCity(city)); 
-                                                setShowCityDropDown(false); 
-                                            }}
+                                            onClick={() => { setSelectedCity(city); setCitySearch(city); setShowCityDropDown(false); }}
                                         >
                                             {translateCity(city)}
                                         </div>
@@ -610,11 +587,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                                 style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                                 onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { 
-                                                    setSelectedDepart(city); 
-                                                    setDepartSearch(translateCity(city)); 
-                                                    setShowDepartDropDown(false); 
-                                                }}
+                                                onClick={() => { setSelectedDepart(city); setDepartSearch(city); setShowDepartDropDown(false); }}
                                             >
                                                 {translateCity(city)}
                                             </div>
@@ -647,11 +620,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                                 style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                                 onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { 
-                                                    setSelectedDepot(city); 
-                                                    setDepotSearch(translateCity(city)); 
-                                                    setShowDepotDropDown(false); 
-                                                }}
+                                                onClick={() => { setSelectedDepot(city); setDepotSearch(city); setShowDepotDropDown(false); }}
                                             >
                                                 {translateCity(city)}
                                             </div>
