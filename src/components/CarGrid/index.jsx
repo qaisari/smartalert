@@ -1297,7 +1297,7 @@ export default function CarGrid({ filters = {} }) {
                                     display: 'flex', 
                                     alignItems: 'stretch', 
                                     position: 'relative', 
-                                    overflow: 'hidden' 
+                                    overflow: 'hidden'
                                 }}
                             >
                                 <div style={{
@@ -1316,10 +1316,19 @@ export default function CarGrid({ filters = {} }) {
                                             opacity = 1;
                                             zIndex = 2;
                                         } else if (modalPrevImageIndex !== null && idx === modalPrevImageIndex) {
-                                            if (modalSlideDirection === 'left') {
-                                                transform = 'translateX(-100%) scale(1)';
-                                            } else if (modalSlideDirection === 'right') {
-                                                transform = 'translateX(100%) scale(1)';
+                                            if( lang === 'ar' ) {
+                                                if (modalSlideDirection === 'left') {
+                                                    transform = 'translateX(-100%) scale(1)';
+                                                } else if (modalSlideDirection === 'right') {
+                                                    transform = 'translateX(100%) scale(1)';
+                                                }
+                                            }
+                                            if ( lang === 'fr' ) {
+                                                if (modalSlideDirection === 'left') {
+                                                    transform = 'translateX(100%) scale(1)';
+                                                } else if (modalSlideDirection === 'right') {
+                                                    transform = 'translateX(-100%) scale(1)';
+                                                }
                                             }
                                             opacity = 1;
                                             zIndex = 1;
@@ -1372,7 +1381,7 @@ export default function CarGrid({ filters = {} }) {
                                         transform: 'translateY(-50%)',
                                         opacity: 1,
                                         pointerEvents: 'auto',
-                                        zIndex: 3,
+                                        zIndex: 3
                                     }}>
                                         {(lang === 'ar') ? (
                                             <>
@@ -1552,7 +1561,7 @@ export default function CarGrid({ filters = {} }) {
                                                     }}
                                                 >
                                                     <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d={lang === "ar" ? "M5.5 12.5L10 8L5.5 3.5" : "M10.5 3.5L6 8L10.5 12.5"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                     </svg>
                                                 </button>
                                             </>
