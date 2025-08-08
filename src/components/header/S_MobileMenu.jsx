@@ -17,7 +17,7 @@ const MobileMenu = () => {
     <>
       <div className="pro-header d-flex align-items-center justify-between border-bottom-light">
         <Link to="/">
-          <img style={{ height: 39 }} src={`${import.meta.env.BASE_URL}/img/general/logo-dark.png`} alt="brand" />
+          <img style={{ height: 39 }} src={`/img/general/logo-dark.png`} alt="brand" />
         </Link>
         {/* End logo */}
 
@@ -69,6 +69,16 @@ const MobileMenu = () => {
             className={pathname === "/location" ? "menu-active-link" : ""}
           >
             {t[lang].header.location}
+          </MenuItem>
+          {/* End  Location Menu */}
+
+          <MenuItem
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            onClick={() => navigate("/reparation")}
+            className={pathname === "/reparation" ? "menu-active-link" : ""}
+          >
+            {t[lang].header.reparation}
           </MenuItem>
           {/* End  Location Menu */}
 

@@ -1,3 +1,4 @@
+import Address from "@/components/block/Address";
 import { testimonial } from "@/data/S_testimonialData";
 
 const fr = {
@@ -237,6 +238,7 @@ const fr = {
     usedCars: "Occasion",
     newCars: "Neuve",
     location: "Location",
+    reparation: "Réparation",
     about: "À propos",
     terms: "Termes & Conditions",
     selectLanguage: "Choisir la langue"
@@ -292,19 +294,28 @@ const fr = {
     search: "Rechercher"
   },
   rental: {
+    Address: "Address:",
+    Telephone: "Téléphone:",
     period: "Période",
     pickupLocation: "Lieu de départ",
     dropoffLocation: "Lieu de dépôt",
     sameLocation: "Même lieu",
     differentLocation: "Lieu différent",
     startDate: "Début",
+    startHour: "Heure de Départ",
     endDate: "Fin",
-    departureLabel: "Départ",
-    returnLabel: "Dépôt",
+    from: "De",
+    to: "à",
+    tripDetails: "Détails du voyage:",
+    carDetails: "Détails de la voiture:",
+    endHour: "Heure de Retour",
+    selectHour: "Sélectionner l'heure",
+    departureLabel: "Lieu de Départ",
+    returnLabel: "Lieu de Retour",
     cityPlaceholder: "Ex: Rabat",
     selectPlaceholder: "Sélectionner...",
     selectDates: "Sélectionner ces dates",
-    reset: "Réinitialiser"
+    reset: "Effacer Tous",
   },
   months: {
     january: "Janvier",

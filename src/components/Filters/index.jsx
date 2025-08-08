@@ -38,7 +38,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         };
         return cityMap[cityKey] || cityKey;
     };
-    
+
     const OptionList = ["Abarth", "Acrea", "AC", "Daewoo", "Acura", "Cadilac", "Skoda", "GAZ", "Lifan"
         , "Geely", "Alfa Romeo", "Aston Martin", "Rolls-Royce", "Audi", "Volkswagen", "Citroen",
         "Suzuki", "Fiat", "Opel", "Mercedes", "BMW", "Peugeot"];
@@ -73,8 +73,13 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     const [showDepotDropDown, setShowDepotDropDown] = useState(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [tempStartDate, setTempStartDate] = useState(null);
+    const [tempEndDate, setTempEndDate] = useState(null);
+    const [startHour, setStartHour] = useState("");
+    const [endHour, setEndHour] = useState("");
     const [showCalendar, setShowCalendar] = useState(false);
-    const [currentMonth, setCurrentMonth] = useState(new Date()); // Current date instead of fixed July 2025
+    const [showTimePicker, setShowTimePicker] = useState(null); // 'start' or 'end' or null
+    const [currentMonth, setCurrentMonth] = useState(new Date()); // Current date
     const [promotion, setPromotion] = useState(false);
     const [localisation, setLocalisation] = useState("same");
     const [selectFocused, setSelectFocused] = useState(false);
@@ -136,20 +141,17 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         model.toLowerCase().includes(modelSearch.toLowerCase())
     );
 
-    const formatDate = (date) => {
-        if (!date) return "";
-        const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
-        return new Intl.DateTimeFormat(locale, {
-            weekday: 'short',
-            day: 'numeric',
-            month: 'numeric'
-        }).format(date);
-    };
+    // Time slots for the time picker
+    const timeSlots = [
+        "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+        "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+        "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
+    ];
 
     const formatDateForDisplay = (date) => {
         if (!date) return "";
-        const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
-        return new Intl.DateTimeFormat(locale, {
+        // const locale = lang === 'ar' ? 'ar-SA' : 'fr-FR';
+        return new Intl.DateTimeFormat('fr-FR', {
             day: '2-digit',
             month: '2-digit'
         }).format(date);
@@ -164,17 +166,30 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     };
 
     const handleDateSelect = (date) => {
-        if (!startDate || (startDate && endDate)) {
-            setStartDate(date);
-            setEndDate(null);
+        if (!tempStartDate || (tempStartDate && tempEndDate)) {
+            setTempStartDate(date);
+            setTempEndDate(null);
         } else {
-            if (date > startDate) {
-                setEndDate(date);
+            if (date > tempStartDate) {
+                setTempEndDate(date);
             } else {
-                setStartDate(date);
-                setEndDate(null);
+                setTempStartDate(date);
+                setTempEndDate(null);
             }
         }
+    };
+
+    const confirmDateSelection = () => {
+        setStartDate(tempStartDate);
+        setEndDate(tempEndDate);
+        setShowCalendar(false);
+    };
+
+    const openCalendar = () => {
+        // Initialize temp dates with current selection when opening calendar
+        setTempStartDate(startDate);
+        setTempEndDate(endDate);
+        setShowCalendar(true);
     };
 
     const getDaysInMonth = (date) => {
@@ -237,7 +252,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         ];
         return (
             <div key={monthDate.getTime()} style={{ marginBottom: 24 }}>
-                <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', margin: '1.5rem 0 1rem 0', color: '#16213e', letterSpacing: 0 }}>{monthName}</h4>
+                {/* <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', margin: '1.5rem 0 1rem 0', color: '#16213e', letterSpacing: 0 }}>{monthName}</h4> */}
                 <div style={{ display: 'grid',  gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, textAlign: 'center', marginBottom: 8 }}>
                     {weekDays.map((day, index) => (
                         <div key={index} style={{ fontWeight: 600, color: '#16213e', fontSize: 16, padding: '6px 0' }}>{day}</div>
@@ -248,9 +263,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         if (!date) {
                             return <div key={index} style={{ height: 40 }}></div>;
                         }
-                        const isSelected = (startDate && date.toDateString() === startDate.toDateString()) || 
-                                         (endDate && date.toDateString() === endDate.toDateString());
-                        const isInRange = startDate && endDate && date > startDate && date < endDate;
+                        const isSelected = (tempStartDate && date.toDateString() === tempStartDate.toDateString()) || 
+                                         (tempEndDate && date.toDateString() === tempEndDate.toDateString());
+                        const isInRange = tempStartDate && tempEndDate && date > tempStartDate && date < tempEndDate;
                         const isToday = date.toDateString() === new Date().toDateString();
                         const isPast = date < new Date().setHours(0, 0, 0, 0);
                         const priceData = getPriceForDate(date);
@@ -323,10 +338,12 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             depot: localisation === 'different' ? selectedDepot || "" : "",
             startDate: startDate,
             endDate: endDate,
+            startHour: startHour,
+            endHour: endHour,
             promotion: promotion
         };
         // Check if any filters are active
-        const hasActiveFilters = selectedBrand || modelSearch || selectedCity || selectedDepart || selectedDepot || startDate || endDate || promotion;
+        const hasActiveFilters = selectedBrand || modelSearch || selectedCity || selectedDepart || selectedDepot || startDate || endDate || startHour || endHour || promotion;
         setFiltersApplied(hasActiveFilters);
         onFiltersChange(filters);
     };
@@ -343,6 +360,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         setSelectedDepot("");
         setStartDate(null);
         setEndDate(null);
+        setStartHour("");
+        setEndHour("");
         setPromotion(false);
         setShowDropDown(false);
         setShowModelDropDown(false);
@@ -359,6 +378,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             depot: "",
             startDate: null,
             endDate: null,
+            startHour: "",
+            endHour: "",
             promotion: false
         });
     };
@@ -377,29 +398,6 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                 marginLeft: isMobile ? '0' : '20px',
                 padding: '5px',
             }}>
-            {/* {isMobile && (
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '1rem',
-                    background: '#fff',
-                    borderBottom: '1px solid #e5e7eb',
-                }}>
-                    <h2 style={{ fontSize: '1.325rem', fontWeight: 600 }}>Filtrer les voitures</h2>
-                    <button 
-                        onClick={onClose}
-                        style={{ color: '#9ca3af', background: 'none', border: 'none', borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', transition: 'color 0.2s' }}
-                        onMouseEnter={e => e.currentTarget.style.color = '#fb923c'}
-                        onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
-                    >
-                        <svg style={{ width: 24, height: 24, }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            )} */}
-
             {/* Marque Filter */}
             <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
                 <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.brand.title}</div>
@@ -495,20 +493,65 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
             <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.period}</div>
                 <div 
                     className="filter-date"
-                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '-20px' : '-20px', position: 'relative' }}
-                    onClick={() => setShowCalendar(!showCalendar)}
+                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 'fit-content', boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '-20px' : '-20px', position: 'relative' }}
+                    onClick={() => openCalendar()}
                 >
-                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#16213e' }}>
-                        <div style={{ flex: 1, minWidth: 60 }}>
+                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#fd861dff' }}>
+                        <div style={{ minWidth: 60, display: 'flex', flexDirection: endDate ? 'column' : 'row', justifyContent: 'center', alignItems: 'center', gap: endDate ? '' : '0.5rem', marginRight: endDate ? 0 : -30 }}>
                             <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : t[lang].rental.startDate}</div>
-                            <div style={{ fontSize: '1rem', fontWeight: 600 }}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: endDate ? 'column' : 'row',
+                                gap: endDate ? '0' : '1.9rem',
+                            }}>
+                                <div style={{ fontSize: '1rem', fontWeight: 600 , marginLeft: endDate ? -0 : 0}}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
+                                {/* Show pickup time under date for multi-day rentals */}
+                                {(
+                                    <div style={{ 
+                                        fontSize: endDate ? '0.7rem' : '1.0rem', 
+                                        color: '#9ca3af', 
+                                        marginTop: '2px',
+                                        transform: startHour ? 'translateY(0)' : 'translateY(-10px)',
+                                        opacity: startHour ? 1 : 0,
+                                        pointerEvents: startHour ? 'auto' : 'none',
+                                        transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                    }}>{startHour}</div>
+                                )}
+                            </div>
                         </div>
-                        <div style={{ margin: '0 0.5rem', color: '#9ca3af', fontWeight: 700, fontSize: 18 }}>-</div>
-                        <div style={{ flex: 1, minWidth: 60 }}>
-                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : t[lang].rental.endDate}</div>
-                            <div style={{ fontSize: '1rem', fontWeight: 600 }}>{endDate ? formatDateForDisplay(endDate) : '--/--'}</div>
-                        </div>
-                        <svg style={{ width: 20, height: 20, color: '#9ca3af', marginLeft: 12 }} fill="currentColor" viewBox="0 0 20 20">
+                        
+                        { (
+                            <div style={{
+                                display: 'flex',
+                                gap: '0.5rem',
+                                alignItems: 'center',
+                                transform: endDate ? 'translateX(0)' : 'translateX(-100px)',
+                                opacity: endDate ? 1 : 0,
+                                pointerEvents: endDate ? 'auto' : 'none',
+                                transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                            }}>
+                                <div style={{ margin: '0 0.5rem', color: '#9ca3af', fontWeight: 700, fontSize: 18 }}>-</div>
+                                <div style={{minWidth: 60, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : t[lang].rental.endDate}</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 600 }}>{endDate ? formatDateForDisplay(endDate) : '--/--'}</div>
+                                    {/* Show dropoff time under date for multi-day rentals */}
+                                    {(
+                                        <div style={{ 
+                                            fontSize: endDate ? '0.7rem' : '1.0rem', 
+                                            color: '#9ca3af', 
+                                            marginTop: '2px',
+                                            transform: endHour ? 'translateY(0)' : 'translateY(-10px)',
+                                            opacity: endHour ? 1 : 0,
+                                            pointerEvents: endHour ? 'auto' : 'none',
+                                            transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                        }}>{endHour}</div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                        
+                        <svg style={{ width: 20, height: 20, color: '#fd861dff' }} fill="currentColor" viewBox="0 0 20 20">
                             <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z"/>
                         </svg>
                     </div>
@@ -567,9 +610,9 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     )}
                     {/* For 'different' location, keep as is or implement similar dropdowns for both fields if needed */}
                     {localisation === 'different' && (
-                        <div style={{ display: 'flex', gap: 12 }}>
-                            <div style={{ flex: 1, position: 'relative' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.departureLabel}</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                            <div style={{ flex: 1, position: 'relative', marginTop: '10px' }}>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.departureLabel}</div>
                                 <input
                                     className="filter-input"
                                     type="text"
@@ -580,7 +623,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                     onFocus={() => setShowDepartDropDown(true)}
                                 />
                                 {showDepartDropDown && filteredDeparts.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '150px' : '105%' }}>
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
                                         {filteredDeparts.map((city, index) => (
                                             <div
                                                 key={index}
@@ -602,7 +645,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                 )}
                             </div>
                             <div style={{ flex: 1, position: 'relative' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 500, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.returnLabel}</div>
+                                <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.returnLabel}</div>
                                 <input
                                     className="filter-input"
                                     type="text"
@@ -613,7 +656,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                     onFocus={() => setShowDepotDropDown(true)}
                                 />
                                 {showDepotDropDown && filteredDepots.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '150px' : '105%' }}>
+                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
                                         {filteredDepots.map((city, index) => (
                                             <div
                                                 key={index}
@@ -737,7 +780,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         <button 
                             onClick={() => setShowCalendar(false)}
                             style={{ color: '#9ca3af', background: 'none', border: 'none', borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', transition: 'color 0.2s' }}
-                            onMouseEnter={e => e.currentTarget.style.color = '#fb923c'}
+                            onMouseEnter={e => e.currentTarget.style.color = '#000000ff'}
                             onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
                         >
                             <svg style={{ width: 24, height: 24 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -746,7 +789,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         </button>
                     </div>
                     {/* Month Navigation */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', borderBottom: '1px solid #e5e7eb' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1rem 0rem 1rem' }}>
                         <button 
                             onClick={() => navigateMonth(lang === "ar" ? 1 : -1)}
                             style={{ padding: '0.5rem', borderRadius: '9999px', background: 'none', border: 'none', transition: 'background 0.2s', cursor: 'pointer' }}
@@ -779,29 +822,262 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     </div>
                     {/* Footer */}
                     <div style={{ borderTop: '1px solid #e5e7eb', padding: '1rem', background: '#f9fafb' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '0.75rem', background: '#fff' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '0.75rem', background: '#fff' }}>
+
                             <div style={{ fontSize: '0.95rem', flex: 1 }}>
                                 <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>{t[lang].rental.startDate}</label>
                                 <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
-                                    {startDate ? `${formatDayName(startDate)} ${formatDateForDisplay(startDate)}` : '--/--'}
+                                    {tempStartDate ? `${formatDayName(tempStartDate)} ${formatDateForDisplay(tempStartDate)}` : '--/--'}
                                 </div>
                             </div>
-                            <div style={{ width: 1, height: '3rem', background: '#e5e7eb', margin: '0 1rem' }}></div>
+                            
+                            { tempEndDate && (
+                                <div style={{
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'space-between', 
+                                    flex: 1, 
+                                    marginLeft: '1rem', 
+                                    marginRight: '1rem'
+                                }}>
+                                    <div style={{ width: 1, height: '3rem', background: '#e5e7eb', margin: '0 1rem' }}></div>
+                                    <div style={{ fontSize: '0.95rem', flex: 1 }}>
+                                        <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>{t[lang].rental.endDate}</label>
+                                        <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
+                                            {tempEndDate ? `${formatDayName(tempEndDate)} ${formatDateForDisplay(tempEndDate)}` : '--/--'}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {/* Time Selection Section */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '0.75rem', background: '#fff' }}>
                             <div style={{ fontSize: '0.95rem', flex: 1 }}>
-                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.25rem' }}>{t[lang].rental.endDate}</label>
-                                <div style={{ fontSize: '1.125rem', fontWeight: 500 }}>
-                                    {endDate ? `${formatDayName(endDate)} ${formatDateForDisplay(endDate)}` : '--/--'}
+                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.5rem', fontWeight: 500 }}>{t[lang].rental.startHour}</label>
+                                <div 
+                                    onClick={() => setShowTimePicker('start')}
+                                    style={{ 
+                                        width: '100%', 
+                                        padding: '0.75rem', 
+                                        borderRadius: '6px', 
+                                        border: '1px solid #d1d5db', 
+                                        fontSize: '1rem',
+                                        background: '#fff',
+                                        color: startHour ? '#374151' : '#9ca3af',
+                                        outline: 'none',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        minHeight: '44px',
+                                        transition: 'all 0.2s'
+                                    }}
+                                    onMouseEnter={e => e.currentTarget.style.borderColor = '#fb923c'}
+                                    onMouseLeave={e => e.currentTarget.style.borderColor = '#d1d5db'}
+                                >
+                                    {startHour || (t[lang].rental.selectHour)}
+                                </div>
+                            </div>
+                            <div style={{ width: 1, height: '4rem', background: '#e5e7eb', margin: '0 1rem' }}></div>
+                            <div style={{ fontSize: '0.95rem', flex: 1 }}>
+                                <label style={{ display: 'block', color: '#4b5563', marginBottom: '0.5rem', fontWeight: 500 }}>{t[lang].rental.endHour}</label>
+                                <div 
+                                    onClick={() => setShowTimePicker('end')}
+                                    style={{ 
+                                        width: '100%', 
+                                        padding: '0.75rem', 
+                                        borderRadius: '6px', 
+                                        border: '1px solid #d1d5db', 
+                                        fontSize: '1rem',
+                                        background: '#fff',
+                                        color: endHour ? '#374151' : '#9ca3af',
+                                        outline: 'none',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        minHeight: '44px',
+                                        transition: 'all 0.2s'
+                                    }}
+                                    onMouseEnter={e => e.currentTarget.style.borderColor = '#fb923c'}
+                                    onMouseLeave={e => e.currentTarget.style.borderColor = '#d1d5db'}
+                                >
+                                    {endHour || (t[lang].rental.selectHour)}
                                 </div>
                             </div>
                         </div>
+                        
+                        {/* Time validation message */}
+                        {tempStartDate && tempEndDate && tempStartDate.toDateString() === tempEndDate.toDateString() && startHour && endHour && endHour <= startHour && (
+                            <div style={{ 
+                                background: '#fef2f2', 
+                                border: '1px solid #fecaca', 
+                                borderRadius: '6px', 
+                                padding: '0.5rem', 
+                                marginBottom: '1rem',
+                                fontSize: '0.875rem',
+                                color: '#dc2626'
+                            }}>
+                                {t[lang].rental.timeValidation || 'L\'heure de fin doit être après l\'heure de début pour le même jour.'}
+                            </div>
+                        )}
                         <button 
                             style={{ width: '100%', background: '#fb923c', color: '#fff', padding: '0.75rem 0', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'background 0.2s' }}
                             onMouseEnter={e => e.currentTarget.style.background = '#f97316'}
                             onMouseLeave={e => e.currentTarget.style.background = '#fb923c'}
-                            onClick={() => setShowCalendar(false)}
+                            onClick={confirmDateSelection}
                         >
                             {t[lang].rental.selectDates}
                         </button>
+                    </div>
+                    
+                </div>
+            </div>,
+            document.body
+        )}
+        
+        {/* Scrollable Time Picker Modal */}
+        {createPortal(
+            <div 
+                style={{ 
+                    position: 'fixed', 
+                    inset: 0, 
+                    background: 'rgba(0, 0, 25, 0.40)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    zIndex: 99999,
+                    opacity: showTimePicker ? 1 : 0,
+                    pointerEvents: showTimePicker ? 'auto' : 'none',
+                    transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                }}
+                onClick={() => setShowTimePicker(null)}
+            >
+                <div style={{ 
+                    background: '#fff', 
+                    borderRadius: '20px', 
+                    boxShadow: '0 10px 40px rgba(0,0,0,0.2)', 
+                    width: isMobile ? '85vw' : '320px', 
+                    maxHeight: '70vh', 
+                    overflow: 'hidden', 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    transform: showTimePicker ? 'scale(1)' : 'scale(0.95)',
+                    opacity: showTimePicker ? 1 : 0,
+                    transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                }}
+                onClick={(e) => e.stopPropagation()}
+                >
+                    {/* Header */}
+                    <div style={{ 
+                        padding: '1.5rem 1.5rem 1rem 1.5rem', 
+                        borderBottom: '1px solid #f1f5f9',
+                        textAlign: 'center'
+                    }}>
+                        <h3 style={{ 
+                            fontSize: '1.125rem', 
+                            fontWeight: 600, 
+                            color: '#1e293b',
+                            margin: 0
+                        }}>
+                            {showTimePicker === 'start' ? t[lang].rental.startHour : t[lang].rental.endHour}
+                        </h3>
+                        <button 
+                            onClick={() => setShowTimePicker(null)}
+                            style={{ 
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                color: '#94a3b8', 
+                                background: 'none', 
+                                border: 'none', 
+                                borderRadius: '50%', 
+                                width: '32px',
+                                height: '32px',
+                                cursor: 'pointer', 
+                                transition: 'all 0.2s',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.background = '#f1f5f9';
+                                e.currentTarget.style.color = '#475569';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.background = 'none';
+                                e.currentTarget.style.color = '#94a3b8';
+                            }}
+                        >
+                            <svg style={{ width: 18, height: 18 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    {/* Scrollable Time List */}
+                    <div style={{ 
+                        flex: 1, 
+                        maxHeight: '300px',
+                        overflowY: 'auto',
+                        padding: '0.5rem 0'
+                    }}>
+                        {timeSlots.filter(time => {
+                            // Apply same filtering logic for end time
+                            if (showTimePicker === 'end' && tempStartDate && tempEndDate && 
+                                tempStartDate.toDateString() === tempEndDate.toDateString() && startHour) {
+                                return time > startHour;
+                            }
+                            return true;
+                        }).map((time, index) => {
+                            const isSelected = (showTimePicker === 'start' && startHour === time) || 
+                                             (showTimePicker === 'end' && endHour === time);
+                            return (
+                                <div
+                                    key={index}
+                                    style={{ 
+                                        padding: '1rem 1.5rem', 
+                                        cursor: 'pointer', 
+                                        fontSize: '1.1rem', 
+                                        fontWeight: isSelected ? 600 : 500,
+                                        background: isSelected ? '#fef3c7' : 'transparent',
+                                        color: isSelected ? '#f59e0b' : '#374151',
+                                        borderLeft: isSelected ? '4px solid #f59e0b' : '4px solid transparent',
+                                        transition: 'all 0.2s ease',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                    onMouseEnter={e => {
+                                        if (!isSelected) {
+                                            e.currentTarget.style.background = '#f8fafc';
+                                            e.currentTarget.style.color = '#1e293b';
+                                        }
+                                    }}
+                                    onMouseLeave={e => {
+                                        if (!isSelected) {
+                                            e.currentTarget.style.background = 'transparent';
+                                            e.currentTarget.style.color = '#374151';
+                                        }
+                                    }}
+                                    onClick={() => {
+                                        if (showTimePicker === 'start') {
+                                            setStartHour(time);
+                                        } else {
+                                            setEndHour(time);
+                                        }
+                                        setShowTimePicker(null);
+                                    }}
+                                >
+                                    {time}
+                                    {isSelected && (
+                                        <svg style={{ width: 20, height: 20, marginLeft: 8 }} fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>,

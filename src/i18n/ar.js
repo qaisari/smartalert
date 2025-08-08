@@ -1,3 +1,6 @@
+import Address from "@/components/block/Address";
+import { start } from "@popperjs/core";
+
 const ar = {
   home: {
     sources: {
@@ -283,18 +286,27 @@ const ar = {
     search: "بحث"
   },
   rental: {
+    Address: "العنوان",
+    Telephone: "الهاتف",
     period: "الفترة",
     pickupLocation: "مكان الانطلاق",
     dropoffLocation: "مكان الإيداع",
     sameLocation: "نفس المكان",
     differentLocation: "مكان مختلف",
     startDate: "البداية",
+    startHour: "ساعة الانطلاق",
+    endHour: "ساعة العودة",
     endDate: "النهاية",
+    from: "من",
+    to: "إلى",
+    tripDetails: ":تفاصيل الرحلة",
+    carDetails: ":تفاصيل السيارة",
     departureLabel: "المغادرة",
     returnLabel: "العودة",
     cityPlaceholder: "مثال: الرباط",
     selectPlaceholder: "اختر...",
     selectDates: "اختر هذه التواريخ",
+    selectHour: "اختر الساعة",
     reset: "إعادة تعيين"
   },
   months: {
@@ -341,6 +353,7 @@ const ar = {
     usedCars: "المستعمل",
     newCars: "الجديد",
     location: "كراء",
+    reparation: "إصلاح السيارات",
     about: "معلومات عنا",
     terms: "الأحكام والشروط",
     selectLanguage: "اختر لغتك",

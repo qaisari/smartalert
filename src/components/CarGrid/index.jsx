@@ -50,7 +50,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Casablanca"
+            city: "Casablanca",
+            address: "123 Rue Mohammed V",
+            telephone: "+212 522 123 456"
         },
         {
             id: 2,
@@ -62,10 +64,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 650,
             promotion: true,
+            promotionDiscount: 15,
             year: 2022,
             fuel: "Diesel",
             transmission: "Automatique",
-            city: "Rabat"
+            city: "Rabat",
+            address: "45 Avenue Hassan II",
+            telephone: "+212 537 234 567"
         },
         {
             id: 3,
@@ -80,7 +85,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Marrakech"
+            city: "Marrakech",
+            address: "78 Route de Fès",
+            telephone: "+212 524 345 678"
         },
         {
             id: 4,
@@ -92,10 +99,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 350,
             promotion: true,
+            promotionDiscount: 10,
             year: 2021,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Agadir"
+            city: "Agadir",
+            address: "156 Boulevard Moulay Youssef",
+            telephone: "+212 528 456 789"
         },
         {
             id: 5,
@@ -110,7 +120,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Diesel",
             transmission: "Manuelle",
-            city: "Fès"
+            city: "Fès",
+            address: "89 Avenue du Prince Héritier",
+            telephone: "+212 535 567 890"
         },
         {
             id: 6,
@@ -125,7 +137,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2022,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Tanger"
+            city: "Tanger",
+            address: "234 Rue de la Liberté",
+            telephone: "+212 539 678 901"
         },
         {
             id: 7,
@@ -137,10 +151,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 750,
             promotion: true,
+            promotionDiscount: 20,
             year: 2023,
             fuel: "Diesel",
             transmission: "Automatique",
-            city: "Casablanca"
+            city: "Casablanca",
+            address: "567 Boulevard Zerktouni",
+            telephone: "+212 522 789 012"
         },
         {
             id: 8,
@@ -155,7 +172,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2022,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Rabat"
+            city: "Rabat",
+            address: "321 Avenue Allal Ben Abdallah",
+            telephone: "+212 537 890 123"
         },
         {
             id: 9,
@@ -167,10 +186,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 300,
             promotion: true,
+            promotionDiscount: 12,
             year: 2023,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Marrakech"
+            city: "Marrakech",
+            address: "88 Rue Ibn Batouta",
+            telephone: "+212 524 901 234"
         },
         {
             id: 10,
@@ -185,7 +207,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2022,
             fuel: "Hybride",
             transmission: "Automatique",
-            city: "Agadir"
+            city: "Agadir",
+            address: "145 Avenue Mohammed VI",
+            telephone: "+212 528 012 345"
         },
         {
             id: 11,
@@ -197,10 +221,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 420,
             promotion: true,
+            promotionDiscount: 18,
             year: 2021,
             fuel: "Diesel",
             transmission: "Manuelle",
-            city: "Fès"
+            city: "Fès",
+            address: "67 Rue Abou Inane",
+            telephone: "+212 535 123 456"
         },
         {
             id: 12,
@@ -215,7 +242,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Tanger"
+            city: "Tanger",
+            address: "23 Boulevard Hassan II",
+            telephone: "+212 539 234 567"
         },
         {
             id: 13,
@@ -227,10 +256,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 280,
             promotion: true,
+            promotionDiscount: 14,
             year: 2022,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Casablanca"
+            city: "Casablanca",
+            address: "199 Avenue des FAR",
+            telephone: "+212 522 345 678"
         },
         {
             id: 14,
@@ -245,7 +277,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Rabat"
+            city: "Rabat",
+            address: "456 Rue El Jadida",
+            telephone: "+212 537 456 789"
         },
         {
             id: 15,
@@ -257,10 +291,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 320,
             promotion: true,
+            promotionDiscount: 16,
             year: 2022,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Marrakech"
+            city: "Marrakech",
+            address: "78 Rue Patrice Lumumba",
+            telephone: "+212 524 567 890"
         },
         {
             id: 16,
@@ -275,7 +312,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Diesel",
             transmission: "Automatique",
-            city: "Agadir"
+            city: "Agadir",
+            address: "334 Route de l'Ourika",
+            telephone: "+212 528 678 901"
         },
         {
             id: 17,
@@ -287,10 +326,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 440,
             promotion: true,
+            promotionDiscount: 19,
             year: 2022,
             fuel: "Diesel",
             transmission: "Manuelle",
-            city: "Fès"
+            city: "Fès",
+            address: "112 Boulevard Mohammed V",
+            telephone: "+212 535 789 012"
         },
         {
             id: 18,
@@ -305,7 +347,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Tanger"
+            city: "Tanger",
+            address: "89 Avenue 29 Février",
+            telephone: "+212 539 890 123"
         },
         {
             id: 19,
@@ -317,10 +361,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 580,
             promotion: true,
+            promotionDiscount: 17,
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Casablanca"
+            city: "Casablanca",
+            address: "267 Rue de Hollande",
+            telephone: "+212 522 901 234"
         },
         {
             id: 20,
@@ -335,7 +382,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2022,
             fuel: "Hybride",
             transmission: "Automatique",
-            city: "Rabat"
+            city: "Rabat",
+            address: "445 Boulevard d'Anfa",
+            telephone: "+212 537 012 345"
         },
         {
             id: 21,
@@ -347,10 +396,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 520,
             promotion: true,
+            promotionDiscount: 13,
             year: 2023,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Marrakech"
+            city: "Marrakech",
+            address: "89 Avenue de Souissi",
+            telephone: "+212 524 123 456"
         },
         {
             id: 22,
@@ -365,7 +417,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2022,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Agadir"
+            city: "Agadir",
+            address: "77 Rue des Palmiers",
+            telephone: "+212 528 234 567"
         },
         {
             id: 23,
@@ -377,10 +431,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 560,
             promotion: true,
+            promotionDiscount: 22,
             year: 2021,
             fuel: "Diesel",
             transmission: "Automatique",
-            city: "Fès"
+            city: "Fès",
+            address: "155 Avenue Moulay Rachid",
+            telephone: "+212 535 345 678"
         },
         {
             id: 24,
@@ -395,7 +452,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Tanger"
+            city: "Tanger",
+            address: "298 Boulevard Pasteur",
+            telephone: "+212 539 456 789"
         },
         {
             id: 25,
@@ -407,10 +466,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 220,
             promotion: true,
+            promotionDiscount: 11,
             year: 2022,
             fuel: "Essence",
             transmission: "Manuelle",
-            city: "Casablanca"
+            city: "Casablanca",
+            address: "123 Rue Allal Ben Abdallah",
+            telephone: "+212 522 567 890"
         },
         {
             id: 26,
@@ -425,7 +487,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Électrique",
             transmission: "Automatique",
-            city: "Rabat"
+            city: "Rabat",
+            address: "456 Avenue Hassan II",
+            telephone: "+212 537 678 901"
         },
         {
             id: 27,
@@ -437,10 +501,13 @@ export default function CarGrid({ filters = {} }) {
             ],
             basePrice: 780,
             promotion: true,
+            promotionDiscount: 25,
             year: 2022,
             fuel: "Hybride",
             transmission: "Automatique",
-            city: "Marrakech"
+            city: "Marrakech",
+            address: "789 Boulevard Zerktouni",
+            telephone: "+212 524 789 012"
         },
         {
             id: 28,
@@ -455,7 +522,9 @@ export default function CarGrid({ filters = {} }) {
             year: 2023,
             fuel: "Essence",
             transmission: "Automatique",
-            city: "Agadir"
+            city: "Agadir",
+            address: "321 Avenue des FAR",
+            telephone: "+212 528 890 123"
         }
     ]);
 
@@ -478,6 +547,7 @@ export default function CarGrid({ filters = {} }) {
     const [modalAnimating, setModalAnimating] = useState(false);
     const [modalSlideDirection, setModalSlideDirection] = useState('');
     const [modalPrevImageIndex, setModalPrevImageIndex] = useState(null);
+    const [isImageHovered, setIsImageHovered] = useState(false);
     const carsPerPage = 12;
 
     // Calculate daily price based on date and car
@@ -486,7 +556,32 @@ export default function CarGrid({ filters = {} }) {
         
         const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
         const weekendMultiplier = 1.2;
-        const promotionDiscount = car.promotion ? 0.9 : 1;
+        // const promotionDiscount = car.promotion ? (1 - (car.promotionDiscount / 100)) : 1;
+        
+        let totalPrice = 0;
+        let currentDate = new Date(startDate);
+        
+        for (let i = 0; i < days; i++) {
+            let dayPrice = car.basePrice;
+            
+            if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+                dayPrice *= weekendMultiplier;
+            }
+            
+            totalPrice += dayPrice;
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        return Math.round(totalPrice );
+    };
+
+    // Calculate promotion price based on date and car
+    const calculatePromotionPrice = (car, startDate, endDate) => {
+        if (!startDate || !endDate) return car.basePrice;
+        
+        const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+        const weekendMultiplier = 1.2;
+        const promotionDiscount =1 - (car.promotionDiscount / 100);
         
         let totalPrice = 0;
         let currentDate = new Date(startDate);
@@ -541,8 +636,16 @@ export default function CarGrid({ filters = {} }) {
         setFilteredCars(filtered);
     }, [filters, allCars]);
 
+    const formatDateForDisplay = (date) => {
+        if(!date) return "";
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        return `${day}/${month}`;
+    };
+
     const getDaysCount = () => {
         if (!filters.startDate || !filters.endDate) return 1;
+        // console.log("getDaysCount: ", filters.startHour);
         return Math.ceil((filters.endDate - filters.startDate) / (1000 * 60 * 60 * 24));
     };
 
@@ -565,9 +668,7 @@ export default function CarGrid({ filters = {} }) {
     useEffect(() => {
         if(showRentedCar) {
             document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
+        } 
         // Cleanup function to restore scroll when component unmounts
         return () => {
             document.body.style.overflow = 'unset';
@@ -605,9 +706,16 @@ export default function CarGrid({ filters = {} }) {
                 marginBottom: '3rem',
             }}>
                 {getCurrentPageCars().map((car) => {
-                    const totalPrice = calculateDailyPrice(car, filters.startDate, filters.endDate);
+                    // Calculate final price with promotion discount applied
+                    const finalPrice = car.promotion 
+                        ? Math.round(car.basePrice * (1 - car.promotionDiscount / 100))
+                        : car.basePrice;
+                    
+                    const totalPrice =  car.promotion ? calculatePromotionPrice(car, filters.startDate, filters.endDate) : calculateDailyPrice(car, filters.startDate, filters.endDate);
+                    const startHour = filters.startHour ? filters.startHour : '00:00';
+                    const endHour = filters.endHour ? filters.endHour : '23:59';
                     const dailyPrice = filters.startDate && filters.endDate ? 
-                        Math.round(totalPrice / getDaysCount()) : car.basePrice;
+                        Math.round(totalPrice / getDaysCount()) : finalPrice;
                     const isHovered = hoveredCardId === car.id;
                     const leftBtnIsHovered = hoveredLeftBtnId === car.id;
                     const rightBtnIsHovered = hoveredRightBtnId === car.id;
@@ -616,13 +724,7 @@ export default function CarGrid({ filters = {} }) {
                     const nextImageIndex = typeof nextImageIndexes[car.id] !== 'undefined' ? nextImageIndexes[car.id] : null;
                     const slideDirection = slideDirections[car.id] || '';
                     const isAnimating = animatingCars[car.id] || false;
-
-                    // Ensure each car has at least 3 images by duplicating if needed
                     const carImages = [...car.images];
-                    while (carImages.length < 3) {
-                        carImages.push(...car.images);
-                    }
-                    carImages.splice(3); // Keep only first 3 images
 
                     return (
                         <div 
@@ -654,7 +756,7 @@ export default function CarGrid({ filters = {} }) {
                                         
                                         if (idx === activeImageIndex) {
                                             // The currently active/visible image
-                                            transform = 'translateX(0) scale(' + (isHovered ? '1.05' : '1') + ')';
+                                            transform = 'translateX(0) scale(1)';
                                             opacity = 1;
                                             zIndex = 2;
                                         } else if (prevImageIndex !== null && idx === prevImageIndex) {
@@ -725,6 +827,37 @@ export default function CarGrid({ filters = {} }) {
                                         {t[lang].sideBar.promo.cartitle}
                                     </div>
                                 )}
+
+                                {/* {isHovered && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: '12px',
+                                        left: '12px',
+                                        background: 'rgba(0,0,0,0.7)',
+                                        color: 'white',
+                                        padding: '6px 12px',
+                                        borderRadius: '20px',
+                                        fontSize: '0.85rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px',
+                                        zIndex: 2
+                                    }}>
+                                        <svg
+                                            width="14"
+                                            height="14"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                            />
+                                            <circle cx="10" cy="8" r="2" />
+                                        </svg>
+                                        {car.city}
+                                    </div>
+                                )} */}
+                                
                                 {/* Fade-in navigation buttons on card hover */}
                                 {isHovered && (
                                     <div style={{
@@ -954,6 +1087,7 @@ export default function CarGrid({ filters = {} }) {
                                                         <path d="M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                                     </svg>
                                                 </button>
+                                                
                                             </>
                                         )}
                                     </div>
@@ -1011,10 +1145,21 @@ export default function CarGrid({ filters = {} }) {
                                             alignItems: 'baseline',
                                             fontSize: '1.5rem',
                                             fontWeight: 'bold',
-                                            color: '#f97316'
+                                            color: '#f97316',
+                                            gap: '4px'
                                         }}>
-                                            {totalPrice}<p style={{ color: '#f97316',  }}>{t[lang].rentals.currency}</p>
+                                            {filters.startDate && filters.endDate ? totalPrice : finalPrice}<p style={{ color: '#f97316',  }}>{t[lang].rentals.currency}</p>
+                                            {car.promotion  && (
+                                                <div style={{
+                                                    color: '#6b7280',
+                                                    fontSize: '0.9rem',
+                                                    textDecoration: 'line-through'
+                                                }}>
+                                                    {car.basePrice * getDaysCount()}{t[lang].rentals.currency}
+                                                </div>
+                                            )}
                                         </div>
+                                        
                                         <div style={{
                                             color: '#6b7280',
                                             fontSize: '0.9rem'
@@ -1043,7 +1188,7 @@ export default function CarGrid({ filters = {} }) {
                                             e.currentTarget.style.boxShadow = 'none';
                                         }}
                                         onClick={() => {
-                                            setRentedCar({ ...car, totalPrice, dailyPrice });
+                                            setRentedCar({ ...car, totalPrice, dailyPrice, startHour, endHour, finalPrice });
                                             setShowRentedCar(true);
                                             setModalImageIndex(0); // Reset modal image index
                                         }}
@@ -1067,7 +1212,7 @@ export default function CarGrid({ filters = {} }) {
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage <= 1}
                             >
-                                <i className="icon-chevron-right text-12" />
+                                {(lang === "ar") ? <i className="icon-chevron-right text-12" /> : <i className="icon-chevron-left text-12" />}
                             </button>
                         </div>
 
@@ -1143,7 +1288,7 @@ export default function CarGrid({ filters = {} }) {
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage >= totalPages}
                             >
-                                <i className="icon-chevron-left text-12" />
+                                {(lang === "ar") ? <i className="icon-chevron-left text-12" /> : <i className="icon-chevron-right text-12" />}
                             </button>
                         </div>
                     </div>
@@ -1169,7 +1314,7 @@ export default function CarGrid({ filters = {} }) {
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center', 
-                        zIndex: 9999,
+                        zIndex: 99999,
                         opacity: showRentedCar ? 1 : 0,
                         pointerEvents: showRentedCar ? 'auto' : 'none',
                         transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
@@ -1178,141 +1323,60 @@ export default function CarGrid({ filters = {} }) {
                 >
                     <div
                         key={rentedCar.id}
-                        className="pt-40 pb-30 px-20 sm:px-50 md:px-70 lg:px-100 xl:px-150"
+                        className="pt-30 pb-20 px-20 sm:px-50 md:px-70 lg:px-100 xl:px-150"
                         style={{
                             background: 'white',
-                            width: 'auto',
-                            height: 'auto',
                             borderRadius: '12px',
                             boxShadow: '0 0 50px rgba(0,0,0,0.4)',
+                            margin: '0 1rem',
+                            maxHeight: '90vh',
+                            maxWidth: '90vw',
+                            minWidth: '700px',
+                            overflow: 'hidden',
                             display: 'flex',
                             flexDirection: 'column',
-                            minWidth: 600,
-                            minHeight: 300,
-                            maxWidth: 600,
-                            position: 'relative',
-                            overflow: 'hidden',
+                            transform: showRentedCar ? 'scale(1)' : 'scale(0.95)',
+                            opacity: showRentedCar ? 1 : 0,
+                            pointerEvents: showRentedCar ? 'auto' : 'none',
+                            transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)'
                         }}
-                        onMouseEnter={() => setRentHovered(true)}
-                        onMouseLeave={() => setRentHovered(false)}
+                        onMouseEnter={() => {
+                            setRentHovered(true);
+                            setIsImageHovered(true);
+                        }}
+                        onMouseLeave={() => {
+                            setRentHovered(false);
+                            setIsImageHovered(false);
+                        }}
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <section 
-                            style={{ flex: 1, display: 'flex', alignItems: 'stretch', gap: '20px', background: 'white' }}
+                            style={{ flex: 1, display: 'flex', gap: '30px' }}
                         >
-                            <div
-                                style={{ 
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    width: '200px',
-                                    background: 'white',
-                                    flex: 1,
-                                    marginRight: 0,
-                                }}
-                                
-                            > 
-                                <div className="col-auto">
-                                    <h1 className="text-30 sm:text-25 fw-600">{rentedCar.brand} {rentedCar.model}</h1>
-                                </div>
-
-                                <div className="col-auto" style={{ marginTop: '10px' }}>
-                                    <div className="text-14">{t[lang].rentals.price}: <label className="text-15 fw-500">{rentedCar.totalPrice} {t[lang].rentals.currency}</label></div>
-                                    <div className="text-14">{rentedCar.year} • {translateCarSpec(rentedCar.fuel)} • {translateCarSpec(rentedCar.transmission)}</div>
-                                    <div className="text-14" style={{ marginLeft: '-5px' }}>
-                                        { (filters.depot && filters.depart) ? (
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <svg
-                                                        width="18"
-                                                        height="18"
-                                                        viewBox="0 0 20 20"
-                                                        fill="#f97316"
-                                                        style={{ verticalAlign: 'middle', marginBottom: '5px' }}
-                                                    >
-                                                        <path
-                                                            d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
-                                                            fill="#f97316"
-                                                        />
-                                                        <circle cx="10" cy="8" r="2" fill="#f97316" />
-                                                    </svg>
-                                                    {filters.depart || rentedCar.city}
-                                                </div>
-                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18px' }}>
-                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="4" cy="9" r="1.5" fill="#f97316"/>
-                                                        <circle cx="9" cy="9" r="1.5" fill="#f97316"/>
-                                                        <circle cx="14" cy="9" r="1.5" fill="#f97316"/>
-                                                    </svg>
-                                                </span>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <svg
-                                                        width="18"
-                                                        height="18"
-                                                        viewBox="0 0 20 20"
-                                                        fill="#f97316"
-                                                        style={{ verticalAlign: 'middle', marginBottom: '5px' }}
-                                                    >
-                                                        <path
-                                                            d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
-                                                            fill="#f97316"
-                                                        />
-                                                        <circle cx="10" cy="8" r="2" fill="#f97316" />
-                                                    </svg>
-                                                    {translateCity(filters.depot || rentedCar.city)}
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <svg
-                                                    width="18"
-                                                    height="18"
-                                                    viewBox="0 0 20 20"
-                                                    fill="#f97316"
-                                                    style={{ verticalAlign: 'middle', marginBottom: '5px' }}
-                                                >
-                                                    <path
-                                                        d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
-                                                    fill="#f97316"
-                                                    />
-                                                    <circle cx="10" cy="8" r="2" fill="#f97316" />
-                                                </svg>
-                                                {translateCity(rentedCar.city)}
-                                            </>
-                                        )}
-                                    </div>
-                                    <div className="text-14">{rentedCar.dailyPrice}{t[lang].rentals.currency}{t[lang].rentals.perDayShort}</div>
-                                </div>
-
-                                <div className="col-auto" style={{ marginTop: 'auto' }}>
-                                    <div className="button h-50 px-24 -dark-2 bg-brown-2 text-white" style={{ marginTop: '27px', cursor: 'pointer'  }}>
-                                        {t[lang].rentals.moreDetails}
-                                        <div className="icon-arrow-top-right ml-15"/>
-                                    </div>
-                                </div>
-                                
-                            </div>
                             <div 
                                 style={{ 
-                                    borderRadius: '5px', 
                                     flex: 1, 
                                     display: 'flex', 
-                                    alignItems: 'stretch', 
-                                    position: 'relative', 
-                                    overflow: 'hidden'
+                                    alignItems: 'flex-start', 
+                                    overflow: 'hidden',
                                 }}
                             >
                                 <div style={{
-                                    width: '100%',
-                                    height: '100%',
+                                    width: '350px',
+                                    height: '200px',
                                     position: 'relative',
                                     overflow: 'hidden',
-                                }}>
+                                    borderRadius: '8px',
+                                    background: '#f3f4f6',
+                                }}
+                                >
                                     {rentedCar.images.map((img, idx) => {
                                         let transform = 'translateX(100%)';
                                         let opacity = 0;
                                         let zIndex = 0;
                                         
                                         if (idx === modalImageIndex) {
-                                            transform = 'translateX(0) scale(' + (rentHovered ? '1' : '1.05') + ')';
+                                            transform = 'translateX(0) scale(1)';
                                             opacity = 1;
                                             zIndex = 2;
                                         } else if (modalPrevImageIndex !== null && idx === modalPrevImageIndex) {
@@ -1366,208 +1430,384 @@ export default function CarGrid({ filters = {} }) {
                                             />
                                         );
                                     })}
+                                    
+                                    {(
+                                        <div style={{
+                                            position: 'absolute',
+                                            bottom: '12px',
+                                            left: '12px',
+                                            background: 'rgba(0,0,0,0.7)',
+                                            color: 'white',
+                                            padding: '6px 12px',
+                                            borderRadius: '20px',
+                                            fontSize: '0.85rem',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            zIndex: 2,
+                                            opacity: isImageHovered ? 1 : 0,
+                                            pointerEvents: isImageHovered ? 'auto' : 'none',
+                                            transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                        }}>
+                                            <svg
+                                                width="14"
+                                                height="14"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                />
+                                                <circle cx="10" cy="8" r="2" />
+                                            </svg>
+                                            {rentedCar.city}
+                                        </div>
+                                    )}
+                                    
+                                    {/* Navigation buttons for modal */}
+                                    {rentedCar.images.length > 1 && (
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            position: 'absolute',
+                                            width: '100%',
+                                            top: '50%',
+                                            left: '0',
+                                            transform: 'translateY(-50%)',
+                                            opacity: 1,
+                                            pointerEvents: 'auto',
+                                            zIndex: 3,
+                                            opacity: isImageHovered ? 1 : 0,
+                                            pointerEvents: isImageHovered ? 'auto' : 'none',
+                                            transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                        }}>
+                                            {(lang === 'ar') ? (
+                                                <>
+                                                    <button 
+                                                        disabled={modalAnimating}
+                                                        style={{
+                                                            background: modalRightBtnHovered ? '#ffe736ff' : 'rgba(255, 255, 255, 0.85)',
+                                                            borderRadius: '50%',
+                                                            width: '35px',
+                                                            height: '35px',
+                                                            border: 'none',
+                                                            color: modalRightBtnHovered ? '#ffffffff' : '#374151',
+                                                            marginRight: 16,
+                                                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                            cursor: modalAnimating ? 'default' : 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            transition: 'background 0.3s, color 0.3s'
+                                                        }}
+                                                        onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
+                                                        onMouseLeave={() => setModalRightBtnHovered(false)}
+                                                        onClick={(e) => {
+                                                            if (modalAnimating) return;
+                                                            e.stopPropagation();
+                                                            
+                                                            setModalAnimating(true);
+                                                            setModalSlideDirection(lang === "ar" ? 'left' : 'right');
+                                                            setModalPrevImageIndex(modalImageIndex);
+                                                            
+                                                            const total = rentedCar.images.length;
+                                                            const newIndex = lang === "ar" ? 
+                                                                (modalImageIndex - 1 + total) % total : 
+                                                                (modalImageIndex + 1) % total;
+                                                            setModalImageIndex(newIndex);
+                                                            
+                                                            setTimeout(() => {
+                                                                setModalSlideDirection('');
+                                                                setModalPrevImageIndex(null);
+                                                                setModalAnimating(false);
+                                                            }, 500);
+                                                        }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button 
+                                                        disabled={modalAnimating}
+                                                        style={{
+                                                            background: modalLeftBtnHovered ? '#ffe736ff' : 'rgba(255, 255, 255, 0.85)',
+                                                            borderRadius: '50%',
+                                                            width: '35px',
+                                                            height: '35px',
+                                                            border: 'none',
+                                                            color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
+                                                            marginLeft: 16,
+                                                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                            cursor: modalAnimating ? 'default' : 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            transition: 'background 0.3s, color 0.3s'
+                                                        }}
+                                                        onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
+                                                        onMouseLeave={() => setModalLeftBtnHovered(false)}
+                                                        onClick={(e) => {
+                                                            if (modalAnimating) return;
+                                                            e.stopPropagation();
+                                                            
+                                                            setModalAnimating(true);
+                                                            setModalSlideDirection(lang === "ar" ? 'right' : 'left');
+                                                            setModalPrevImageIndex(modalImageIndex);
+                                                            
+                                                            const total = rentedCar.images.length;
+                                                            const newIndex = lang === "ar" ? 
+                                                                (modalImageIndex + 1) % total : 
+                                                                (modalImageIndex - 1 + total) % total;
+                                                            setModalImageIndex(newIndex);
+                                                            
+                                                            setTimeout(() => {
+                                                                setModalSlideDirection('');
+                                                                setModalPrevImageIndex(null);
+                                                                setModalAnimating(false);
+                                                            }, 500);
+                                                        }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d= "M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        </svg>
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button 
+                                                        disabled={modalAnimating}
+                                                        style={{
+                                                            background: modalLeftBtnHovered ? '#ffe736ff' : 'rgba(255, 255, 255, 0.85)',
+                                                            borderRadius: '50%',
+                                                            width: '35px',
+                                                            height: '35px',
+                                                            border: 'none',
+                                                            color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
+                                                            marginLeft: 16,
+                                                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                            cursor: modalAnimating ? 'default' : 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            transition: 'background 0.3s, color 0.3s'
+                                                        }}
+                                                        onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
+                                                        onMouseLeave={() => setModalLeftBtnHovered(false)}
+                                                        onClick={(e) => {
+                                                            if (modalAnimating) return;
+                                                            e.stopPropagation();
+                                                            
+                                                            setModalAnimating(true);
+                                                            setModalSlideDirection(lang === "ar" ? 'right' : 'left');
+                                                            setModalPrevImageIndex(modalImageIndex);
+                                                            
+                                                            const total = rentedCar.images.length;
+                                                            const newIndex = lang === "ar" ? 
+                                                                (modalImageIndex + 1) % total : 
+                                                                (modalImageIndex - 1 + total) % total;
+                                                            setModalImageIndex(newIndex);
+                                                            
+                                                            setTimeout(() => {
+                                                                setModalSlideDirection('');
+                                                                setModalPrevImageIndex(null);
+                                                                setModalAnimating(false);
+                                                            }, 500);
+                                                        }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d={lang === "ar" ? "M5.5 12.5L10 8L5.5 3.5" : "M10.5 3.5L6 8L10.5 12.5"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button 
+                                                        disabled={modalAnimating}
+                                                        style={{
+                                                            background: modalRightBtnHovered ? '#ffe736ff' : 'rgba(255, 255, 255, 0.85)',
+                                                            borderRadius: '50%',
+                                                            width: '35px',
+                                                            height: '35px',
+                                                            border: 'none',
+                                                            color: modalRightBtnHovered ? '#ffffffff' : '#374151',
+                                                            marginRight: 16,
+                                                            boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                                                            cursor: modalAnimating ? 'default' : 'pointer',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            transition: 'background 0.3s, color 0.3s'
+                                                        }}
+                                                        onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
+                                                        onMouseLeave={() => setModalRightBtnHovered(false)}
+                                                        onClick={(e) => {
+                                                            if (modalAnimating) return;
+                                                            e.stopPropagation();
+                                                            
+                                                            setModalAnimating(true);
+                                                            setModalSlideDirection(lang === "ar" ? 'left' : 'right');
+                                                            setModalPrevImageIndex(modalImageIndex);
+                                                            
+                                                            const total = rentedCar.images.length;
+                                                            const newIndex = lang === "ar" ? 
+                                                                (modalImageIndex - 1 + total) % total : 
+                                                                (modalImageIndex + 1) % total;
+                                                            setModalImageIndex(newIndex);
+                                                            
+                                                            setTimeout(() => {
+                                                                setModalSlideDirection('');
+                                                                setModalPrevImageIndex(null);
+                                                                setModalAnimating(false);
+                                                            }, 500);
+                                                        }}
+                                                    >
+                                                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                                        </svg>
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <div
+                                style={{ 
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    width: '200px',
+                                    flex: 1,
+                                    marginRight: 0,
+                                }}
+                                
+                            > 
+                                <div className="col-auto">
+                                    <h1 className="text-30 sm:text-25 fw-600" >{rentedCar.brand} {rentedCar.model}</h1>
+                                </div>
+
+                                <div className="col-auto">
+                                    {/* Price of the car */}
+                                    <div className="text-17 fw-600" style={{ color: '#f97316', marginBottom: -5 }}>
+                                        <label className="text-20 fw-600" style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                                            {t[lang].rentals.price}: {(filters.startDate && filters.endDate) ? rentedCar.totalPrice : rentedCar.finalPrice}{t[lang].rentals.currency}
+                                            {rentedCar.promotion  && (
+                                                <div style={{
+                                                    color: '#6b7280',
+                                                    fontSize: '0.8rem',
+                                                    textDecoration: 'line-through'
+                                                }}>
+                                                    {rentedCar.basePrice * getDaysCount()}{t[lang].rentals.currency}
+                                                </div>
+                                            )}
+                                        </label>   
+                                    </div>
+
+                                    <div className="text-14" style={{ color: '#6b7280' }}>{rentedCar.dailyPrice}{t[lang].rentals.currency}{t[lang].rentals.perDayShort}</div>
+
+                                    <h6 style={{ marginTop: '10px', marginBottom: '5px' }}>{t[lang].rental.carDetails}</h6>
+                                    <div className="text-14" style={{ color: '#6b7280' }}>{rentedCar.year} <b>•</b> {translateCarSpec(rentedCar.fuel)} <b>•</b> {translateCarSpec(rentedCar.transmission)}</div>
+
+                                    <h6 style={{ marginTop: '10px', marginBottom: '5px' }}>{t[lang].rental.tripDetails}</h6>
+                                    <div className="text-14" style={{ color: '#6b7280' }}>
+                                        
+                                        {(filters.startDate || filters.endDate) ? (
+                                            <>
+                                                <div className="text-14" style={{ color: '#6b7280' }}>{t[lang].rental.startDate}: {formatDateForDisplay(filters.startDate)} {t[lang].rental.to} {rentedCar.startHour}</div>
+                                                <div className="text-14" style={{ color: '#6b7280' }}>{t[lang].rental.endDate}: {formatDateForDisplay(filters.endDate) || formatDateForDisplay(filters.startDate)} {t[lang].rental.to} {rentedCar.endHour}</div>
+                                            </>
+                                        ) : null}
+                                        
+                                        <div style={{ marginLeft: '-5px' }}>
+                                            { (filters.depot && filters.depart) ? (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', marginLeft: (filters.startDate || filters.depot || filters.depart) ? '0px' : -5 }}>
+                                                        <svg
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 20 20"
+                                                            fill="#f97316"
+                                                            style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                        >
+                                                            <path
+                                                                d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                                fill="#f97316"
+                                                            />
+                                                            <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                        </svg>
+                                                        {filters.depart || rentedCar.city}
+                                                    </div>
+                                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18px' }}>
+                                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="4" cy="9" r="1.5" fill="#f97316"/>
+                                                            <circle cx="9" cy="9" r="1.5" fill="#f97316"/>
+                                                            <circle cx="14" cy="9" r="1.5" fill="#f97316"/>
+                                                        </svg>
+                                                    </span>
+                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                        <svg
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 20 20"
+                                                            fill="#f97316"
+                                                            style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                        >
+                                                            <path
+                                                                d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                                fill="#f97316"
+                                                            />
+                                                            <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                        </svg>
+                                                        {translateCity(filters.depot || rentedCar.city)}
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <svg
+                                                        width="18"
+                                                        height="18"
+                                                        viewBox="0 0 20 20"
+                                                        fill="#f97316"
+                                                        style={{ verticalAlign: 'middle', marginBottom: '5px' }}
+                                                    >
+                                                        <path
+                                                            d="M10 2C6.686 2 4 4.686 4 8c0 4.418 5.25 9.25 5.477 9.464a1 1 0 0 0 1.046 0C10.75 17.25 16 12.418 16 8c0-3.314-2.686-6-6-6zm0 13.293C8.14 13.01 6 10.36 6 8a4 4 0 1 1 8 0c0 2.36-2.14 5.01-4 7.293z"
+                                                        fill="#f97316"
+                                                        />
+                                                        <circle cx="10" cy="8" r="2" fill="#f97316" />
+                                                    </svg>
+                                                    {translateCity(rentedCar.city)}
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Address Section */}
+                                    {rentedCar.address && (
+                                        <div style={{ marginTop: '10px' }}>
+                                            <h6 style={{ marginBottom: '1px' }}>{t[lang].rental.Address}</h6>
+                                            <div className="text-14" style={{ color: '#6b7280' }}>
+                                                {rentedCar.address}, {translateCity(rentedCar.city)}
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    {/* Telephone Section */}
+                                    {rentedCar.telephone && (
+                                        <div style={{ marginTop: '10px' }}>
+                                            <h6 style={{ marginBottom: '5px' }}>{t[lang].rental.Telephone}</h6>
+                                            <div className="text-14" style={{ color: '#6b7280' }}>
+                                                {rentedCar.telephone}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="col-auto">
+                                    <div className="button h-50 px-24 -dark-2 bg-brown-2 text-white" style={{ marginTop: '17px', cursor: 'pointer'  }}>
+                                        {t[lang].rentals.moreDetails}
+                                        <div className="icon-arrow-top-right ml-15"/>
+                                    </div>
                                 </div>
                                 
-                                {/* Navigation buttons for modal */}
-                                {rentedCar.images.length > 1 && (
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        position: 'absolute',
-                                        width: '100%',
-                                        top: '50%',
-                                        left: '0',
-                                        transform: 'translateY(-50%)',
-                                        opacity: 1,
-                                        pointerEvents: 'auto',
-                                        zIndex: 3
-                                    }}>
-                                        {(lang === 'ar') ? (
-                                            <>
-                                                <button 
-                                                    disabled={modalAnimating}
-                                                    style={{
-                                                        background: modalRightBtnHovered ? '#ffe736ff' : 'white',
-                                                        borderRadius: '50%',
-                                                        width: '35px',
-                                                        height: '35px',
-                                                        border: 'none',
-                                                        color: modalRightBtnHovered ? '#ffffffff' : '#374151',
-                                                        marginRight: 16,
-                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                        cursor: modalAnimating ? 'default' : 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        transition: 'background 0.3s, color 0.3s'
-                                                    }}
-                                                    onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
-                                                    onMouseLeave={() => setModalRightBtnHovered(false)}
-                                                    onClick={(e) => {
-                                                        if (modalAnimating) return;
-                                                        e.stopPropagation();
-                                                        
-                                                        setModalAnimating(true);
-                                                        setModalSlideDirection(lang === "ar" ? 'left' : 'right');
-                                                        setModalPrevImageIndex(modalImageIndex);
-                                                        
-                                                        const total = rentedCar.images.length;
-                                                        const newIndex = lang === "ar" ? 
-                                                            (modalImageIndex - 1 + total) % total : 
-                                                            (modalImageIndex + 1) % total;
-                                                        setModalImageIndex(newIndex);
-                                                        
-                                                        setTimeout(() => {
-                                                            setModalSlideDirection('');
-                                                            setModalPrevImageIndex(null);
-                                                            setModalAnimating(false);
-                                                        }, 500);
-                                                    }}
-                                                >
-                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                                <button 
-                                                    disabled={modalAnimating}
-                                                    style={{
-                                                        background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
-                                                        borderRadius: '50%',
-                                                        width: '35px',
-                                                        height: '35px',
-                                                        border: 'none',
-                                                        color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
-                                                        marginLeft: 16,
-                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                        cursor: modalAnimating ? 'default' : 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        transition: 'background 0.3s, color 0.3s'
-                                                    }}
-                                                    onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
-                                                    onMouseLeave={() => setModalLeftBtnHovered(false)}
-                                                    onClick={(e) => {
-                                                        if (modalAnimating) return;
-                                                        e.stopPropagation();
-                                                        
-                                                        setModalAnimating(true);
-                                                        setModalSlideDirection(lang === "ar" ? 'right' : 'left');
-                                                        setModalPrevImageIndex(modalImageIndex);
-                                                        
-                                                        const total = rentedCar.images.length;
-                                                        const newIndex = lang === "ar" ? 
-                                                            (modalImageIndex + 1) % total : 
-                                                            (modalImageIndex - 1 + total) % total;
-                                                        setModalImageIndex(newIndex);
-                                                        
-                                                        setTimeout(() => {
-                                                            setModalSlideDirection('');
-                                                            setModalPrevImageIndex(null);
-                                                            setModalAnimating(false);
-                                                        }, 500);
-                                                    }}
-                                                >
-                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d= "M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <button 
-                                                    disabled={modalAnimating}
-                                                    style={{
-                                                        background: modalLeftBtnHovered ? '#ffe736ff' : 'white',
-                                                        borderRadius: '50%',
-                                                        width: '35px',
-                                                        height: '35px',
-                                                        border: 'none',
-                                                        color: modalLeftBtnHovered ? '#ffffffff' : '#374151',
-                                                        marginLeft: 16,
-                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                        cursor: modalAnimating ? 'default' : 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        transition: 'background 0.3s, color 0.3s'
-                                                    }}
-                                                    onMouseEnter={() => !modalAnimating && setModalLeftBtnHovered(true)}
-                                                    onMouseLeave={() => setModalLeftBtnHovered(false)}
-                                                    onClick={(e) => {
-                                                        if (modalAnimating) return;
-                                                        e.stopPropagation();
-                                                        
-                                                        setModalAnimating(true);
-                                                        setModalSlideDirection(lang === "ar" ? 'right' : 'left');
-                                                        setModalPrevImageIndex(modalImageIndex);
-                                                        
-                                                        const total = rentedCar.images.length;
-                                                        const newIndex = lang === "ar" ? 
-                                                            (modalImageIndex + 1) % total : 
-                                                            (modalImageIndex - 1 + total) % total;
-                                                        setModalImageIndex(newIndex);
-                                                        
-                                                        setTimeout(() => {
-                                                            setModalSlideDirection('');
-                                                            setModalPrevImageIndex(null);
-                                                            setModalAnimating(false);
-                                                        }, 500);
-                                                    }}
-                                                >
-                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d={lang === "ar" ? "M5.5 12.5L10 8L5.5 3.5" : "M10.5 3.5L6 8L10.5 12.5"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                                <button 
-                                                    disabled={modalAnimating}
-                                                    style={{
-                                                        background: modalRightBtnHovered ? '#ffe736ff' : 'white',
-                                                        borderRadius: '50%',
-                                                        width: '35px',
-                                                        height: '35px',
-                                                        border: 'none',
-                                                        color: modalRightBtnHovered ? '#ffffffff' : '#374151',
-                                                        marginRight: 16,
-                                                        boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
-                                                        cursor: modalAnimating ? 'default' : 'pointer',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        transition: 'background 0.3s, color 0.3s'
-                                                    }}
-                                                    onMouseEnter={() => !modalAnimating && setModalRightBtnHovered(true)}
-                                                    onMouseLeave={() => setModalRightBtnHovered(false)}
-                                                    onClick={(e) => {
-                                                        if (modalAnimating) return;
-                                                        e.stopPropagation();
-                                                        
-                                                        setModalAnimating(true);
-                                                        setModalSlideDirection(lang === "ar" ? 'left' : 'right');
-                                                        setModalPrevImageIndex(modalImageIndex);
-                                                        
-                                                        const total = rentedCar.images.length;
-                                                        const newIndex = lang === "ar" ? 
-                                                            (modalImageIndex - 1 + total) % total : 
-                                                            (modalImageIndex + 1) % total;
-                                                        setModalImageIndex(newIndex);
-                                                        
-                                                        setTimeout(() => {
-                                                            setModalSlideDirection('');
-                                                            setModalPrevImageIndex(null);
-                                                            setModalAnimating(false);
-                                                        }, 500);
-                                                    }}
-                                                >
-                                                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d= "M5.5 12.5L10 8L5.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                                    </svg>
-                                                </button>
-                                            </>
-                                        )}
-                                    </div>
-                                )}
                             </div>
                         </section>
                         {rentedCar.promotion && (
