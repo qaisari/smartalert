@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import alternativeImage from "/img/alternativePicture/default_image.png";
 import { LanguageContext } from "@/i18n/LanguageProvider";
@@ -7,6 +7,25 @@ import t from "@/i18n/t";
 
 export default function CarGrid({ filters = {} }) {
     const { lang } = useContext(LanguageContext);
+    const navigate = useNavigate();
+    // Responsive breakpoint for modal layout
+    const [viewportWidth, setViewportWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+    useEffect(() => {
+        const onResize = () => setViewportWidth(window.innerWidth);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
+    const isSmallScreen = viewportWidth < 1024; // stack on tablets/phones
+
+    // Toast state for validation feedback
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+    useEffect(() => {
+        if(showToast){
+            const timer = setTimeout(() => setShowToast(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast]);
 
     // Add translation function for car specs
     const translateCarSpec = (spec) => {
@@ -52,7 +71,12 @@ export default function CarGrid({ filters = {} }) {
             transmission: "Automatique",
             city: "Casablanca",
             address: "123 Rue Mohammed V",
-            telephone: "+212 522 123 456"
+            telephone: "+212 522 123 456",
+            seats: 5,
+            airConditioning: true,
+            consumption: "6.2 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 2,
@@ -71,6 +95,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Rabat",
             address: "45 Avenue Hassan II",
             telephone: "+212 537 234 567"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.5 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 3,
@@ -88,6 +117,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Marrakech",
             address: "78 Route de Fès",
             telephone: "+212 524 345 678"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.8 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 4,
@@ -106,6 +140,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Agadir",
             address: "156 Boulevard Moulay Youssef",
             telephone: "+212 528 456 789"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.9 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 5,
@@ -123,6 +162,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Fès",
             address: "89 Avenue du Prince Héritier",
             telephone: "+212 535 567 890"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.4 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 6,
@@ -140,6 +184,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Tanger",
             address: "234 Rue de la Liberté",
             telephone: "+212 539 678 901"
+            ,seats: 4,
+            airConditioning: true,
+            consumption: "4.8 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 7,
@@ -158,6 +207,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Casablanca",
             address: "567 Boulevard Zerktouni",
             telephone: "+212 522 789 012"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.1 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 8,
@@ -175,6 +229,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Rabat",
             address: "321 Avenue Allal Ben Abdallah",
             telephone: "+212 537 890 123"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.3 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 9,
@@ -193,6 +252,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Marrakech",
             address: "88 Rue Ibn Batouta",
             telephone: "+212 524 901 234"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.2 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 10,
@@ -210,6 +274,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Agadir",
             address: "145 Avenue Mohammed VI",
             telephone: "+212 528 012 345"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "4.5 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 11,
@@ -228,6 +297,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Fès",
             address: "67 Rue Abou Inane",
             telephone: "+212 535 123 456"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.7 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 12,
@@ -245,6 +319,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Tanger",
             address: "23 Boulevard Hassan II",
             telephone: "+212 539 234 567"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.0 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 13,
@@ -263,6 +342,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Casablanca",
             address: "199 Avenue des FAR",
             telephone: "+212 522 345 678"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.5 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 14,
@@ -280,6 +364,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Rabat",
             address: "456 Rue El Jadida",
             telephone: "+212 537 456 789"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.4 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 15,
@@ -298,6 +387,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Marrakech",
             address: "78 Rue Patrice Lumumba",
             telephone: "+212 524 567 890"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.1 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 16,
@@ -315,6 +409,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Agadir",
             address: "334 Route de l'Ourika",
             telephone: "+212 528 678 901"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.9 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 17,
@@ -333,6 +432,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Fès",
             address: "112 Boulevard Mohammed V",
             telephone: "+212 535 789 012"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.8 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 18,
@@ -350,6 +454,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Tanger",
             address: "89 Avenue 29 Février",
             telephone: "+212 539 890 123"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.6 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 19,
@@ -368,6 +477,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Casablanca",
             address: "267 Rue de Hollande",
             telephone: "+212 522 901 234"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.7 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 20,
@@ -385,6 +499,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Rabat",
             address: "445 Boulevard d'Anfa",
             telephone: "+212 537 012 345"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "4.7 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 21,
@@ -403,6 +522,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Marrakech",
             address: "89 Avenue de Souissi",
             telephone: "+212 524 123 456"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.6 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 22,
@@ -420,6 +544,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Agadir",
             address: "77 Rue des Palmiers",
             telephone: "+212 528 234 567"
+            ,seats: 4,
+            airConditioning: true,
+            consumption: "5.3 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 23,
@@ -438,6 +567,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Fès",
             address: "155 Avenue Moulay Rachid",
             telephone: "+212 535 345 678"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.9 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 24,
@@ -455,6 +589,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Tanger",
             address: "298 Boulevard Pasteur",
             telephone: "+212 539 456 789"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "6.5 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 25,
@@ -473,6 +612,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Casablanca",
             address: "123 Rue Allal Ben Abdallah",
             telephone: "+212 522 567 890"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "5.8 L/100km",
+            abs: true,
+            rearCamera: false
         },
         {
             id: 26,
@@ -490,6 +634,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Rabat",
             address: "456 Avenue Hassan II",
             telephone: "+212 537 678 901"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "0 (électrique)",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 27,
@@ -508,6 +657,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Marrakech",
             address: "789 Boulevard Zerktouni",
             telephone: "+212 524 789 012"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "4.9 L/100km",
+            abs: true,
+            rearCamera: true
         },
         {
             id: 28,
@@ -525,6 +679,11 @@ export default function CarGrid({ filters = {} }) {
             city: "Agadir",
             address: "321 Avenue des FAR",
             telephone: "+212 528 890 123"
+            ,seats: 5,
+            airConditioning: true,
+            consumption: "7.1 L/100km",
+            abs: true,
+            rearCamera: true
         }
     ]);
 
@@ -680,6 +839,7 @@ export default function CarGrid({ filters = {} }) {
     }, [filters]);
 
     return (
+        <>
         <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{
                 display: 'flex',
@@ -1330,9 +1490,10 @@ export default function CarGrid({ filters = {} }) {
                             boxShadow: '0 0 50px rgba(0,0,0,0.4)',
                             margin: '0 1rem',
                             maxHeight: '90vh',
-                            maxWidth: '90vw',
-                            minWidth: '700px',
-                            overflow: 'hidden',
+                            width: 'min(66vw, 780px)',
+                            maxWidth: '66vw',
+                            overflowY: 'auto',
+                            overflowX: 'hidden',
                             display: 'flex',
                             flexDirection: 'column',
                             transform: showRentedCar ? 'scale(1)' : 'scale(0.95)',
@@ -1351,7 +1512,12 @@ export default function CarGrid({ filters = {} }) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <section 
-                            style={{ flex: 1, display: 'flex', gap: '30px' }}
+                            style={{ 
+                                flex: 1, 
+                                display: 'flex', 
+                                flexDirection: isSmallScreen ? 'column' : 'row',
+                                gap: isSmallScreen ? 'clamp(12px, 3vw, 24px)' : 'clamp(16px, 3vw, 30px)'
+                            }}
                         >
                             <div 
                                 style={{ 
@@ -1362,12 +1528,14 @@ export default function CarGrid({ filters = {} }) {
                                 }}
                             >
                                 <div style={{
-                                    width: '350px',
-                                    height: '200px',
+                                    width: isSmallScreen ? '100%' : '350px',
+                                    height: isSmallScreen ? 'auto' : '200px',
+                                    aspectRatio: isSmallScreen ? '16 / 9' : 'auto',
                                     position: 'relative',
                                     overflow: 'hidden',
                                     borderRadius: '8px',
                                     background: '#f3f4f6',
+                                    flexShrink: 0
                                 }}
                                 >
                                     {rentedCar.images.map((img, idx) => {
@@ -1674,14 +1842,15 @@ export default function CarGrid({ filters = {} }) {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
-                                    width: '200px',
-                                    flex: 1,
+                                    width: isSmallScreen ? '100%' : '10px',
+                                    flex: isSmallScreen ? '0 0 auto' : '1 1 auto',
+                                    minWidth: isSmallScreen ? 'auto' : 0,
                                     marginRight: 0,
                                 }}
                                 
                             > 
                                 <div className="col-auto">
-                                    <h1 className="text-30 sm:text-25 fw-600" >{rentedCar.brand} {rentedCar.model}</h1>
+                                    <h1 className="text-30 sm:text-25 fw-600" style={{ fontSize: 'clamp(20px, 5vw, 30px)' }}>{rentedCar.brand} {rentedCar.model}</h1>
                                 </div>
 
                                 <div className="col-auto">
@@ -1733,7 +1902,7 @@ export default function CarGrid({ filters = {} }) {
                                                             />
                                                             <circle cx="10" cy="8" r="2" fill="#f97316" />
                                                         </svg>
-                                                        {filters.depart || rentedCar.city}
+                                                        {translateCity(filters.depart || rentedCar.city)}
                                                     </div>
                                                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18px' }}>
                                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1801,8 +1970,21 @@ export default function CarGrid({ filters = {} }) {
                                     )}
                                 </div>
 
-                                <div className="col-auto">
-                                    <div className="button h-50 px-24 -dark-2 bg-brown-2 text-white" style={{ marginTop: '17px', cursor: 'pointer'  }}>
+                                <div className="col-auto" style={{ width: isSmallScreen ? '100%' : 'auto' }}>
+                                    <div 
+                                        className="button h-50 px-24 -dark-2 bg-brown-2 text-white" 
+                                        style={{ marginTop: '17px', cursor: 'pointer', width: isSmallScreen ? '100%' : 'auto' }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowRentedCar(false);
+                                            if(!filters.startDate || !filters.endDate){
+                                                setToastMessage(t[lang].rentals?.periodRequiredFull || (lang === 'fr' ? 'Veuillez sélectionner une date de début et de fin.' : 'يرجى اختيار تاريخ البداية والنهاية.'));
+                                                setShowToast(true);
+                                                return;
+                                            }
+                                            navigate(`/car/${rentedCar.id}`, { state: { car: rentedCar, filters} });
+                                        }}
+                                    >
                                         {t[lang].rentals.moreDetails}
                                         <div className="icon-arrow-top-right ml-15"/>
                                     </div>
@@ -1833,5 +2015,34 @@ export default function CarGrid({ filters = {} }) {
                 </div>, document.body
             )}
         </div>
+        {showToast && createPortal(
+            <div style={{
+                position: 'fixed',
+                bottom: '20px',
+                [lang === 'ar' ? 'left' : 'right']: '20px',
+                background: '#1f2937',
+                color: '#fff',
+                padding: '0.85rem 1rem',
+                borderRadius: '10px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.65rem',
+                fontSize: '0.9rem',
+                fontWeight: 500,
+                zIndex: 100000,
+                animation: 'fadeInUp 0.4s ease'
+            }}>
+                <svg style={{ width:18, height:18 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 9v4" />
+                    <path d="M12 17h.01" />
+                    <circle cx="12" cy="12" r="10" />
+                </svg>
+                <span style={{ flex:1 }}>{toastMessage}</span>
+                <button onClick={() => setShowToast(false)} style={{ background:'none', border:'none', color:'#fff', cursor:'pointer', fontSize:'1rem', lineHeight:1 }}>×</button>
+            </div>,
+            document.body
+        )}
+        </>
     );
 }

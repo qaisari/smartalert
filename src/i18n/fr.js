@@ -294,8 +294,8 @@ const fr = {
     search: "Rechercher"
   },
   rental: {
-    Address: "Address:",
-    Telephone: "Téléphone:",
+    Address: "Adresse :",
+    Telephone: "Téléphone :",
     period: "Période",
     pickupLocation: "Lieu de départ",
     dropoffLocation: "Lieu de dépôt",
@@ -306,6 +306,23 @@ const fr = {
     endDate: "Fin",
     from: "De",
     to: "à",
+    oneway: "trajet aller simple",
+    roundtrip: "trajet aller-retour",
+    roundTrip: "trajet aller-retour", // alias to be safe
+    rentalDetails: "Détails de la location",
+    character: "Les caractéristiques",
+    conditions: 'Conditions',
+    conditionsAgeLabel: 'Âge du locataire',
+    conditionsAgeValue: '22 - 65 ans',
+    drivingExperienceLabel: 'Expérience de conduite',
+    drivingExperienceValue: 'à partir de 2 ans',
+    mileageLimitLabel: 'Limitation de kilométrage',
+    mileageLimitValue: 'Non',
+    assuranceTitle: 'Assurance',
+    noExtraCoverage: 'Aucune couverture supplémentaire',
+    bigtoutes: 'TOUTES LES CARACTÉRISTIQUES',
+    toutes: "TOUTES",
+    reduction: 'RÉDUIRE',
     tripDetails: "Détails du voyage:",
     carDetails: "Détails de la voiture:",
     endHour: "Heure de Retour",
@@ -316,6 +333,125 @@ const fr = {
     selectPlaceholder: "Sélectionner...",
     selectDates: "Sélectionner ces dates",
     reset: "Effacer Tous",
+    day: "Jour",
+    days: "Jours",
+    pricePerDayLabel: "Prix par jour:",
+    rentalDurationLabel: "Durée de location:",
+    assuranceLabel: "Assurance:",
+    totalLabel: "Total:",
+    insurancePlans: {
+      securityDeposit: "Dépôt de garantie",
+      plus: {
+        name: "Assurance Plus",
+        f1: "Couverture de tous les dommages\nSans dépôt de garantie",
+        f2: "Annulation du voyage (maladie, accident, décès)",
+        f3: "Services d'assistance"
+      },
+      basic: {
+        name: "Assurance Basique",
+        f1: "Couverture de tous les dommages au-delà de la franchise",
+        f3: "Annulation du voyage (maladie, accident, décès)",
+        f4: "Services d'assistance"
+      },
+      none: {
+        name: "Sans assurance",
+        f1: "Ne couvre pas les dommages, mais couvre les dommages aux autres véhicules"
+      }
+    },
+    specs: {
+      transmission: "Boîte de vitesses",
+      engine: "Moteur",
+      productionYear: "Année de production",
+      audio: "Audio",
+      bluetooth: "Bluetooth",
+      seats: "Nombre de places",
+      airConditioning: "Climatisation",
+      consumption: "Consommation",
+      abs: "ABS",
+      rearCamera: "Caméra de recul",
+      yes: "Oui",
+      no: "Non"
+    }
+  ,
+  yourContact: "Vos coordonnées",
+  contactForm: {
+    fields: {
+      fullNameLabel: "Prénom et nom *",
+      fullNamePh: "Saisissez le prénom et le nom",
+      birthDateLabel: "Date de naissance *",
+      birthDatePh: "Entrez la date de naissance",
+      emailLabel: "Courriel *",
+      emailPh: "Adresse email",
+      phoneLabel: "Téléphone *",
+      phonePh: "Numéro du contact",
+      appsHint: "Indiquez les applications associées à votre numéro",
+      secondaryPhoneSection: "Téléphone supplémentaire (facultatif)",
+      addAnother: "Ajouter un autre numéro",
+      secondaryPhonePh: "Téléphone supplémentaire",
+      commentLabel: "Commentaire",
+    },
+    errors: {
+      fullNameReq: "Saisissez le prénom et le nom",
+      birthReq: "Entrez la date de naissance",
+      emailReq: "Adresse mail obligatoire",
+      phoneReq: "Numéro du contact obligatoire",
+    },
+    apps: {
+      telegram: "Telegram",
+      whatsapp: "WhatsApp",
+      viber: "Viber"
+    }
+  },
+  payment: {
+    title: "Paiement",
+    pay: "Payer",
+    cash: "Paiement à la livraison",
+    cashDesc: "Vous paierez lors de la remise du véhicule.",
+    card: "Carte bancaire",
+    cardDesc: "Payer par carte sur place.",
+    transfer: "Virement bancaire",
+    transferDesc: "Payer par virement avant la remise du véhicule.",
+    methods: {
+      gpayLabel: "Google Pay",
+      cardNewLabel: "Nouvelle carte de crédit ou de débit",
+      paypalLabel: "PayPal",
+      revolutLabel: "Revolut"
+    },
+    fields: {
+      cardNumber: "Numéro de carte",
+      numberPh: "1111 2222 3333 4444",
+      expiry: "Date d’expiration (MM/AA)",
+      mmPh: "MM",
+      yyPh: "AA",
+      cvc: "CVC/CVV",
+      cvcPh: "123",
+      holder: "Nom du titulaire (tel qu’indiqué sur la carte)",
+      holderPh: "ex. Jean Dupont"
+    }
+  },
+  },
+  weekdays: {
+    sunday: "Dim",
+    monday: "Lun",
+    tuesday: "Mar",
+    wednesday: "Mer",
+    thursday: "Jeu",
+    friday: "Ven",
+    saturday: "Sam"
+  },
+  smallMonths: {
+    january: "Jan",
+    february: "Fév",
+    march: "Mar",
+    april: "Avr",
+    may: "Mai",
+    june: "Juin",
+    july: "Juil",
+    august: "Août",
+    september: "Sep",
+    october: "Oct",
+    november: "Nov",
+    december: "Déc",
   },
   months: {
     january: "Janvier",
@@ -473,7 +609,11 @@ const fr = {
     perDayShort: "/jour",
     carsFound: "voitures trouvées",
     noCarsFound: "Aucune voiture trouvée avec ces critères",
-    tryModifyFilters: "Essayez de modifier vos filtres"
+  tryModifyFilters: "Essayez de modifier vos filtres",
+  periodRequired: "Période obligatoire",
+  selectDates: "Sélectionnez la date de début et la date de fin"
+  ,periodRequiredFull: "Veuillez sélectionner une date de début et une date de fin pour continuer"
+  ,periodRequiredShort: "Sélectionnez une période"
   },
   footer: {
     contactInfo: {

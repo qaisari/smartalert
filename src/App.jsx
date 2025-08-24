@@ -23,6 +23,7 @@ import Terms from "./pages/others/terms";
 import HotelSingleV1Dynamic from "./pages/hotel/hotel-single-v1";
 import CarListPage2 from "./pages/car/car-list-v2";
 import Location from "./pages/location";
+import CarCard from "./components/CarCard";
 import Reparation from "./pages/reparation";
 import CarSingleV1Dynamic from "./pages/car/car-single";
 import { fetchBrandCriteria } from "./features/filters/brandCriteriaSlice";
@@ -64,6 +65,7 @@ function App() {
               <Route path="neuve" element={<CarListPage2 />} />
               <Route path="location" element={<Location />} />
               <Route path="reparation" element={<Reparation />} />
+              <Route path="/car/:id" element={<CarCard />} />
 
               <Route path="neuve/:id" element={<HotelSingleV1Dynamic />} />
               <Route path="occasion/:id" element={<CarSingleV1Dynamic />} />

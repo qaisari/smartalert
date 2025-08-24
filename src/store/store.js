@@ -8,6 +8,7 @@ import chipCriteriaSlice from "../features/filters/chipCriteriaSlice"
 import sectorCriteriaSlice from "../features/filters/sectorCriteriaSlice"
 import modelCriteriaSlice from "../features/filters/modelCriteriaSlice"
 import uiSlice from "../features/ui/uiSlice"
+import contactFormReducer from "../features/ui/contactFormSlice"
 import promoCarsSlice from "@/features/cars/promoCarsSlice";
 
 export const store = configureStore({
@@ -22,5 +23,6 @@ export const store = configureStore({
     modelReducer: modelCriteriaSlice,
     ui: uiSlice,
     promoCarsReducer: promoCarsSlice,
+  contactForm: contactFormReducer,
   },
 });

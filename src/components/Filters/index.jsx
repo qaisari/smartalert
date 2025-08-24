@@ -84,6 +84,15 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     const [localisation, setLocalisation] = useState("same");
     const [selectFocused, setSelectFocused] = useState(false);
     const [filtersApplied, setFiltersApplied] = useState(false);
+    // Inline validation message state
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showError, setShowError] = useState(false);
+    useEffect(() => {
+        if(showError){
+            const timer = setTimeout(() => setShowError(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [showError]);
 
     const handleChange = (e) => {
         setSearch(e.target.value);
@@ -253,15 +262,15 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         return (
             <div key={monthDate.getTime()} style={{ marginBottom: 24 }}>
                 {/* <h4 style={{ fontSize: '1.5rem', fontWeight: 700, textAlign: 'center', margin: '1.5rem 0 1rem 0', color: '#16213e', letterSpacing: 0 }}>{monthName}</h4> */}
-                <div style={{ display: 'grid',  gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, textAlign: 'center', marginBottom: 8 }}>
+            <div style={{ display: 'grid',  gridTemplateColumns: 'repeat(7, minmax(0, 1fr))', gap: 'clamp(4px, 1vw, 8px)', textAlign: 'center', marginBottom: 8 }}>
                     {weekDays.map((day, index) => (
-                        <div key={index} style={{ fontWeight: 600, color: '#16213e', fontSize: 16, padding: '6px 0' }}>{day}</div>
+            <div key={index} style={{ fontWeight: 600, color: '#16213e', fontSize: 'clamp(12px, 2.6vw, 16px)', padding: '6px 0' }}>{day}</div>
                     ))}
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, minmax(2px, 1fr))', gap: 'clamp(4px, 1vw, 8px)' }}>
                     {days.map((date, index) => {
                         if (!date) {
-                            return <div key={index} style={{ height: 40 }}></div>;
+                            return <div key={index} style={{ width: '100%', aspectRatio: '1 / 1' }}></div>;
                         }
                         const isSelected = (tempStartDate && date.toDateString() === tempStartDate.toDateString()) || 
                                          (tempEndDate && date.toDateString() === tempEndDate.toDateString());
@@ -290,11 +299,12 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                                 key={index}
                                 disabled={isPast}
                                 style={{
-                                    height: 40,
-                                    width: 40,
-                                    borderRadius: 8,
+                                    width: '80%',
+                                    aspectRatio: '1 / 1',
+                                    height: 'auto',
+                                    borderRadius: 10,
                                     fontWeight: 600,
-                                    fontSize: 16,
+                                    fontSize: 'clamp(12px, 2.8vw, 16px)',
                                     background: bg,
                                     color: color,
                                     border: border,
@@ -330,6 +340,13 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
     }, [showCalendar]);
 
     const handleSearch = () => {
+        // Enforce mandatory period
+        if (!startDate || !endDate) {
+            // Simple visual feedback (could elevate to stateful error banner)
+            setErrorMessage(t[lang].rentals?.periodRequiredFull || (lang === 'fr' ? 'Veuillez sélectionner une période.' : 'يرجى اختيار فترة.'));
+            setShowError(true);
+            return;
+        }
         const filters = {
             brand: selectedBrand || "",
             model: modelSearch || "",
@@ -398,342 +415,371 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                 marginLeft: isMobile ? '0' : '20px',
                 padding: '5px',
             }}>
-            {/* Marque Filter */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.brand.title}</div>
-                <div style={{ position: 'relative' }}>
-                    <input 
-                        className="filter-input"
-                        type="text"
-                        placeholder={t[lang].sideBar.brand.placeholder}
-                        style={{ 
-                            width: '100%', 
-                            height: '48px', 
-                            background: '#ffffffff', 
-                            fontFamily: 'Roboto, sans-serif', 
-                            borderRadius: 6, 
-                            fontSize: '1rem', 
-                            outline: 'none', 
-                            marginBottom: -10, 
-                            fontWeight: 500, 
-                            color: '#222', 
-                            marginTop: -10, 
-                            marginLeft: (lang === "ar") ? -30 : -30, 
-                            padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 0.7rem',
-
-                        }}
-                        value={search}
-                        onChange={handleChange}
-                        onFocus={() => setShowDropDown(true)}
-                    />
-                    {showDropDown && filteredOptions.length > 0 && (
-                        <div style={{ position: 'absolute', top: '160%', left: -25, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: isMobile ? '114%' : '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
-                            {filteredOptions.map((car, index) => (
-                                <div
-                                    key={index}
-                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 500, width: isMobile ? '85%' : '80%', height: '34px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
-                                    onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
-                                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                    onClick={() => handleOptionSelect(car)}
-                                >
-                                    {car}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    {showDropDown && (
-                        <div 
-                            style={{ position: 'fixed', inset: 0, zIndex: 5 }}
-                            onClick={() => setShowDropDown(false)}
-                        ></div>
-                    )}
-                </div>
-            </div>
-
-            {/* Modèle Filter - Only show when brand is selected */}
-            {selectedBrand && availableModels.length > 0 && (
-                <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.model.title}</div>
+            
+                {/* Marque Filter */}
+                <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', borderTop: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e',  marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.brand.title}</div>
                     <div style={{ position: 'relative' }}>
                         <input 
+                            className="filter-input"
                             type="text"
-                            placeholder={t[lang].sideBar.model.placeholder}
-                            style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '-35px' : '-35px', fontFamily: 'Roboto, sans-serif' }}
-                            value={modelSearch}
-                            onChange={handleModelChange}
-                            onFocus={() => setShowModelDropDown(true)}
+                            placeholder={t[lang].sideBar.brand.placeholder}
+                            style={{ 
+                                width: '100%', 
+                                height: '48px', 
+                                background: '#ffffffff', 
+                                fontFamily: 'Roboto, sans-serif', 
+                                borderRadius: 6, 
+                                fontSize: '1rem', 
+                                outline: 'none', 
+                                marginBottom: -10, 
+                                fontWeight: 500, 
+                                color: '#222', 
+                                marginTop: -10, 
+                                marginLeft: (lang === "ar") ? -30 : -30, 
+                                padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 0.7rem',
+
+                            }}
+                            value={search}
+                            onChange={handleChange}
+                            onFocus={() => setShowDropDown(true)}
                         />
-                        {showModelDropDown && filteredModels.length > 0 && (
-                            <div style={{ position: 'absolute', top: '140%', left: -23, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
-                                {filteredModels.map((model, index) => (
+                        {showDropDown && filteredOptions.length > 0 && (
+                            <div style={{ position: 'absolute', top: '160%', left: -25, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', overflowY: 'auto', zIndex: 10, width: isMobile ? '114%' : '279px', maxHeight: '385px', padding: '0.7rem 0', boxShadow: '0 4px 16px rgba(0,0,0,0.08)'}}>
+                                {filteredOptions.map((car, index) => (
                                     <div
                                         key={index}
-                                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.95rem', fontWeight: 500, width: isMobile ? '85%' : '80%', height: '34px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                         onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                        onClick={() => handleModelSelect(model)}
+                                        onClick={() => handleOptionSelect(car)}
                                     >
-                                        {model}
+                                        {car}
                                     </div>
                                 ))}
                             </div>
                         )}
-                        {showModelDropDown && (
+                        {showDropDown && (
                             <div 
                                 style={{ position: 'fixed', inset: 0, zIndex: 5 }}
-                                onClick={() => setShowModelDropDown(false)}
+                                onClick={() => setShowDropDown(false)}
                             ></div>
                         )}
                     </div>
                 </div>
-            )}
 
-            {/* Période Filter (Calendar Trigger) */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', position: 'relative', background: '#fff' }}>
-            <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.period}</div>
-                <div 
-                    className="filter-date"
-                    style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 'fit-content', boxShadow: '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', marginLeft: isMobile ? '-20px' : '-20px', position: 'relative' }}
-                    onClick={() => openCalendar()}
-                >
-                    <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#fd861dff' }}>
-                        <div style={{ minWidth: 60, display: 'flex', flexDirection: endDate ? 'column' : 'row', justifyContent: 'center', alignItems: 'center', gap: endDate ? '' : '0.5rem', marginRight: endDate ? 0 : -30 }}>
-                            <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : t[lang].rental.startDate}</div>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexDirection: endDate ? 'column' : 'row',
-                                gap: endDate ? '0' : '1.9rem',
-                            }}>
-                                <div style={{ fontSize: '1rem', fontWeight: 600 , marginLeft: endDate ? -0 : 0}}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
-                                {/* Show pickup time under date for multi-day rentals */}
-                                {(
-                                    <div style={{ 
-                                        fontSize: endDate ? '0.7rem' : '1.0rem', 
-                                        color: '#9ca3af', 
-                                        marginTop: '2px',
-                                        transform: startHour ? 'translateY(0)' : 'translateY(-10px)',
-                                        opacity: startHour ? 1 : 0,
-                                        pointerEvents: startHour ? 'auto' : 'none',
-                                        transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
-                                    }}>{startHour}</div>
-                                )}
-                            </div>
-                        </div>
-                        
-                        { (
-                            <div style={{
-                                display: 'flex',
-                                gap: '0.5rem',
-                                alignItems: 'center',
-                                transform: endDate ? 'translateX(0)' : 'translateX(-100px)',
-                                opacity: endDate ? 1 : 0,
-                                pointerEvents: endDate ? 'auto' : 'none',
-                                transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
-                            }}>
-                                <div style={{ margin: '0 0.5rem', color: '#9ca3af', fontWeight: 700, fontSize: 18 }}>-</div>
-                                <div style={{minWidth: 60, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : t[lang].rental.endDate}</div>
-                                    <div style={{ fontSize: '1rem', fontWeight: 600 }}>{endDate ? formatDateForDisplay(endDate) : '--/--'}</div>
-                                    {/* Show dropoff time under date for multi-day rentals */}
-                                    {(
-                                        <div style={{ 
-                                            fontSize: endDate ? '0.7rem' : '1.0rem', 
-                                            color: '#9ca3af', 
-                                            marginTop: '2px',
-                                            transform: endHour ? 'translateY(0)' : 'translateY(-10px)',
-                                            opacity: endHour ? 1 : 0,
-                                            pointerEvents: endHour ? 'auto' : 'none',
-                                            transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
-                                        }}>{endHour}</div>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                        
-                        <svg style={{ width: 20, height: 20, color: '#fd861dff' }} fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            {/* Pickup / Drop-off Section */}
-            <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.dropoffLocation}</div>
-                <div className="filter-date" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>
-                        <CustomDropdown
-                            value={localisation}
-                            onChange={setLocalisation}
-                            placeholder={t[lang].rental.selectPlaceholder}
-                            options={[
-                                { value: 'same', label: t[lang].rental.sameLocation },
-                                { value: 'different', label: t[lang].rental.differentLocation }
-                            ]}
-                        />
-                    </div>
-                    {/* City dropdown for 'same' location */}
-                    {localisation === 'same' && (
+                {/* Modèle Filter - Only show when brand is selected */}
+                {selectedBrand && availableModels.length > 0 && (
+                    <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                        <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.model.title}</div>
                         <div style={{ position: 'relative' }}>
-                            <input
-                                className="filter-input"
+                            <input 
                                 type="text"
-                                placeholder={t[lang].rental.cityPlaceholder}
-                                style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '-30px' : '-30px' }}
-                                value={citySearch}
-                                onChange={e => { setCitySearch(e.target.value); setShowCityDropDown(true); }}
-                                onFocus={() => setShowCityDropDown(true)}
+                                placeholder={t[lang].sideBar.model.placeholder}
+                                style={{ width: '100%', height: '48px', background: '#ffffffff', borderRadius: 6, padding: (lang === "ar") ? '0.75rem 0rem' : '0.75rem 1rem', fontSize: '1rem', outline: 'none', marginBottom: 0, fontWeight: 500, color: '#222',  marginLeft: isMobile ? '-35px' : '-35px', fontFamily: 'Roboto, sans-serif' }}
+                                value={modelSearch}
+                                onChange={handleModelChange}
+                                onFocus={() => setShowModelDropDown(true)}
                             />
-                            {showCityDropDown && filteredCities.length > 0 && (
+                            {showModelDropDown && filteredModels.length > 0 && (
                                 <div style={{ position: 'absolute', top: '140%', left: -23, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
-                                    {filteredCities.map((city, index) => (
+                                    {filteredModels.map((model, index) => (
                                         <div
                                             key={index}
                                             style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
                                             onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                            onClick={() => { setSelectedCity(city); setCitySearch(city); setShowCityDropDown(false); }}
+                                            onClick={() => handleModelSelect(model)}
                                         >
-                                            {translateCity(city)}
+                                            {model}
                                         </div>
                                     ))}
                                 </div>
                             )}
-                            {showCityDropDown && (
+                            {showModelDropDown && (
                                 <div 
                                     style={{ position: 'fixed', inset: 0, zIndex: 5 }}
-                                    onClick={() => setShowCityDropDown(false)}
+                                    onClick={() => setShowModelDropDown(false)}
                                 ></div>
                             )}
                         </div>
-                    )}
-                    {/* For 'different' location, keep as is or implement similar dropdowns for both fields if needed */}
-                    {localisation === 'different' && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <div style={{ flex: 1, position: 'relative', marginTop: '10px' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.departureLabel}</div>
-                                <input
-                                    className="filter-input"
-                                    type="text"
-                                    placeholder={t[lang].rental.cityPlaceholder}
-                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
-                                    value={departSearch}
-                                    onChange={e => { setDepartSearch(e.target.value); setShowDepartDropDown(true); }}
-                                    onFocus={() => setShowDepartDropDown(true)}
-                                />
-                                {showDepartDropDown && filteredDeparts.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
-                                        {filteredDeparts.map((city, index) => (
-                                            <div
-                                                key={index}
-                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
-                                                onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
-                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { setSelectedDepart(city); setDepartSearch(city); setShowDepartDropDown(false); }}
-                                            >
-                                                {translateCity(city)}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                                {showDepartDropDown && (
-                                    <div 
-                                        style={{ position: 'fixed', inset: 0, zIndex: 5 }}
-                                        onClick={() => setShowDepartDropDown(false)}
-                                    ></div>
-                                )}
+                    </div>
+                )}
+
+                {/* Période Filter (Calendar Trigger) */}
+                <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', position: 'relative', background: '#fff' }}>
+                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.period}</div>
+                    <div 
+                        className="filter-date"
+                        style={{ background: '#ffffffff', borderRadius: '6px', padding: '0.75rem 2.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 'fit-content', boxShadow: showError ? '0px 0px 8px rgba(255, 2, 2, 0.63)' : '0px 0px 8px rgba(0,0,0,0.09)', marginTop: '14px', paddingLeft: '10px', marginLeft: '-20px', position: 'relative' }}
+                        onClick={() => openCalendar()}
+                    >
+                        <div style={{ display: 'flex', flex: 1, justifyContent: 'space-between', alignItems: 'center', color: '#fd861dff' }}>
+                            <div style={{ minWidth: 60, display: 'flex', flexDirection: endDate ? 'column' : 'row', justifyContent: 'center', alignItems: 'center', gap: endDate ? '' : '0.5rem', marginRight: endDate ? 0 : -30 }}>
+                                <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{startDate ? formatDayName(startDate) : t[lang].rental.startDate}</div>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexDirection: endDate ? 'column' : 'row',
+                                    gap: endDate ? '0' : '1.9rem',
+                                }}>
+                                    <div style={{ fontSize: '1rem', fontWeight: 600 , marginLeft: endDate ? -0 : 0}}>{startDate ? formatDateForDisplay(startDate) : '--/--'}</div>
+                                    {/* Show pickup time under date for multi-day rentals */}
+                                    {(
+                                        <div style={{ 
+                                            fontSize: endDate ? '0.7rem' : '1.0rem', 
+                                            color: '#9ca3af', 
+                                            marginTop: '2px',
+                                            transform: startHour ? 'translateY(0)' : 'translateY(-10px)',
+                                            opacity: startHour ? 1 : 0,
+                                            pointerEvents: startHour ? 'auto' : 'none',
+                                            transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                        }}>{startHour}</div>
+                                    )}
+                                </div>
                             </div>
-                            <div style={{ flex: 1, position: 'relative' }}>
-                                <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.returnLabel}</div>
-                                <input
-                                    className="filter-input"
-                                    type="text"
-                                    placeholder={t[lang].rental.cityPlaceholder}
-                                    style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
-                                    value={depotSearch}
-                                    onChange={e => { setDepotSearch(e.target.value); setShowDepotDropDown(true); }}
-                                    onFocus={() => setShowDepotDropDown(true)}
-                                />
-                                {showDepotDropDown && filteredDepots.length > 0 && (
-                                    <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
-                                        {filteredDepots.map((city, index) => (
-                                            <div
-                                                key={index}
-                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
-                                                onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
-                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                                                onClick={() => { setSelectedDepot(city); setDepotSearch(city); setShowDepotDropDown(false); }}
-                                            >
-                                                {translateCity(city)}
-                                            </div>
-                                        ))}
+                            
+                            { (
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '0.5rem',
+                                    alignItems: 'center',
+                                    transform: endDate ? 'translateX(0)' : 'translateX(-100px)',
+                                    opacity: endDate ? 1 : 0,
+                                    pointerEvents: endDate ? 'auto' : 'none',
+                                    transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                }}>
+                                    <div style={{ margin: '0 0.5rem', color: '#9ca3af', fontWeight: 700, fontSize: 18 }}>-</div>
+                                    <div style={{minWidth: 60, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <div style={{ fontSize: '0.75rem', color: '#6b7280', fontWeight: 500 }}>{endDate ? formatDayName(endDate) : t[lang].rental.endDate}</div>
+                                        <div style={{ fontSize: '1rem', fontWeight: 600 }}>{endDate ? formatDateForDisplay(endDate) : '--/--'}</div>
+                                        {/* Show dropoff time under date for multi-day rentals */}
+                                        {(
+                                            <div style={{ 
+                                                fontSize: endDate ? '0.7rem' : '1.0rem', 
+                                                color: '#9ca3af', 
+                                                marginTop: '2px',
+                                                transform: endHour ? 'translateY(0)' : 'translateY(-10px)',
+                                                opacity: endHour ? 1 : 0,
+                                                pointerEvents: endHour ? 'auto' : 'none',
+                                                transition: 'opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1)'
+                                            }}>{endHour}</div>
+                                        )}
                                     </div>
-                                )}
-                                {showDepotDropDown && (
-                                    <div 
-                                        style={{ position: 'fixed', inset: 0, zIndex: 5 }}
-                                        onClick={() => setShowDepotDropDown(false)}
-                                    ></div>
-                                )}
-                            </div>
+                                </div>
+                            )}
+                            
+                            <svg style={{ width: 20, height: 20, color: '#fd861dff' }} fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zM4 8h12v8H4V8z"/>
+                            </svg>
                         </div>
-                    )}
+                    </div>
                 </div>
-            </div>
 
-            {/* Promotion Filter */}
-            <div className="filter-section" style={{ padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
-                <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.promo.title}</div>
-                <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222',marginLeft: isMobile ? '-20px' : '-20px' }}>
-                    <input 
-                        type="checkbox" 
-                        checked={promotion}
-                        onChange={(e) => setPromotion(e.target.checked)}
-                        style={{ marginRight: '0.5rem', accentColor: '#fb923c', width: 18, height: 18 }}
-                    />
-                    <span>{t[lang].sideBar.promo.default}</span>
-                </label>
-            </div>
+                {/* Pickup / Drop-off Section */}
+                <div className="filter-section" style={{ borderBottom: '1px solid #e5e7eb', padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.dropoffLocation}</div>
+                    <div className="filter-date" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        <div style={{ width: '100%', maxWidth: 240, marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>
+                            <CustomDropdown
+                                value={localisation}
+                                onChange={setLocalisation}
+                                placeholder={t[lang].rental.selectPlaceholder}
+                                options={[
+                                    { value: 'same', label: t[lang].rental.sameLocation },
+                                    { value: 'different', label: t[lang].rental.differentLocation }
+                                ]}
+                            />
+                        </div>
+                        {/* City dropdown for 'same' location */}
+                        {localisation === 'same' && (
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    className="filter-input"
+                                    type="text"
+                                    placeholder={t[lang].rental.cityPlaceholder}
+                                    style={{ marginBottom: 0, background: '#fff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginLeft: isMobile ? '-30px' : '-30px' }}
+                                    value={translateCity(citySearch)}
+                                    onChange={e => { setCitySearch(e.target.value); setShowCityDropDown(true); }}
+                                    onFocus={() => setShowCityDropDown(true)}
+                                />
+                                {showCityDropDown && filteredCities.length > 0 && (
+                                    <div style={{ position: 'absolute', top: '140%', left: -23, right: (lang === "ar") ? -25 : 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '350px' : '289px' }}>
+                                        {filteredCities.map((city, index) => (
+                                            <div
+                                                key={index}
+                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                                onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                onClick={() => { setSelectedCity(city); setCitySearch(city); setShowCityDropDown(false); }}
+                                            >
+                                                {translateCity(city)}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {showCityDropDown && (
+                                    <div 
+                                        style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                        onClick={() => setShowCityDropDown(false)}
+                                    ></div>
+                                )}
+                            </div>
+                        )}
+                        {/* For 'different' location, keep as is or implement similar dropdowns for both fields if needed */}
+                        {localisation === 'different' && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                <div style={{ flex: 1, position: 'relative', marginTop: '10px' }}>
+                                    <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.departureLabel}</div>
+                                    <input
+                                        className="filter-input"
+                                        type="text"
+                                        placeholder={t[lang].rental.cityPlaceholder}
+                                        style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
+                                        value={translateCity(departSearch)}
+                                        onChange={e => { setDepartSearch(e.target.value); setShowDepartDropDown(true); }}
+                                        onFocus={() => setShowDepartDropDown(true)}
+                                    />
+                                    {showDepartDropDown && filteredDeparts.length > 0 && (
+                                        <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
+                                            {filteredDeparts.map((city, index) => (
+                                                <div
+                                                    key={index}
+                                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                                    onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                    onClick={() => { setSelectedDepart(city); setDepartSearch(city); setShowDepartDropDown(false); }}
+                                                >
+                                                    {translateCity(city)}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {showDepartDropDown && (
+                                        <div 
+                                            style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                            onClick={() => setShowDepartDropDown(false)}
+                                        ></div>
+                                    )}
+                                </div>
+                                <div style={{ flex: 1, position: 'relative' }}>
+                                    <div className="date-label" style={{ fontSize: 14, fontWeight: 600, fontFamily: 'Roboto, sans-serif', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].rental.returnLabel}</div>
+                                    <input
+                                        className="filter-input"
+                                        type="text"
+                                        placeholder={t[lang].rental.cityPlaceholder}
+                                        style={{ marginBottom: 0, background: '#ffffffff', fontFamily: 'Roboto, sans-serif', borderRadius: 6, fontSize: 15, fontWeight: 500, color: '#222', marginTop: -10, marginLeft: isMobile ? '-30px' : '-30px' }}
+                                        value={translateCity(depotSearch)}
+                                        onChange={e => { setDepotSearch(e.target.value); setShowDepotDropDown(true); }}
+                                        onFocus={() => setShowDepotDropDown(true)}
+                                    />
+                                    {showDepotDropDown && filteredDepots.length > 0 && (
+                                        <div style={{ position: 'absolute', top: '125%', left: -23, right: 0, background: '#fff', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', maxHeight: '12rem', overflowY: 'auto', zIndex: 10, width: isMobile ? '115%' : '119%' }}>
+                                            {filteredDepots.map((city, index) => (
+                                                <div
+                                                    key={index}
+                                                    style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', fontSize: '0.9rem', width: '80%', height: '35px', gap: '10%', marginLeft: '10%', background: 'transparent', transition: 'background 0.15s', color: '#222', borderRadius: 9}}
+                                                    onMouseEnter={e => e.currentTarget.style.background = '#fffff3ff'}
+                                                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                                                    onClick={() => { setSelectedDepot(city); setDepotSearch(city); setShowDepotDropDown(false); }}
+                                                >
+                                                    {translateCity(city)}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {showDepotDropDown && (
+                                        <div 
+                                            style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+                                            onClick={() => setShowDepotDropDown(false)}
+                                        ></div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
 
-            {/* Calendar Modal */}
-            
-            {/* Search and Clear Buttons */}
-            <div style={{ padding: '1rem 1rem 1.5rem 1rem', display: 'flex', gap: '0.5rem', flexDirection: 'column' }}>
-                <button 
-                    onClick={() => {
-                        handleSearch();
-                        if (isMobile && onClose) onClose();
-                    }}
-                    style={{ width: '100%', background: '#374151', color: '#fff', padding: '0.75rem 1rem', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = '#ff8120'}
-                    onMouseLeave={e => e.currentTarget.style.background = '#374151'}
-                >
-                    <svg style={{ width: 16, height: 16, marginRight: 8 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    {t[lang].sideBar.search}
-                </button>
+                {/* Promotion Filter */}
+                <div className="filter-section" style={{ padding: '1.5rem 1.5rem 1rem 1.5rem', background: '#fff' }}>
+                    <div className="filter-label" style={{ fontWeight: 700, fontFamily: 'Roboto, sans-serif', fontSize: '1.1rem', marginBottom: '5px', marginTop: '-3px', color: '#16213e', marginLeft: isMobile ? '-20px' : '-20px' }}>{t[lang].sideBar.promo.title}</div>
+                    <label className="promotion-label" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '1rem', color: '#222',marginLeft: isMobile ? '-20px' : '-20px' }}>
+                        <input 
+                            type="checkbox" 
+                            checked={promotion}
+                            onChange={(e) => setPromotion(e.target.checked)}
+                            style={{ marginRight: '0.5rem', accentColor: '#fb923c', width: 18, height: 18 }}
+                        />
+                        <span>{t[lang].sideBar.promo.default}</span>
+                    </label>
+                </div>
+
+                {/* Calendar Modal */}
                 
-                {/* Show Clear All button only when filters are applied */}
-                {filtersApplied && (
+                {/* Search and Clear Buttons */}
+                <div style={{ padding: '1rem 1rem 1.5rem 1rem', display: 'flex', gap: '0.5rem', flexDirection: 'column' }}>
                     <button 
                         onClick={() => {
-                            clearAllFilters();
+                            handleSearch();
                             if (isMobile && onClose) onClose();
                         }}
-                        style={{ width: '100%', background: '#f3f4f6', color: '#374151', padding: '0.75rem 1rem', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: '1px solid #d1d5db', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
-                        onMouseEnter={e => { e.currentTarget.style.background = '#e5e7eb'; e.currentTarget.style.borderColor = '#9ca3af'; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.borderColor = '#d1d5db'; }}
+                        style={{ width: '100%', background: '#374151', color: '#fff', padding: '0.75rem 1rem', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+                        onMouseEnter={e => e.currentTarget.style.background = '#ff8120'}
+                        onMouseLeave={e => e.currentTarget.style.background = '#374151'}
                     >
                         <svg style={{ width: 16, height: 16, marginRight: 8 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        {t[lang].rental.reset}
+                        {t[lang].sideBar.search}
                     </button>
+                    
+                    {/* Show Clear All button only when filters are applied */}
+                    {filtersApplied && (
+                        <button 
+                            onClick={() => {
+                                clearAllFilters();
+                                if (isMobile && onClose) onClose();
+                            }}
+                            style={{ width: '100%', background: '#f3f4f6', color: '#374151', padding: '0.75rem 1rem', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: '1px solid #d1d5db', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#e5e7eb'; e.currentTarget.style.borderColor = '#9ca3af'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.borderColor = '#d1d5db'; }}
+                        >
+                            <svg style={{ width: 16, height: 16, marginRight: 8 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            {t[lang].rental.reset}
+                        </button>
+                    )}
+                </div>
+                {(
+                    <div style={{
+                        background: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        color: '#b91c1c',
+                        fontSize: '0.85rem',
+                        fontWeight: 500,
+                        borderRadius: 8,
+                        padding: '0.65rem 0.75rem',
+                        margin: '0.5rem 0.75rem 1rem 0.75rem',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '0.5rem',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+                        animation: 'fadeSlideIn 0.4s ease',
+                        opacity: showError ? 1 : 0,
+                        pointerEvents: showError ? 'auto' : 'none',
+                        transition: 'opacity 0.3s ease',
+                    }}>
+                        <svg style={{ width: 16, height: 16, flexShrink: 0, marginTop: 2 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" />
+                            <line x1="12" y1="8" x2="12" y2="13" />
+                            <line x1="12" y1="16" x2="12" y2="16" />
+                        </svg>
+                        <div style={{ flex: 1 }}>{errorMessage}</div>
+                        <button onClick={() => setShowError(false)} style={{ background: 'none', border: 'none', color: '#b91c1c', cursor: 'pointer', padding: 4, lineHeight: 0 }}>×</button>
+                    </div>
                 )}
-            </div>
-        </aside>
+            </aside>
 
         {/* Calendar Modal - Rendered outside the aside using portal */}
         {createPortal(
@@ -756,8 +802,8 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     background: '#fff', 
                     borderRadius: '16px', 
                     boxShadow: '0 8px 32px rgba(0,0,0,0.18)', 
-                    maxWidth: isMobile ? '90vw' : '28rem', 
-                    width: isMobile ? '45vw' : '100%', 
+                    width: isMobile ? 'min(92vw, 28rem)' : '28rem',
+                    maxWidth: '92vw',
                     margin: '0 1rem', 
                     maxHeight: '90vh', 
                     overflow: 'hidden', 
@@ -908,19 +954,6 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                         </div>
                         
                         {/* Time validation message */}
-                        {tempStartDate && tempEndDate && tempStartDate.toDateString() === tempEndDate.toDateString() && startHour && endHour && endHour <= startHour && (
-                            <div style={{ 
-                                background: '#fef2f2', 
-                                border: '1px solid #fecaca', 
-                                borderRadius: '6px', 
-                                padding: '0.5rem', 
-                                marginBottom: '1rem',
-                                fontSize: '0.875rem',
-                                color: '#dc2626'
-                            }}>
-                                {t[lang].rental.timeValidation || 'L\'heure de fin doit être après l\'heure de début pour le même jour.'}
-                            </div>
-                        )}
                         <button 
                             style={{ width: '100%', background: '#fb923c', color: '#fff', padding: '0.75rem 0', borderRadius: '8px', fontWeight: 500, fontSize: '1rem', border: 'none', cursor: 'pointer', transition: 'background 0.2s' }}
                             onMouseEnter={e => e.currentTarget.style.background = '#f97316'}
@@ -940,7 +973,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
         {createPortal(
             <div 
                 style={{ 
-                    position: 'fixed', 
+                    position: 'fixed',
                     inset: 0, 
                     background: 'rgba(0, 0, 25, 0.40)', 
                     display: 'flex', 
@@ -957,7 +990,7 @@ export default function Filters({ onFiltersChange, isMobile = false, onClose }) 
                     background: '#fff', 
                     borderRadius: '20px', 
                     boxShadow: '0 10px 40px rgba(0,0,0,0.2)', 
-                    width: isMobile ? '85vw' : '320px', 
+                    width: '320px', 
                     maxHeight: '70vh', 
                     overflow: 'hidden', 
                     display: 'flex', 

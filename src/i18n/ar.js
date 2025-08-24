@@ -286,8 +286,8 @@ const ar = {
     search: "بحث"
   },
   rental: {
-    Address: "العنوان",
-    Telephone: "الهاتف",
+    Address: "العنوان:",
+    Telephone: "الهاتف:",
     period: "الفترة",
     pickupLocation: "مكان الانطلاق",
     dropoffLocation: "مكان الإيداع",
@@ -299,15 +299,148 @@ const ar = {
     endDate: "النهاية",
     from: "من",
     to: "إلى",
+  oneway: "رحلة ذهاب فقط",
+  roundTrip: "رحلة ذهاب وإياب",
+  roundtrip: "رحلة ذهاب وإياب", // alias
+  rentalDetails: "تفاصيل الإيجار",
+  character: "الخصائص",
+  toutes: "جميع الخصائص",
+  bigtoutes: "جميع الخصائص",
+  reduction: "إخفاء",
+  conditions: "الشروط",
+  conditionsAgeLabel: "عمر المستأجر",
+  conditionsAgeValue: "22 - 65 سنة",
+  drivingExperienceLabel: "خبرة القيادة",
+  drivingExperienceValue: "منذ سنتين على الأقل",
+  mileageLimitLabel: "حد الكيلومترات",
+  mileageLimitValue: "لا يوجد",
+  assuranceTitle: "التأمين",
+  noExtraCoverage: "لا توجد تغطية إضافية",
     tripDetails: ":تفاصيل الرحلة",
     carDetails: ":تفاصيل السيارة",
+    specs: {
+      transmission: "علبة السرعات",
+      engine: "المحرك",
+      productionYear: "سنة الصنع",
+      audio: "الصوت",
+      bluetooth: "بلوتوث",
+      seats: "عدد المقاعد",
+      airConditioning: "مكيف الهواء",
+      consumption: "استهلاك الوقود",
+      abs: "ABS",
+      rearCamera: "كاميرا الرجوع للخلف",
+      yes: "نعم",
+      no: "لا"
+    },
+  yourContact: "معلوماتك",
+  contactForm: {
+    fields: {
+      fullNameLabel: "الاسم الكامل *",
+      fullNamePh: "أدخل الاسم واللقب",
+      birthDateLabel: "تاريخ الميلاد *",
+      birthDatePh: "أدخل تاريخ الميلاد",
+      emailLabel: "البريد الإلكتروني *",
+      emailPh: "عنوان البريد الإلكتروني",
+      phoneLabel: "الهاتف *",
+      phonePh: "رقم الاتصال",
+      appsHint: "حدد التطبيقات المرتبطة برقمك",
+      secondaryPhoneSection: "هاتف إضافي (اختياري)",
+      addAnother: "إضافة رقم آخر",
+      secondaryPhonePh: "هاتف إضافي",
+      commentLabel: "ملاحظة",
+    },
+    errors: {
+      fullNameReq: "يرجى إدخال الاسم واللقب",
+      birthReq: "يرجى إدخال تاريخ الميلاد",
+      emailReq: "البريد الإلكتروني مطلوب",
+      phoneReq: "رقم الهاتف مطلوب",
+    },
+    apps: {
+      telegram: "تيليغرام",
+      whatsapp: "واتساب",
+      viber: "فايبر"
+    }
+  },
+  payment: {
+    title: "الدفع",
+    pay: "ادفع",
+    cash: "الدفع عند التسليم",
+    cashDesc: "ستدفع عند تسليم السيارة.",
+    card: "بطاقة بنكية",
+    cardDesc: "الدفع بالبطاقة في المكان.",
+    transfer: "تحويل بنكي",
+    transferDesc: "الدفع عن طريق التحويل قبل التسليم.",
+    methods: {
+      gpayLabel: "Google Pay",
+      cardNewLabel: "بطاقة ائتمان أو خصم جديدة",
+      paypalLabel: "PayPal",
+      revolutLabel: "Revolut"
+    },
+    fields: {
+      cardNumber: "رقم البطاقة",
+      numberPh: "1111 2222 3333 4444",
+      expiry: "تاريخ الانتهاء (شهر/سنة)",
+      mmPh: "شهر",
+      yyPh: "سنة",
+      cvc: "CVC/CVV",
+      cvcPh: "123",
+      holder: "اسم صاحب البطاقة (كما يظهر على البطاقة)",
+      holderPh: "مثال: محمد أحمد"
+    }
+  },
     departureLabel: "المغادرة",
     returnLabel: "العودة",
     cityPlaceholder: "مثال: الرباط",
     selectPlaceholder: "اختر...",
     selectDates: "اختر هذه التواريخ",
     selectHour: "اختر الساعة",
-    reset: "إعادة تعيين"
+    reset: "إعادة تعيين",
+    pricePerDayLabel: "السعر لكل يوم:",
+    rentalDurationLabel: "مدة الإيجار:",
+    assuranceLabel: "التأمين:",
+    totalLabel: "المجموع:",
+    insurancePlans: {
+      securityDeposit: "الوديعة",
+      plus: {
+        name: "تأمين بلس",
+        f1: "تغطية لجميع الأضرار\nبدون وديعة",
+        f2: "إلغاء الرحلة (مرض، حادث، وفاة)",
+        f3: "خدمات المساعدة"
+      },
+      basic: {
+        name: "تأمين أساسي",
+        f1: "تغطية لجميع الأضرار بعد خصم نسبة التحمل",
+        f3: "إلغاء الرحلة (مرض، حادث، وفاة)",
+        f4: "خدمات المساعدة"
+      },
+      none: {
+        name: "بدون تأمين",
+        f1: "لا يغطي الأضرار للمركبة، لكنه يغطي الأضرار للمركبات الأخرى"
+      }
+    }
+  },
+  weekdays: {
+    sunday: "الأحد",
+    monday: "الإثنين",
+    tuesday: "الثلاثاء",
+    wednesday: "الأربعاء",
+    thursday: "الخميس",
+    friday: "الجمعة",
+    saturday: "السبت"
+  },
+  smallMonths: {
+    january: "يناير",
+    february: "فبراير",
+    march: "مارس",
+    april: "أبريل",
+    may: "مايو",
+    june: "يونيو",
+    july: "يوليو",
+    august: "أغسطس",
+    september: "سبتمبر",
+    october: "أكتوبر",
+    november: "نوفمبر",
+    december: "ديسمبر"
   },
   months: {
     january: "يناير",
@@ -475,7 +608,11 @@ const ar = {
     perDayShort: "/يوم",
     carsFound: "سيارات موجودة",
     noCarsFound: "لم يتم العثور على سيارات بهذه المعايير",
-    tryModifyFilters: "جرب تعديل المرشحات"
+  tryModifyFilters: "جرب تعديل المرشحات",
+  periodRequired: "الفترة مطلوبة",
+  selectDates: "اختر تاريخ البداية والنهاية"
+  ,periodRequiredFull: "يرجى اختيار تاريخ بداية وتاريخ نهاية للمتابعة"
+  ,periodRequiredShort: "اختر فترة"
   },
   footer: {
     contactInfo: {

@@ -62,6 +62,20 @@
     }
 }
 
+.inputLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.arrow-icon {
+    margin-left: 0px;
+    // transition: transform 5.5s;
+    &.flipped {
+        transform: rotate(180deg);
+    }
+}
+
 .custom-dropdown {
     width: 152px;
     height: 20px;
